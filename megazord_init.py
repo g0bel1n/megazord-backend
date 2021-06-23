@@ -111,26 +111,37 @@ class SwissKnife():
 
         print("Pre Megazord dictionnary is now complete. \n You can now fine tune (.fine_tune()) or call Megazord formation (.assemble_Megazord())")
 
-    def fine_tune(self, zord):
+    def fine_tune(self, zord, fine_tune_at = 280, epochs =4, lr = 0.0001):
 
-            model = tf.keras.models.load_model(directory+ "/"+ zord +".pb")
+        print("_____________ Fine tuning {} __________".format(zord))
+        print(" Importing train_ds...")
+        directory_ = self.directory + "/" + zord
+        train_ds = tf.keras.preprocessing.image_dataset_from_directory(
+            directory_,
+            labels="inferred",
+            label_mode="int", shuffle=True, batch_size=32)
 
-            model.layers[2].trainable = True
+        print("Augmenting the train_ds")
+        augmented_train_ds = train_ds.map(lambda x, y: (self.data_augmentation(x), y))
+        augmented_train_ds = augmented_train_ds.prefetch(buffer_size=32)
+        augmented_train_ds.shuffle(1000)
+        print("Augmentation is done. Now begins fine-tuning")
 
-            fine_tune_at = 280
+        model = self.zords[zord][0]
+        model.layers[2].trainable = True
 
-            for layer in model.layers[2].layers[1:fine_tune_at]:
-                layer.trainable =  False
+        for layer in model.layers[2].layers[1:fine_tune_at]:
+            layer.trainable =  False
 
-            model.optimizer.learning_rate = model.optimizer.learning_rate / 10
+        model.optimizer.learning_rate = lr
 
-            model.fit(augmented_train_ds, epochs=epochs)
+        model.fit(augmented_train_ds, epochs=epochs)
 
-            self.zords[zord] = [model, train_ds.class_names]
-            print("\t{} zord has been fine-tuned and added to pre_megazord dictionnary. \n ".format(zord))
+        self.zords[zord] = [model, train_ds.class_names]
+        print("{} zord has been fine-tuned and added to pre_megazord dictionnary. \n ".format(zord))
 
-            print("\tSaving the zord ...")
-            model.save(self.directory+"/" + zord + ".pb")
+        print("Saving the zord ...")
+        model.save(self.directory+"/" + zord + ".pb")
 
 ##TW L'ordre des fichiers de main_zorg doit être le meme que celui du dossier parent
 
@@ -209,7 +220,9 @@ if __name__ == "__main__" :
 
     swiss_knife = SwissKnife(zords, directory)
 
-    swiss_knife.train_zords(epochs = 1  )
+    swiss_knife.train_zords(epochs = 1)
+
+    swiss_knife.fine_tune(zord = "handle", epochs=1)
 
     megazord = swiss_knife.assemble_Megazord()
 
