@@ -107,18 +107,35 @@ class SwissKnife():
             print("{} zord has been fitted and added to pre_megazord dictionnary. \n ".format(zord))
             print("Saving the zord ...")
             training_zords[zord].save(self.directory+"/"+zord+".pb")
+            self.train_queue.remove(zord)
 
         print("Pre Megazord dictionnary is now complete. \n You can now fine tune (.fine_tune()) or call Megazord formation (.assemble_Megazord())")
 
     def fine_tune(self, zord):
-        print("fine_tuning unavailable yet...")
-        return None
+
+            model = tf.keras.models.load_model(directory+ "/"+ zord +".pb")
+
+            model.layers[2].trainable = True
+
+            fine_tune_at = 280
+
+            for layer in model.layers[2].layers[1:fine_tune_at]:
+                layer.trainable =  False
+
+            model.optimizer.learning_rate = model.optimizer.learning_rate / 10
+
+            model.fit(augmented_train_ds, epochs=epochs)
+
+            self.zords[zord] = [model, train_ds.class_names]
+            print("\t{} zord has been fine-tuned and added to pre_megazord dictionnary. \n ".format(zord))
+
+            print("\tSaving the zord ...")
+            model.save(self.directory+"/" + zord + ".pb")
 
 ##TW L'ordre des fichiers de main_zorg doit être le meme que celui du dossier parent
 
     def assemble_Megazord(self):
 
-        print("Megazord assembly is starting ...")
         input_shape = (256,256,3)
         inputs_MZ = keras.Input(shape=input_shape)
 
@@ -150,7 +167,7 @@ class SwissKnife():
         print("Reaching the bottom of the neural network...")
 
         output_MZ = tf.stack([pre_stack], axis=0)
-        print("and....")
+
         print("\n\t\t\t\t\t\t#############################################\n\t\t\t\t\t\t###########  MEGAZORD DEPLOYED  #############\n\t\t\t\t\t\t#############################################\n ")
 
 
@@ -158,7 +175,7 @@ class SwissKnife():
 
     def save(self, megazord):
         print("Saving Megazord")
-        megazord.save(self.directory+"/megazord.pb")
+        megazord.save("megazord.pb")
         print("Megazord is saved")
 
     def megazord_to_coreML(self, megazord):
@@ -172,9 +189,9 @@ class SwissKnife():
 
         print("Saving the converted megazord...")
 
-        megazord_CML.save(self.directory+"/megazord.mlmodel")
+        megazord_CML.save("megazord.mlmodel")
 
-        print("Megazord is ready to serve ;)")
+        print("Megazord is ready to go ;)")
 
 
     def show_architecture(self):
@@ -192,7 +209,7 @@ if __name__ == "__main__" :
 
     swiss_knife = SwissKnife(zords, directory)
 
-    swiss_knife.train_zords(epochs = 6 )
+    swiss_knife.train_zords(epochs = 1  )
 
     megazord = swiss_knife.assemble_Megazord()
 
