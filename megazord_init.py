@@ -26,7 +26,8 @@ class SwissKnife():
                     print("\tSuccessul importation")
             except :
                 self.train_queue.append(zord)
-                print("\t"+ zord + " model has not been trained yet. It has been added to the train queue.")
+                print("\t"+ zord + " model has not been trained yet. It has been added to the training"
+                                   " queue.")
 
         print("Trying to import main zord...")
         try :
@@ -36,7 +37,7 @@ class SwissKnife():
             print("\tSuccess")
         except :
             self.train_queue.append("main_zord")
-            print("\tmain_zord" + " model has not been trained yet. It has been added to the train queue.")
+            print("\tmain_zord" + " model has not been trained yet. It has been added to the training queue.")
         print("\n#############################\n ")
         print("Zord models have been imported, please use .train_zords method to start the training queue if need be.\nTraining Queue : ", self.train_queue)
 
@@ -51,10 +52,12 @@ class SwissKnife():
         training_zords = {}
 
         for zord in self.train_queue:
-
+            if zord == "main_zord": directory_ = self.directory + "/data"
+            else : directory_ = self.directory+"/data/"+zord
+            print(directory_)
             print("_____________ Training {} __________".format(zord))
             print(" Importing train_ds...")
-            directory_ = self.directory+"/data/"+zord
+
             train_ds = tf.keras.preprocessing.image_dataset_from_directory(
             directory_,
             labels="inferred",
@@ -191,6 +194,8 @@ class SwissKnife():
 
     def megazord_to_coreML(self, megazord):
 
+        print("CoreML conversion is beginning...")
+
         image_input = ct.ImageType(shape=(1, 256, 256, 3,),
                        bias=[-1,-1,-1])
 
@@ -202,7 +207,7 @@ class SwissKnife():
 
         megazord_CML.save(self.directory+"/zords/"+"megazord.mlmodel")
 
-        print("Megazord is ready to go ;)")
+        print("Megazord is ready to serve ;)")
 
 
     def show_architecture(self):
@@ -216,16 +221,16 @@ def listdir_nohidden(path):
 if __name__ == "__main__" :
 
     directory = "/Users/lucas/swiss_knife"
-    zords = ["ball_bearing", "handle", "motor"]
+    zords = ["ball_bearing", "handle", "motor", "sofiane"]
 
     swiss_knife = SwissKnife(zords, directory)
 
     swiss_knife.train_zords(epochs = 6)
 
-    swiss_knife.fine_tune(zord = "handle", epochs=3)
+    #swiss_knife.fine_tune(zord = "handle", epochs=3)
 
     megazord = swiss_knife.assemble_Megazord()
 
-    swiss_knife.save(megazord)
+    #swiss_knife.save(megazord)
 
     swiss_knife.megazord_to_coreML(megazord)
