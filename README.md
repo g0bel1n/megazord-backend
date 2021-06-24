@@ -1,6 +1,6 @@
 # Megazord
 
-Deep learning project realised Lucas Saban and Augustin Cramer for Soft Next. 
+Deep learning project realised by Lucas Saban and Augustin Cramer for Soft Next. 
 
 Please mention us if you use this code.  
 Feel free to contact us at : lucas.saban@ensae.fr or augustin.cramer@ensae.fr. 
