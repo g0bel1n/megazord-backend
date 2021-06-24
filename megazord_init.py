@@ -156,7 +156,6 @@ class SwissKnife():
         nb_class = len(self.zords["main_zord"][1])
         compt = 0
         pre_stack = []
-        print("here")
         for key in self.zords.keys() :
             if key != "main_zord":
                 zorg_plus = self.zords[key]
@@ -166,9 +165,6 @@ class SwissKnife():
                     pre_stack.append(class_pred[0,compt])
                 else :
                     out = zorg_plus[0](inputs_MZ)
-                    print(zorg_plus)
-                    print(class_pred)
-                    print(out)
                     for i in range(len(zorg_plus[1])):
                         pre_stack.append(class_pred[0,compt]*out[0,i])
                 compt+=1
