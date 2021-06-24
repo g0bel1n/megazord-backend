@@ -3,13 +3,15 @@ from tensorflow.keras import layers
 import tensorflow as tf
 import os
 import coremltools as ct
+import numpy as np
 
+import matplotlib.image as mpimg
 class SwissKnife():
 
     #zords = ["zord1", "zord2", "zord3", ...]
-    def __init__(self,zords,directory):
-        assert type(zords)==list, "zords parameter must be a list object."
+    def __init__(self,directory):
         assert type(directory)== str, "directory parameter must be a str object"
+        zords = listdir_nohidden(directory+"/data")
         self.zords = {}
         self.directory = directory
         self.train_queue = []
@@ -63,6 +65,8 @@ class SwissKnife():
             labels="inferred",
             label_mode="int", shuffle=True, batch_size=32)
 
+
+
             print("Augmenting the train_ds")
             augmented_train_ds = train_ds.map(lambda x,y : (self.data_augmentation(x),y))
             augmented_train_ds = augmented_train_ds.prefetch(buffer_size=32)# facilitates training
@@ -102,11 +106,10 @@ class SwissKnife():
             print("Fit sequence launched...")
             training_zords[zord].fit(augmented_train_ds, epochs=epochs)
 
-            self.zords[zord] = [training_zords[zord], train_ds.class_names]
+            self.zords[zord] = [training_zords[zord], train_ds.class_names[::-1]]
             print("{} zord has been fitted and added to pre_megazord dictionnary. \n ".format(zord))
             print("Saving the zord ...")
             training_zords[zord].save(self.directory+"/zords/"+zord+".pb")
-            self.train_queue.remove(zord)#might be the source of the training queue phantom
 
         print("Pre Megazord dictionnary is now complete. \n You can now fine tune (.fine_tune()) or call Megazord formation (.assemble_Megazord())")
 
@@ -136,7 +139,7 @@ class SwissKnife():
 
         model.fit(augmented_train_ds, epochs=epochs)
 
-        self.zords[zord] = [model, train_ds.class_names]
+        self.zords[zord] = [model, train_ds.class_names[::-1]]
         print("{} zord has been fine-tuned and added to pre_megazord dictionnary. \n ".format(zord))
 
         print("Saving the zord ...")
@@ -148,26 +151,24 @@ class SwissKnife():
         inputs_MZ = keras.Input(shape=input_shape)
 
         class_pred=self.zords["main_zord"][0](inputs_MZ)
-        labels_count = 0
         labels = []
-        for key in self.zords.keys() :
-            if key != "main_zord":
-                el = self.zords[key]
-                labels_count+= len(el[1])
-                for label in el[1] :
-                    labels.append(label)
-
         self.labels = labels
         nb_class = len(self.zords["main_zord"][1])
         compt = 0
         pre_stack = []
+        print("here")
         for key in self.zords.keys() :
             if key != "main_zord":
                 zorg_plus = self.zords[key]
+                for label in zorg_plus[1]:
+                    labels.append(label)
                 if len(zorg_plus[1])==1 :
                     pre_stack.append(class_pred[0,compt])
                 else :
                     out = zorg_plus[0](inputs_MZ)
+                    print(zorg_plus)
+                    print(class_pred)
+                    print(out)
                     for i in range(len(zorg_plus[1])):
                         pre_stack.append(class_pred[0,compt]*out[0,i])
                 compt+=1
@@ -210,17 +211,16 @@ class SwissKnife():
 
 
 def listdir_nohidden(path):
-        return [el for el in os.listdir(path) if not el.startswith(".")]
+        return sorted([el for el in os.listdir(path) if not el.startswith(".")])
 
 
 if __name__ == "__main__" :
 
     directory = "/Users/lucas/swiss_knife"
-    zords = ["ball_bearing", "handle", "motor", "sofiane"]
 
-    swiss_knife = SwissKnife(zords, directory)
+    swiss_knife = SwissKnife(directory)
 
-    swiss_knife.train_zords(epochs = 6)
+    #swiss_knife.train_zords(epochs = 6)
 
     #swiss_knife.fine_tune(zord = "handle", epochs=3)
 
