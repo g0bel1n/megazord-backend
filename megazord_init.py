@@ -63,16 +63,9 @@ class SwissKnife():
             labels="inferred",
             label_mode="int", shuffle=True, batch_size=32)
 
-            if len(train_ds.class_names) == 1 :
-                self.zords[zord] = [None,[zord]]
-                print("Single label class doesn't need to be trained.")
-                continue
-
-
-
             print("Augmenting the train_ds")
             augmented_train_ds = train_ds.map(lambda x,y : (self.data_augmentation(x),y))
-            augmented_train_ds = augmented_train_ds.prefetch(buffer_size=32)
+            augmented_train_ds = augmented_train_ds.prefetch(buffer_size=32)# facilitates training
             augmented_train_ds.shuffle(1000)
             print("Augmentation is done. Importation of InceptionV3 beginning...")
 
@@ -84,6 +77,8 @@ class SwissKnife():
                 pooling=None,
                 classes=1000,
                 classifier_activation="softmax")
+
+            #InceptionV3 layer are frozen so that we only need to train the last layer
 
             base_model.trainable = False
 
@@ -97,11 +92,12 @@ class SwissKnife():
             outputs = keras.layers.Dense(len(train_ds.class_names),activation=tf.nn.softmax)(x)
 
             training_zords[zord] = keras.Model(inputs, outputs)
-            training_zords[zord]._name = zord
+
+            training_zords[zord]._name = zord #Changing each model name is capital as it might cause errors when calling same labelled models
 
             training_zords[zord].compile(optimizer='adam',
                       loss='sparse_categorical_crossentropy',
-                      metrics=['accuracy'])
+                      metrics=['accuracy']) #the default learning rate is 1e-3
 
             print("Fit sequence launched...")
             training_zords[zord].fit(augmented_train_ds, epochs=epochs)
@@ -110,7 +106,7 @@ class SwissKnife():
             print("{} zord has been fitted and added to pre_megazord dictionnary. \n ".format(zord))
             print("Saving the zord ...")
             training_zords[zord].save(self.directory+"/zords/"+zord+".pb")
-            self.train_queue.remove(zord)
+            self.train_queue.remove(zord)#might be the source of the training queue phantom
 
         print("Pre Megazord dictionnary is now complete. \n You can now fine tune (.fine_tune()) or call Megazord formation (.assemble_Megazord())")
 
@@ -136,7 +132,7 @@ class SwissKnife():
         for layer in model.layers[2].layers[1:fine_tune_at]:
             layer.trainable =  False
 
-        model.optimizer.learning_rate = lr
+        model.optimizer.learning_rate = lr# a smaller learning rate is required to fine tune the unfrozen layers
 
         model.fit(augmented_train_ds, epochs=epochs)
 
@@ -145,8 +141,6 @@ class SwissKnife():
 
         print("Saving the zord ...")
         model.save(self.directory+"/zords/" + zord + ".pb")
-
-##TW L'ordre des fichiers de main_zorg doit être le meme que celui du dossier parent
 
     def assemble_Megazord(self):
 
@@ -185,7 +179,7 @@ class SwissKnife():
         print("\n\t\t\t\t\t\t#############################################\n\t\t\t\t\t\t###########  MEGAZORD DEPLOYED  #############\n\t\t\t\t\t\t#############################################\n ")
 
 
-        return keras.Model(inputs_MZ, output_MZ)
+        return keras.Model(inputs_MZ, output_MZ) #The Megazord is deliberatly not an attribute of the SwiisKnife object to reduce its constraint on the computer's RAM
 
     def save(self, megazord):
         print("Saving Megazord")
@@ -210,8 +204,9 @@ class SwissKnife():
         print("Megazord is ready to serve ;)")
 
 
-    def show_architecture(self):
-        tf.keras.utils.plot_model(self.megazord, show_shapes=True)
+    # following methods does not work yet
+    #def show_architecture(self):
+        #tf.keras.utils.plot_model(self.megazord, show_shapes=True)
 
 
 def listdir_nohidden(path):
