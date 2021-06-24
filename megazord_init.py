@@ -17,12 +17,12 @@ class SwissKnife():
 
             print("Trying to import " + zord + " model ...")
             try :
-                if len(listdir_nohidden(self.directory+"/"+zord))==1:
+                if len(listdir_nohidden(self.directory+"/data/"+zord))==1:
                     self.zords[zord] = [None,[zord]]
                     print("\tSingle Label Class, no need to import.")
                 else:
-                    labels = listdir_nohidden(self.directory+"/"+zord)
-                    self.zords[zord] = [tf.keras.models.load_model(self.directory+"/"+ zord+".pb"),labels]
+                    labels = listdir_nohidden(self.directory+"/data/"+zord)
+                    self.zords[zord] = [tf.keras.models.load_model(self.directory+"/zords/"+ zord+".pb"),labels]
                     print("\tSuccessul importation")
             except :
                 self.train_queue.append(zord)
@@ -30,8 +30,8 @@ class SwissKnife():
 
         print("Trying to import main zord...")
         try :
-            main_zord = tf.keras.models.load_model(self.directory+ "/"+"main_zord"+".pb")
-            labels = listdir_nohidden(self.directory+"/"+"main_zord")
+            main_zord = tf.keras.models.load_model(self.directory+ "/zords/"+"main_zord"+".pb")
+            labels = listdir_nohidden(self.directory+"/data")
             self.zords["main_zord"] = [main_zord,labels]
             print("\tSuccess")
         except :
@@ -54,7 +54,7 @@ class SwissKnife():
 
             print("_____________ Training {} __________".format(zord))
             print(" Importing train_ds...")
-            directory_ = self.directory+"/"+zord
+            directory_ = self.directory+"/data/"+zord
             train_ds = tf.keras.preprocessing.image_dataset_from_directory(
             directory_,
             labels="inferred",
@@ -106,7 +106,7 @@ class SwissKnife():
             self.zords[zord] = [training_zords[zord], train_ds.class_names]
             print("{} zord has been fitted and added to pre_megazord dictionnary. \n ".format(zord))
             print("Saving the zord ...")
-            training_zords[zord].save(self.directory+"/"+zord+".pb")
+            training_zords[zord].save(self.directory+"/zords/"+zord+".pb")
             self.train_queue.remove(zord)
 
         print("Pre Megazord dictionnary is now complete. \n You can now fine tune (.fine_tune()) or call Megazord formation (.assemble_Megazord())")
@@ -115,7 +115,7 @@ class SwissKnife():
 
         print("_____________ Fine tuning {} __________".format(zord))
         print(" Importing train_ds...")
-        directory_ = self.directory + "/" + zord
+        directory_ = self.directory + "/data/" + zord
         train_ds = tf.keras.preprocessing.image_dataset_from_directory(
             directory_,
             labels="inferred",
@@ -141,7 +141,7 @@ class SwissKnife():
         print("{} zord has been fine-tuned and added to pre_megazord dictionnary. \n ".format(zord))
 
         print("Saving the zord ...")
-        model.save(self.directory+"/" + zord + ".pb")
+        model.save(self.directory+"/zords/" + zord + ".pb")
 
 ##TW L'ordre des fichiers de main_zorg doit être le meme que celui du dossier parent
 
@@ -186,7 +186,7 @@ class SwissKnife():
 
     def save(self, megazord):
         print("Saving Megazord")
-        megazord.save("megazord.pb")
+        megazord.save(self.directory+"/zords/"+"megazord.pb")
         print("Megazord is saved")
 
     def megazord_to_coreML(self, megazord):
@@ -200,7 +200,7 @@ class SwissKnife():
 
         print("Saving the converted megazord...")
 
-        megazord_CML.save("megazord.mlmodel")
+        megazord_CML.save(self.directory+"/zords/"+"megazord.mlmodel")
 
         print("Megazord is ready to go ;)")
 
@@ -215,14 +215,14 @@ def listdir_nohidden(path):
 
 if __name__ == "__main__" :
 
-    directory = "/Users/lucas/swiss_knife_data"
+    directory = "/Users/lucas/swiss_knife"
     zords = ["ball_bearing", "handle", "motor"]
 
     swiss_knife = SwissKnife(zords, directory)
 
-    swiss_knife.train_zords(epochs = 1)
+    swiss_knife.train_zords(epochs = 6)
 
-    swiss_knife.fine_tune(zord = "handle", epochs=1)
+    swiss_knife.fine_tune(zord = "handle", epochs=3)
 
     megazord = swiss_knife.assemble_Megazord()
 
