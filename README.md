@@ -30,9 +30,9 @@ Sometime, the error "Some class are missing" might arise. It could be due to the
 In this situation, check your directory to verify if there are really the .pb file of each class (not single label class). If its not the case, re-running the code will handle the situation.
 Nevertheless, this bug is bound to be fixed soon.
 
-## Why Megazord and zords ? 
+## Why *Megazord* and *zords* ? 
 
-Well, it is because of the architecture of our neural network. It combines several small neural networks, trained to distinguish object from the same class (ex: motor_s and motor_m) to make a big neural networks that classify each label. It made us remember the good old days, when we used to watch the Power Rangers series. They used to merge their zords (each Ranger had its own zord aka fighter robot) into a megazord which could defeat the bad guys. In our case, the megazord is the final model and the zords are the secondary models.
+Well, it is because of the architecture of our neural network. It combines several small neural networks, trained to distinguish object from the same class (ex: motor_s and motor_m) to make a big neural networks that classify each label. It made us remember the good old days, when we used to watch the *Power Rangers series*. They used to merge their zords (each Ranger had its own zord aka fighter robot) into a megazord which could defeat the bad guys. In our case, the megazord is the final model and the zords are the secondary models.
 
 
 ## Tips
