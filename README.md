@@ -21,7 +21,9 @@ opencv 4.5.2.54
 
 tqdm 4.61.1
 
+## Techniques used
 
+In this project we used Data Augmentation, Transfer Learning (Inception V3), Fine Tuning and multi inputs/outputs neural networks
 ## Errors known
 
 Sometime, the error "Some class are missing" might arise. It could be due to the fact that the training queue has not really been completed.
