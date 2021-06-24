@@ -21,6 +21,11 @@ opencv 4.5.2.54
 
 tqdm 4.61.1
 
+## The app
+
+The app is based on code sample found on the Apple Developper website. It's not energy efficient and is quite heavy.  
+For now, it's only for visualization but we might improve it later on.
+
 ## Techniques used
 
 In this project we used Data Augmentation, Transfer Learning (Inception V3), Fine Tuning and multi inputs/outputs neural networks
@@ -30,7 +35,14 @@ Sometime, the error "Some class are missing" might arise. It could be due to the
 In this situation, check your directory to verify if there are really the .pb file of each class (not single label class). If its not the case, re-running the code will handle the situation.
 Nevertheless, this bug is bound to be fixed soon.
 
+*Line 109 is suspected to be the source of the error
+
 ## Why *Megazord* and *zords* ? 
+
+
+
+
+
 
 Well, it is because of the architecture of our neural network. It combines several small neural networks, trained to distinguish object from the same class (ex: motor_s and motor_m) to make a big neural networks that classify each label. It made us remember the good old days, when we used to watch the *Power Rangers series*. They used to merge their zords (each Ranger had its own zord aka fighter robot) into a megazord which could defeat the bad guys. In our case, the megazord is the final model and the zords are the secondary models.
 
