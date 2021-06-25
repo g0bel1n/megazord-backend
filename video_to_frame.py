@@ -1,17 +1,18 @@
 import cv2
-from PIL import Image
 from tqdm import tqdm
 import os
-import matplotlib.pyplot as plt
 
-
+def listdir_nohidden(path, mov_only = True):
+    if mov_only :return [el for el in os.listdir(path) if not el.startswith(".") and  (el.endswith(".MOV") or el.endswith(".mov"))]
+    else : return [el for el in os.listdir(path) if not el.startswith(".")]
 
 #fps_goal is the number of frame per second the user wants to extract
 def framer(list_object, directory, fps_goal = 2, rescale=False, shape=(128,128)):
+    l_count= []
     for object in list_object :
         j=0
         directory_= directory+"/"+object
-        for filename in tqdm(os.listdir(directory_)):
+        for filename in tqdm(listdir_nohidden(directory_)):
             if filename.endswith(".MOV") or filename.endswith(".mov") :
                 #Import the video file
                 cap = cv2.VideoCapture(directory_+"/"+filename)
@@ -46,12 +47,15 @@ def framer(list_object, directory, fps_goal = 2, rescale=False, shape=(128,128))
                 cap.release()
                 cv2.destroyAllWindows()
             j+=1
-    print("Directory done")
+        l_count.append((object,i))
+
+    for object,compt in l_count:
+        print("The class " + object + " contains " + str(compt) + " images.")
 
 # Contains the name of the object  and must be the name of the folder it  is in.
 #list_object = ["handle_lock","ball_bearing", "handle_lockless", "motor_m", "motor_S"]
-list_object=["motor_S"]
+list_object=["white_wheel_ro","white_wheel_sq", "black_wheel"]
 # main directory
-directory = "/Users/lucas/test_framer"
+directory = "/Users/lucas/Downloads"
 
-framer(list_object=list_object,fps_goal=4,  directory=directory, rescale=True, shape=(256,256))
+framer(list_object=list_object,fps_goal=8,  directory=directory, rescale=True, shape=(256,256))
