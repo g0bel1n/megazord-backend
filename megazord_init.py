@@ -51,6 +51,7 @@ class SwissKnife():
 
 
     def train_zords(self,epochs=2):
+
         training_zords = {}
 
         for zord in self.train_queue:
@@ -65,7 +66,28 @@ class SwissKnife():
             labels="inferred",
             label_mode="int", shuffle=True, batch_size=32)
 
+            folders=[]
+            if zord == "main_zord":
+                classes = listdir_nohidden(directory_)
+                for classe in classes:
+                    dir_ = directory_ + "/" + classe
+                    labels = listdir_nohidden((dir_))
+                    tot = 0
+                    for label in labels:
+                        tot += len(listdir_nohidden(dir_ + "/" + label, jpg_only=True))
+                    folders.append(tot)
 
+            else:
+                for label in listdir_nohidden((directory_)):
+                    file_nb = len(listdir_nohidden(directory_ + "/" + label, jpg_only=True))
+                    folders.append(file_nb)
+
+            m = max(folders)
+            class_weight = {}
+            for i in range(len(folders)):
+                class_weight[i] = float(m)/float(folders[i])
+
+            print("As data is imbalanced, the following weights will be applied ", list(class_weight.values()))
 
             print("Augmenting the train_ds")
             augmented_train_ds = train_ds.map(lambda x,y : (self.data_augmentation(x),y))
@@ -104,7 +126,7 @@ class SwissKnife():
                       metrics=['accuracy']) #the default learning rate is 1e-3
 
             print("Fit sequence launched...")
-            training_zords[zord].fit(augmented_train_ds, epochs=epochs)
+            training_zords[zord].fit(augmented_train_ds, epochs=epochs, class_weight=class_weight)
 
             self.zords[zord] = [training_zords[zord], train_ds.class_names[::-1]]
             print("{} zord has been fitted and added to pre_megazord dictionnary. \n ".format(zord))
@@ -123,6 +145,28 @@ class SwissKnife():
             labels="inferred",
             label_mode="int", shuffle=True, batch_size=32)
 
+        folders = []
+        if zord == "main_zord":
+            classes = listdir_nohidden(directory_)
+            for classe in classes:
+                dir_ = directory_ + "/" + classe
+                labels = listdir_nohidden((dir_))
+                tot = 0
+                for label in labels:
+                    tot += len(listdir_nohidden(dir_ + "/" + label, jpg_only=True))
+                folders.append(tot)
+
+        else:
+            for label in listdir_nohidden((directory_)):
+                file_nb = len(listdir_nohidden(directory_ + "/" + label, jpg_only=True))
+                folders.append(file_nb)
+
+        m = max(folders)
+        class_weight = {}
+        for i in range(len(folders)):
+            class_weight[i] = float(m) / float(folders[i])
+        print("As data is imbalanced, the following weights will be applied ", list(class_weight.values()))
+
         print("Augmenting the train_ds")
         augmented_train_ds = train_ds.map(lambda x, y: (self.data_augmentation(x), y))
         augmented_train_ds = augmented_train_ds.prefetch(buffer_size=32)
@@ -137,7 +181,7 @@ class SwissKnife():
 
         model.optimizer.learning_rate = lr# a smaller learning rate is required to fine tune the unfrozen layers
 
-        model.fit(augmented_train_ds, epochs=epochs)
+        model.fit(augmented_train_ds, epochs=epochs, class_weight=class_weight)
 
         self.zords[zord] = [model, train_ds.class_names[::-1]]
         print("{} zord has been fine-tuned and added to pre_megazord dictionnary. \n ".format(zord))
@@ -206,8 +250,9 @@ class SwissKnife():
         #tf.keras.utils.plot_model(self.megazord, show_shapes=True)
 
 
-def listdir_nohidden(path):
-        return sorted([el for el in os.listdir(path) if not el.startswith(".")])
+def listdir_nohidden(path, jpg_only=False):
+        if jpg_only : return sorted([el for el in os.listdir(path) if not el.startswith(".") and (el.endswith(".jpg") or el.endswith(".JPG"))])
+        else : return sorted([el for el in os.listdir(path) if not el.startswith(".") ])
 
 
 if __name__ == "__main__" :
@@ -216,7 +261,7 @@ if __name__ == "__main__" :
 
     swiss_knife = SwissKnife(directory)
 
-    #swiss_knife.train_zords(epochs = 6)
+    swiss_knife.train_zords(epochs = 1)
 
     #swiss_knife.fine_tune(zord = "handle", epochs=3)
 
