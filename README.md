@@ -31,11 +31,7 @@ For now, it's only for visualization but we might improve it later on.
 In this project we used Data Augmentation, Transfer Learning (Inception V3), Fine Tuning and multi inputs/outputs neural networks
 ## Errors known
 
-Sometime, the error "Some class are missing" might arise. It could be due to the fact that the training queue has not really been completed.
-In this situation, check your directory to verify if there are really the .pb file of each class (not single label class). If its not the case, re-running the code will handle the situation.
-Nevertheless, this bug is bound to be fixed soon.
-
-*Line 109 is suspected to be the source of the error
+None.
 
 ## Why *Megazord* and *zords* ? 
 
