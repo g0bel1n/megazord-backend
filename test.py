@@ -12,7 +12,7 @@ def test_data_repartition_zord(dir = "data_test/wheel"):
 
 
 def test_data_repartition_main_zord(dir="data_test"):
-    assert data_repartition("main_zord", dir) == [6,5,7]
+    assert data_repartition("main_zord", dir) == [6,6,7]
 
 def test_weighter():
     folders = [1,5,9]
