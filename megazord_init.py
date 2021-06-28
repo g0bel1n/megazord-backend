@@ -126,7 +126,7 @@ class SwissKnife:
             labels="inferred",
             label_mode="int", shuffle=True, batch_size=32)
 
-        folders = data_repartition(zord, directory_)
+        folders = data_repartition(zord,directory_)
 
         class_weight = weighter(folders)
 
@@ -231,12 +231,12 @@ def data_repartition(zord, directory_):
             labels = listdir_nohidden(dir_)
             tot = 0
             for label in labels:
-                tot += len(listdir_nohidden(dir_ + "/" + label, jpg_only=True))
+                tot += len(listdir_nohidden(diver(dir_ + "/" + label), jpg_only=True))
             folders.append(tot)
 
     else:
         for label in listdir_nohidden(directory_):
-            file_nb = len(listdir_nohidden(directory_ + "/" + label, jpg_only=True))
+            file_nb = len(listdir_nohidden(diver(directory_ + "/" + label), jpg_only=True))
             folders.append(file_nb)
 
     return folders
@@ -249,6 +249,11 @@ def weighter(folders):
 
     return class_weight
 
+def diver(path):
+    while len(listdir_nohidden(path))==1 :
+        path+="/" + listdir_nohidden(path)[0]
+    return path
+
 
 if __name__ == "__main__":
     from tensorflow.keras import layers
@@ -259,10 +264,9 @@ if __name__ == "__main__":
     directory = "/Users/lucas/swiss_knife"
 
     swiss_knife = SwissKnife(directory)
+    swiss_knife.train_zords(epochs=2)
 
-    swiss_knife.train_zords(epochs=1)
-
-    # swiss_knife.fine_tune(zord = "handle", epochs=3)
+    #swiss_knife.fine_tune(zord = "handle", epochs=3)
 
     megazord = swiss_knife.assemble_Megazord()
 

@@ -11,17 +11,14 @@ Feel free to contact us at : lucas.saban@ensae.fr or augustin.cramer@ensae.fr.
 
 ## Versions
 
-IDE : PyCharm
+| Module      | Version | 
+| :---        |    ----:   |  
+| Python      | 3.9        |
+| tensorflow   | 2.5.0        | 
+| coremltools      | 4.1        |
+| opencv      | 4.5.2.54       |
+| tqdm      | 4.61.1       |
 
-Python 3.9 
-
-tensorflow 2.5.0
-
-coremltools 4.1
-
-opencv 4.5.2.54
-
-tqdm 4.61.1
 
 ## The app
 
