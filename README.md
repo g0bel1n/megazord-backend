@@ -1,5 +1,7 @@
 # Megazord
 
+![Build Status](https://github.com/iSab01/megazord/workflows/python-app/badge.svg)
+
 Deep learning project realised by Lucas Saban and Augustin Cramer for Soft Next. 
 
 Please mention us if you use this code.  
