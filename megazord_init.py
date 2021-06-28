@@ -1,9 +1,3 @@
-from tensorflow.keras import layers
-from tensorflow import nn, stack, keras
-import os
-import coremltools as ct
-
-
 class SwissKnife:
 
     # zords = ["zord1", "zord2", "zord3", ...]
@@ -255,6 +249,11 @@ def weighter(folders):
 
 
 if __name__ == "__main__":
+    from tensorflow.keras import layers
+    from tensorflow import nn, stack, keras
+    import os
+    import coremltools as ct
+
     directory = "/Users/lucas/swiss_knife"
 
     swiss_knife = SwissKnife(directory)
