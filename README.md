@@ -1,6 +1,6 @@
 # Megazord
 
-![Build Status](https://github.com/iSab01/megazord/workflows/python-app/badge.svg)
+[![Unit tests](https://github.com/iSab01/megazord/actions/workflows/python-app.yml/badge.svg)](https://github.com/iSab01/megazord/actions/workflows/python-app.yml)
 
 Deep learning project realised by Lucas Saban and Augustin Cramer for Soft Next. 
 
