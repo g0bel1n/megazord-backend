@@ -65,26 +65,9 @@ class SwissKnife:
                 labels="inferred",
                 label_mode="int", shuffle=True, batch_size=32)
 
-            folders = []
-            if zord == "main_zord":
-                classes = listdir_nohidden(directory_)
-                for classe in classes:
-                    dir_ = directory_ + "/" + classe
-                    labels = listdir_nohidden(dir_)
-                    tot = 0
-                    for label in labels:
-                        tot += len(listdir_nohidden(dir_ + "/" + label, jpg_only=True))
-                    folders.append(tot)
+            folders = data_repartition(zord, directory_)
 
-            else:
-                for label in listdir_nohidden(directory_):
-                    file_nb = len(listdir_nohidden(directory_ + "/" + label, jpg_only=True))
-                    folders.append(file_nb)
-
-            m = max(folders)
-            class_weight = {}
-            for i in range(len(folders)):
-                class_weight[i] = float(m) / float(folders[i])
+            class_weight = weighter(folders)
 
             print("As data is imbalanced, the following weights will be applied ", list(class_weight.values()))
 
@@ -147,26 +130,10 @@ class SwissKnife:
             labels="inferred",
             label_mode="int", shuffle=True, batch_size=32)
 
-        folders = []
-        if zord == "main_zord":
-            classes = listdir_nohidden(directory_)
-            for classe in classes:
-                dir_ = directory_ + "/" + classe
-                labels = listdir_nohidden((dir_))
-                tot = 0
-                for label in labels:
-                    tot += len(listdir_nohidden(dir_ + "/" + label, jpg_only=True))
-                folders.append(tot)
+        folders = data_repartition(zord, directory_)
 
-        else:
-            for label in listdir_nohidden(directory_):
-                file_nb = len(listdir_nohidden(directory_ + "/" + label, jpg_only=True))
-                folders.append(file_nb)
+        class_weight = weighter(folders)
 
-        m = max(folders)
-        class_weight = {}
-        for i in range(len(folders)):
-            class_weight[i] = float(m) / float(folders[i])
         print("As data is imbalanced, the following weights will be applied ", list(class_weight.values()))
 
         print("Augmenting the train_ds")
@@ -227,7 +194,7 @@ class SwissKnife:
 
     def save(self, megazord):
         print("Saving Megazord")
-        megazord.save(self.directory + "/zords/" + "megazord.pb")
+        megazord.save(self.directory + "/zords/" + "megazord.h5")
         print("Megazord is saved")
 
     def megazord_to_coreML(self, megazord):
@@ -259,6 +226,33 @@ def listdir_nohidden(path, jpg_only=False):
     else:
         return sorted([el for el in os.listdir(path) if not el.startswith(".")])
 
+def data_repartition(zord, directory_):
+    folders = []
+    if zord == "main_zord":
+        classes = listdir_nohidden(directory_)
+        for classe in classes:
+            dir_ = directory_ + "/" + classe
+            labels = listdir_nohidden(dir_)
+            tot = 0
+            for label in labels:
+                tot += len(listdir_nohidden(dir_ + "/" + label, jpg_only=True))
+            folders.append(tot)
+
+    else:
+        for label in listdir_nohidden(directory_):
+            file_nb = len(listdir_nohidden(directory_ + "/" + label, jpg_only=True))
+            folders.append(file_nb)
+
+    return folders
+
+def weighter(folders):
+    m = max(folders)
+    class_weight = {}
+    for i in range(len(folders)):
+        class_weight[i] = float(m) / float(folders[i])
+
+    return class_weight
+
 
 if __name__ == "__main__":
     directory = "/Users/lucas/swiss_knife"
@@ -271,6 +265,6 @@ if __name__ == "__main__":
 
     megazord = swiss_knife.assemble_Megazord()
 
-    # swiss_knife.save(megazord)
+    swiss_knife.save(megazord)
 
-    swiss_knife.megazord_to_coreML(megazord)
+    #swiss_knife.megazord_to_coreML(megazord)
