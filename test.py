@@ -1,5 +1,4 @@
 from megazord_init import *
-import os
 
 
 def test_listdir_nohidden_3(dir = "data_test"):
