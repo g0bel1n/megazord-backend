@@ -7,10 +7,12 @@ def listdir_nohidden(path, mov_only = True):
     else : return [el for el in os.listdir(path) if not el.startswith(".")]
 
 #fps_goal is the number of frame per second the user wants to extract
-def framer(list_object, directory, fps_goal = 2, rescale=False, shape=(128,128)):
+def framer(directory, fps_goal = 2, rescale=False, shape=(128,128)):
+    list_object = listdir_nohidden(directory, mov_only=False)
+    print(list_object)
     l_count= []
     for object in list_object :
-        j=0
+        compt =0
         directory_= directory+"/"+object
         for filename in tqdm(listdir_nohidden(directory_)):
             if filename.endswith(".MOV") or filename.endswith(".mov") :
@@ -41,21 +43,19 @@ def framer(list_object, directory, fps_goal = 2, rescale=False, shape=(128,128))
                         if rescale : frame = cv2.resize(frame, shape)
                         assert frame.shape[0]==frame.shape[1]
                         #creates the directory if it doesn't already exists.
-                        os.makedirs(directory_+"/frames_"+object, exist_ok=True)
-                        cv2.imwrite(directory_+"/frames_"+object+"/"+object+str(j)+"_"+str(i) + '.jpg', frame)
+                        #os.makedirs(directory_+object, exist_ok=True)
+                        cv2.imwrite(directory_+"/"+object+"_"+str(compt) + '.jpg', frame)
+                        compt+=1
                     i += 1
                 cap.release()
                 cv2.destroyAllWindows()
-            j+=1
-        l_count.append((object,i))
+        l_count.append((object,compt))
 
     for object,compt in l_count:
         print("The class " + object + " contains " + str(compt) + " images.")
 
-# Contains the name of the object  and must be the name of the folder it  is in.
-#list_object = ["handle_lock","ball_bearing", "handle_lockless", "motor_m", "motor_S"]
-list_object=["white_wheel_ro","white_wheel_sq", "black_wheel"]
-# main directory
-directory = "/Users/lucas/Downloads"
 
-framer(list_object=list_object,fps_goal=8,  directory=directory, rescale=True, shape=(256,256))
+# main directory
+directory = "/Users/lucas/swiss_knife/data/tube"
+
+framer(fps_goal=8,  directory=directory, rescale=True, shape=(256,256))
