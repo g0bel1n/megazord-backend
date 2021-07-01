@@ -200,7 +200,7 @@ def int_reader(label):
 
 if __name__ == "__main__":
 
-    os.remove("labels.txt")""
+    os.remove("labels.txt")
     os.remove("int_label.txt")
     os.remove("int_classe.txt")
 
