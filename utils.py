@@ -1,6 +1,4 @@
 import os
-from tqdm import tqdm
-
 import numpy as np
 import matplotlib.image as mpimg
 
@@ -58,7 +56,7 @@ class image_from_directory:
             n = sum(data_repartition("main_zord", path))
             x, y = np.empty((n, 256, 256, 3)), np.empty((n, 1), dtype="int32")
             int_label = int_reader(label="classe")
-            for classe in tqdm(self.classes_names) :
+            for classe in self.classes_names :
                 path_classe = os.path.join(path,classe)
                 for label in listdir_nohidden(path_classe):
                     path_label = os.path.join(path_classe, label)
@@ -78,7 +76,7 @@ class image_from_directory:
             n = sum(data_repartition("main_zord", path))
             x, y = np.empty((n, 256, 256, 3)), []
             int_label = int_reader(label ="label")
-            for classe in tqdm(self.classes_names) :
+            for classe in self.classes_names :
                 path_classe = os.path.join(path,classe)
                 for label in listdir_nohidden(path_classe):
                     path_label = os.path.join(path_classe,label)
@@ -133,7 +131,7 @@ def labeller(path):
     err_compt = 0
     n = sum(data_repartition("main_zord", path))
     classes_names = listdir_nohidden(path)
-    for classe in tqdm(classes_names):
+    for classe in classes_names:
         path_classe = os.path.join(path, classe)
         for label in listdir_nohidden(path_classe):
             path_label = os.path.join(path_classe, label)
@@ -202,7 +200,7 @@ def int_reader(label):
 
 if __name__ == "__main__":
 
-    os.remove("labels.txt")
+    os.remove("labels.txt")""
     os.remove("int_label.txt")
     os.remove("int_classe.txt")
 
