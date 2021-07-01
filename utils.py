@@ -71,7 +71,7 @@ class image_from_directory:
                             print(e.__class__)
                             err_compt += 1
 
-        elif zord_kind == "one4all" or zord_kind=="megazord":
+        elif zord_kind == "one4all" or zord_kind=="megazord_lsa":
 
             n = sum(data_repartition("main_zord", path))
             x, y = np.empty((n, 256, 256, 3)), []
@@ -93,7 +93,7 @@ class image_from_directory:
 
         else :
             n = sum(data_repartition(zord_kind, path))
-            x,y = np.empty((n,256,256,3)), np.empty((n, 1), dtype="int32")
+            x,y = np.empty((n,256,256,3)), []
             self.classes_names = listdir_nohidden(path)
             path_classe = os.path.join(path, zord_kind)
             for label in listdir_nohidden(path_classe):

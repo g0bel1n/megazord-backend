@@ -190,7 +190,7 @@ class SwissKnife:
 
     def save(self, megazord):
         print("Saving Megazord")
-        megazord.save(self.directory + "/zords/" + "megazord.pb")
+        megazord.save(self.directory + "/zords/" + "megazord_lsa.pb")
         print("Megazord is saved")
 
     def megazord_to_coreML(self, megazord):
@@ -204,15 +204,15 @@ class SwissKnife:
 
         megazord_CML = ct.convert(megazord, inputs=[image_input], classifier_config=classifier_config)
 
-        print("Saving the converted megazord...")
+        print("Saving the converted megazord_lsa...")
 
-        megazord_CML.save(self.directory + "/zords/" + "megazord.mlmodel")
+        megazord_CML.save(self.directory + "/zords/" + "megazord_lsa.mlmodel")
 
         print("Megazord is ready to serve ;)")
 
     # following methods does not work yet
     # def show_architecture(self):
-    # tf.keras.utils.plot_model(self.megazord, show_shapes=True)
+    # tf.keras.utils.plot_model(self.megazord_lsa, show_shapes=True)
 
 
 

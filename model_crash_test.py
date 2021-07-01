@@ -1,5 +1,4 @@
 from tensorflow import keras
-import tensorflow as tf
 from sklearn.metrics import confusion_matrix,ConfusionMatrixDisplay
 import seaborn as sns
 sns.set_style("dark")
@@ -8,8 +7,6 @@ from tqdm import tqdm
 import matplotlib.pyplot as plt
 from utils import zord_from_pb_file,image_from_directory
 import random
-
-tf.executing_eagerly()
 
 
 class crash_test:

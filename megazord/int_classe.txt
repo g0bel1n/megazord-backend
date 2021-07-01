@@ -1,2 +1,0 @@
-['ball_bearing' 'handle' 'motor' 'regulator' 'sofiane' 'tube' 'ventilo'
- 'wheel']
