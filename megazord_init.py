@@ -110,7 +110,7 @@ class SwissKnife:
             self.zords[zord] = [training_zords[zord], train_ds.class_names[::-1]]
             print("{} zord has been fitted and added to pre_megazord dictionnary. \n ".format(zord))
             print("Saving the zord ...")
-            training_zords[zord].save(self.directory + "/zords/" + zord + ".pb")
+            training_zords[zord]
 
         print(
             "Pre Megazord dictionnary is now complete. \n You can now fine tune (.fine_tune()) or call Megazord "
@@ -190,7 +190,7 @@ class SwissKnife:
 
     def save(self, megazord):
         print("Saving Megazord")
-        megazord.save(self.directory + "/zords/" + "megazord.h5")
+        megazord.save(self.directory + "/zords/" + "megazord.pb")
         print("Megazord is saved")
 
     def megazord_to_coreML(self, megazord):
@@ -215,51 +215,13 @@ class SwissKnife:
     # tf.keras.utils.plot_model(self.megazord, show_shapes=True)
 
 
-def listdir_nohidden(path, jpg_only=False):
-    if jpg_only:
-        return sorted(
-            [el for el in os.listdir(path) if not el.startswith(".") and (el.endswith(".jpg") or el.endswith(".JPG"))])
-    else:
-        return sorted([el for el in os.listdir(path) if not el.startswith(".")])
-
-def data_repartition(zord, directory_):
-    folders = []
-    if zord == "main_zord":
-        classes = listdir_nohidden(directory_)
-        for classe in classes:
-            dir_ = directory_ + "/" + classe
-            labels = listdir_nohidden(dir_)
-            tot = 0
-            for label in labels:
-                tot += len(listdir_nohidden(diver(dir_ + "/" + label), jpg_only=True))
-            folders.append(tot)
-
-    else:
-        for label in listdir_nohidden(directory_):
-            file_nb = len(listdir_nohidden(diver(directory_ + "/" + label), jpg_only=True))
-            folders.append(file_nb)
-
-    return folders
-
-def weighter(folders):
-    m = max(folders)
-    class_weight = {}
-    for i in range(len(folders)):
-        class_weight[i] = float(m) / float(folders[i])
-
-    return class_weight
-
-def diver(path):
-    while len(listdir_nohidden(path))==1 :
-        path+="/" + listdir_nohidden(path)[0]
-    return path
-
 
 if __name__ == "__main__":
     from tensorflow.keras import layers
     from tensorflow import nn, stack, keras
     import os
     import coremltools as ct
+    from utils import *
 
     directory = "/Users/lucas/swiss_knife"
 
@@ -272,21 +234,6 @@ if __name__ == "__main__":
 
     swiss_knife.save(megazord)
 
-    #swiss_knife.megazord_to_coreML(megazord)
-
-def test_listdir_nohidden_3(dir = "data_test"):
-    assert listdir_nohidden(dir, jpg_only=False) == ['ball_bearing', 'handle', 'wheel']
-
-def test_listdir_nohidden_0(dir="data_test"):
-    assert listdir_nohidden(dir, jpg_only=True) == []
-
-def test_data_repartition_zord(dir = "data_test/wheel"):
-    assert data_repartition("wheel", dir) == [2,3,2]
+    swiss_knife.megazord_to_coreML(megazord)
 
 
-def test_data_repartition_main_zord(dir="data_test"):
-    assert data_repartition("main_zord", dir) == [6,5,7]
-
-def test_weighter():
-    folders = [1,5,9]
-    assert weighter(folders) == {0: 9.0, 1: 1.8, 2: 1.0}
