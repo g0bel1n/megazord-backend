@@ -18,7 +18,8 @@ Feel free to contact us at : lucas.saban@ensae.fr or augustin.cramer@ensae.fr.
 | coremltools      | 4.1        |
 | opencv      | 4.5.2.54       |
 | tqdm      | 4.61.1       |
-
+| numpy      | 1.19.5     |
+| matplotlib | 3.4.2  |
 
 ## The app
 
