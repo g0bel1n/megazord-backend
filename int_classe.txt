@@ -1,2 +1,1 @@
-['ball_bearing' 'handle' 'motor' 'regulator' 'sofiane' 'tube' 'ventilo'
- 'wheel']
+['ball_bearing' 'handle' 'motor' 'sofiane' 'tube' 'wheel']
