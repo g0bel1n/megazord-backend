@@ -255,7 +255,7 @@ if __name__ == "__main__":
     from tensorflow.keras import layers
     from tensorflow import nn, stack, keras
     import coremltools as ct
-    from megazord_project.utilitaries.utils import *
+    from megazord.utilitaries.utils import *
 
     DIRECTORY = "/Users/lucas/swiss_knife"
 

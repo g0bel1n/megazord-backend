@@ -1,4 +1,4 @@
-from megazord_project.utilitaries.utils import *
+from megazord.utilitaries.utils import *
 
 
 def test_listdir_nohidden_3(path="../data_test"):
