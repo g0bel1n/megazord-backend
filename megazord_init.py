@@ -7,6 +7,10 @@ TO DO LIST :
 - Get rid of the wildcard import (*) for utils
 """
 
+from utils import *
+from tensorflow import keras
+from tensorflow.keras import layers
+
 
 class SwissKnife:
     """
