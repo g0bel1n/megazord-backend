@@ -1,5 +1,3 @@
-import os
-
 class SwissKnife:
 
     # zords = ["zord1", "zord2", "zord3", ...]
@@ -219,7 +217,6 @@ class SwissKnife:
 if __name__ == "__main__":
     from tensorflow.keras import layers
     from tensorflow import nn, stack, keras
-    import os
     import coremltools as ct
     from utils import *
 

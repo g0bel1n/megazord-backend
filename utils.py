@@ -3,6 +3,10 @@ import numpy as np
 import matplotlib.image as mpimg
 
 def listdir_nohidden(path, jpg_only=False):
+    '''
+    returns an alphabetically sorted list of filenames of the unhidden files of a directory
+    optionnal arg : jpg_only. Set on True for only .jpg or .JPG
+    '''
     if jpg_only:
         return sorted(
             [el for el in os.listdir(path) if not el.startswith(".") and (el.endswith(".jpg") or el.endswith(".JPG"))])
@@ -11,6 +15,9 @@ def listdir_nohidden(path, jpg_only=False):
 
 
 def data_repartition(zord, directory_):
+    '''
+    Returns the count of .jpg or .JPG files from each category folder in the directory_ folder in the alphabetical order.
+    '''
     folders = []
     if zord == "main_zord":
         classes = listdir_nohidden(directory_)
@@ -31,17 +38,43 @@ def data_repartition(zord, directory_):
     return folders
 
 def weighter(folders):
-    m = max(folders)
-    class_weight = {}
-    for i in range(len(folders)):
-        class_weight[i] = float(m) / float(folders[i])
 
+    '''
+    Returns the proportionnality coefficients of the sizes of the folders. The largest one's weight is set on 1.
+    '''
+    maximum = max(folders)
+    class_weight = {}
+    for i, el in enumerate(folders) :
+        class_weight[i] = float(maximum) / float(el)
     return class_weight
 
 def diver(path):
+    '''
+    DIVES
+    '''
     while len(listdir_nohidden(path))==1 :
         path+="/" + listdir_nohidden(path)[0]
     return path
+
+def one4all_labeller(path):
+    '''
+    LABELS
+    '''
+    obj_map=[]
+    folders = listdir_nohidden(path)
+    for folder in folders :
+        path_ = path+"/"+folder
+        if len(listdir_nohidden(path, jpg_only=True))>1:
+            file_nb = len(listdir_nohidden(diver(path_), jpg_only=True))
+            obj_map.append([folder,file_nb])
+        else:
+            for label in listdir_nohidden(path_):
+                path__ = path_+"/"+label
+                file_nb = len(listdir_nohidden(diver(path__), jpg_only=True))
+                obj_map.append([folder, file_nb])
+
+
+    return obj_map
 
 class image_from_directory:
 
@@ -64,7 +97,7 @@ class image_from_directory:
                     for im in listdir_nohidden(path_label, jpg_only=True):
                         try:
                             img = os.path.join(path_label, im)
-                            x[im_compt] = mpimg.imread(img)
+                            x[im_compt] = img
                             y[im_compt] = int_label[classe]
                             im_compt += 1
                         except Exception as e :
@@ -74,9 +107,9 @@ class image_from_directory:
         elif zord_kind == "one4all" or zord_kind=="megazord_lsa":
 
             n = sum(data_repartition("main_zord", path))
-            x, y = np.empty((n, 256, 256, 3)), []
+            x, y = np.empty((n, 256, 256, 3)), np.empty((n, 1), dtype="int32")
             int_label = int_reader(label ="label")
-            for classe in self.classes_names :
+            for classe in listdir_nohidden(path) :
                 path_classe = os.path.join(path,classe)
                 for label in listdir_nohidden(path_classe):
                     path_label = os.path.join(path_classe,label)
@@ -84,8 +117,8 @@ class image_from_directory:
                     for im in listdir_nohidden(path_label, jpg_only=True):
                         try :
                             img=mpimg.imread(os.path.join(path_label,im))
-                            x[im_compt] =img
-                            y.append(int_label[label])
+                            x[im_compt] = img
+                            y[im_compt] = int_label[label]
                             im_compt+=1
                         except Exception as e :
                             print(e.__class__)
@@ -93,7 +126,7 @@ class image_from_directory:
 
         else :
             n = sum(data_repartition(zord_kind, path))
-            x,y = np.empty((n,256,256,3)), []
+            x, y = np.empty((n, 256, 256, 3)), np.empty((n, 1), dtype="int32")
             self.classes_names = listdir_nohidden(path)
             path_classe = os.path.join(path, zord_kind)
             for label in listdir_nohidden(path_classe):
@@ -104,7 +137,7 @@ class image_from_directory:
                     try:
                         img = mpimg.imread(os.path.join(path_label, im))
                         x[im_compt] = img
-                        y.append(int_label[label])
+                        y[im_compt] = int_label[label]
                         im_compt += 1
                     except Exception as e:
                         print(e.__class__)
@@ -113,9 +146,10 @@ class image_from_directory:
         assert im_compt+err_compt == n, "Some files have been missed"
         print("\n{} files have been imported".format(im_compt))
         print("{} errors occured".format(err_compt))
-        assert len(x)==len(y)
-        self.x = x
-        self.y = y
+        print(len(x))
+        print(len(y))
+        self.x = x[:im_compt]
+        self.y = y[:im_compt]
         self.label_map = int_to_label
 
 def zord_from_pb_file(path):
@@ -127,7 +161,7 @@ def zord_from_pb_file(path):
 
 def labeller(path):
     f = open("labels.txt", "a")
-    path += "/data/megazord_init"
+    path += "/data"
     err_compt = 0
     n = sum(data_repartition("main_zord", path))
     classes_names = listdir_nohidden(path)
@@ -200,9 +234,9 @@ def int_reader(label):
 
 if __name__ == "__main__":
 
-    os.remove("labels.txt")
-    os.remove("int_label.txt")
-    os.remove("int_classe.txt")
+    #os.remove("labels.txt")
+    #os.remove("int_label.txt")
+    #os.remove("int_classe.txt")
 
     labeller("/Users/lucas/swiss_knife")
     int_labeller("classe")

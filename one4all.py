@@ -1,52 +1,48 @@
-'''
-Creates a CNN trained on the on the global dataset. Is the model already exists, does nothing :)
-/!\ WORK IN PROGRESS /!\
-'''
-import os
+# Creates a CNN trained on the on the global dataset. Is the model already exists, does nothing :)
+# WORK IN PROGRESS
+
 import numpy as np
-
-from tensorflow import nn, keras
+from tensorflow import nn, keras, data
 from tensorflow.keras import layers
+from utils import one4all_labeller, weighter, image_from_directory
 
 
-
-class one4all:
+class One4All:
 
     def __init__(self, path):
 
         self.data_augmentation = keras.Sequential([
+            layers.InputLayer((256, 256, 3)),
             layers.experimental.preprocessing.RandomFlip("horizontal"),
             layers.experimental.preprocessing.RandomRotation(0.1),
             layers.experimental.preprocessing.RandomContrast((0, 1))])
-        try :
-            self.model = keras.models.load_model(path+"/zords/"+"one4all.pb")
+        try:
+            self.model = keras.models.load_model(path + "/zords/" + "one4all.pb")
             print("successful importation")
 
         except OSError:
-            path +="/data/one4all"
+
             print("one4all need to be trained...")
-            temp = one4all_labeller(dir)
+            temp = one4all_labeller(path + "/data")
+
             tab = np.array(temp)
-            self.labels = tab[:,0]
-            print(self.labels)
+            self.labels = tab[:, 0]
 
             folders = tab[:, 1].astype("int32")
             class_weight = weighter(folders)
-            train_ds = keras.preprocessing.image_dataset_from_directory(
-                path,
-                labels="inferred",
-                label_mode="int", shuffle=True, batch_size=32)
-
-            print(train_ds.class_names)
-            print("As data is imbalanced, the following weights will be applied ", 
+            import_ds = image_from_directory(path + "/data", "one4all")
+            print("letsgo")
+            print(import_ds.x.shape)
+            train_ds = data.Dataset.from_tensor_slices((import_ds.x, import_ds.y)).batch(32)
+            print("As data is imbalanced, the following weights will be applied ",
                   list(class_weight.values()))
 
             print("Augmenting the train_ds")
             augmented_train_ds = train_ds.map(lambda x, y: (self.data_augmentation(x), y))
-            augmented_train_ds = augmented_train_ds.prefetch(buffer_size=32)  # facilitates training
-            augmented_train_ds.shuffle(1000)
+            augmented_train_ds = augmented_train_ds.prefetch(buffer_size=32).shuffle(30)  # facilitates training
             print("Augmentation is done. Importation of InceptionV3 beginning...")
-
+            print(self.labels)
+            print(np.unique(import_ds.y))
             base_model = keras.applications.InceptionV3(
                 include_top=False,
                 weights="imagenet",
@@ -70,11 +66,11 @@ class one4all:
             outputs = keras.layers.Dense(len(folders), activation=nn.softmax)(x)
 
             self.model = keras.Model(inputs, outputs)
-
+            print("compiling")
             self.model.compile(optimizer='adam',
-                                         loss='sparse_categorical_crossentropy',
-                                         metrics=['accuracy'])
-            epochs = 1
+                               loss='sparse_categorical_crossentropy',
+                               metrics=['accuracy'])
+            epochs = 4
 
             self.model.fit(augmented_train_ds, epochs=epochs, class_weight=class_weight)
 
@@ -83,76 +79,7 @@ class one4all:
             print("model saved")
 
 
-def listdir_nohidden(path, jpg_only=False):
-    ''' 
-    returns an alphabetically sorted list of filenames of the unhidden files of a directory
-    optionnal arg : jpg_only. Set on True for only .jpg or .JPG
-    '''
-    if jpg_only:
-        return sorted(
-            [el for el in os.listdir(path) 
-             if not el.startswith(".") and (el.endswith(".jpg") or el.endswith(".JPG"))])
-    else:
-        return sorted([el for el in os.listdir(path) if not el.startswith(".")])
-
-def data_repartition(zord, directory_):
-    '''
-    Returns the count of .jpg or .JPG files from each category folder in the directory_ folder in the alphabetical order.
-    '''
-    folders = []
-    if zord == "main_zord":
-        classes = listdir_nohidden(directory_)
-        for classe in classes:
-            dir_ = directory_ + "/" + classe
-            labels = listdir_nohidden(dir_)
-            tot = 0
-            for label in labels:
-                tot += len(listdir_nohidden(diver(dir_ + "/" + label), jpg_only=True))
-            folders.append(tot)
-
-    else:
-        for label in listdir_nohidden(directory_):
-            file_nb = len(listdir_nohidden(diver(directory_ + "/" + label), jpg_only=True))
-            folders.append(file_nb)
-
-    return folders
-
-def weighter(folders):
-    '''
-    Returns the proportionnality coefficients of the sizes of the folders. The largest one's weight is set on 1.
-    '''
-    maximum = max(folders)
-    class_weight = {}
-    for i, el in enumerate(folders) :
-        class_weight[i] = float(maximum) / float(el)
-
-    return class_weight
-
-def diver(path):
-    '''
-    DIVES
-    '''
-    while len(listdir_nohidden(path))==1 :
-        print(path)
-        path+="/" + listdir_nohidden(path)[0]
-    return path
-
-def one4all_labeller(path):
-    '''
-    LABELS
-    '''
-    obj_map=[]
-    folders = listdir_nohidden(path)
-    print(folders)
-    for folder in folders :
-        path_ = path+"/"+folder
-        file_nb = len(listdir_nohidden(diver(path_), jpg_only=True))
-        obj_map.append([folder,file_nb])
-    return obj_map
-
-
 if __name__ == "__main__":
     directory = "/Users/lucas/swiss_knife"
-    one4all_init = one4all(directory)
-    model =  one4all_init.model
-    
+    one4all_init = One4All(directory)
+    model = one4all_init.model
