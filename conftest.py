@@ -1,19 +1,19 @@
-from megazord.utilitaries.utils import *
+from utilitaries.utils import *
 
 
-def test_listdir_nohidden_3(path="../data_test"):
+def test_listdir_nohidden_3(path="data_test"):
     assert listdir_nohidden(path, jpg_only=False) == ['ball_bearing', 'handle', 'wheel']
 
 
-def test_listdir_nohidden_0(path="../data_test"):
+def test_listdir_nohidden_0(path="data_test"):
     assert listdir_nohidden(path, jpg_only=True) == []
 
 
-def test_data_repartition_zord(path="../data_test"):
+def test_data_repartition_zord(path="data_test"):
     assert data_repartition("wheel", path) == [2, 3, 2]
 
 
-def test_data_repartition_main_zord(path="../data_test"):
+def test_data_repartition_main_zord(path="data_test"):
     assert data_repartition("main_zord", path) == [6, 6, 7]
 
 
@@ -23,4 +23,5 @@ def test_weighter():
 
 
 def test_diver():
-    assert diver("../data_test/ball_bearing") == "data_test/ball_bearing/ball_bearing/ball_bearing"
+    assert diver("data_test/ball_bearing") == "data_test/ball_bearing/ball_bearing/ball_bearing"
+
