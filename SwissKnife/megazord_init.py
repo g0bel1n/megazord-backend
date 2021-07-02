@@ -1,24 +1,15 @@
-<<<<<<< HEAD
-=======
-'''
-The SwissKnife is the center class of our project. It centralizes many of the functions we need.
+# The SwissKnife is the center class of our project. It centralizes many of the functions we need.
 
-TO DO LIST :
-- Change train_zords to get rid of the dict thing
-- Define the attribute .label in the __init__ function
-- Get rid of the wildcard import (*) for utils
-'''
+# TO DO LIST :
+# Change train_zords to get rid of the dict thing
+# Define the attribute .label in the __init__ function
+# Get rid of the wildcard import (*) for utils
 
-import coremltools as ct
-from tensorflow.keras import layers
-from tensorflow import nn, stack, keras
-from utils import *
 
->>>>>>> 62aca6519978f4d8a91d92b59bb9f9077fab7ffe
 class SwissKnife:
-    '''
+    """
     Innovative and self explanatory class.
-    '''
+    """
 
     # zords = ["zord1", "zord2", "zord3", ...]
     def __init__(self, directory):
@@ -174,8 +165,8 @@ class SwissKnife:
         for layer in model.layers[2].layers[1:fine_tune_at]:
             layer.trainable = False
 
-        model.optimizer.learning_rate = learning_rate  #a smaller learning rate is required to fine
-                                            #tune the unfrozen layers
+        model.optimizer.learning_rate = learning_rate  # a smaller learning rate is required to fine
+        # tune the unfrozen layers
 
         model.fit(augmented_train_ds, epochs=epochs, class_weight=class_weight)
 
@@ -222,9 +213,9 @@ class SwissKnife:
             "###########  MEGAZORD DEPLOYED  #############\n\t\t\t\t\t\t################"
             "#############################\n ")
 
-        return keras.Model(inputs_mz,output_mz)  #The Megazord is deliberatly not an attribute
-                                                 #of the SwissKnife object to reduce its constraint 
-                                                 #on the computer's RAM
+        return keras.Model(inputs_mz, output_mz)  # The Megazord is deliberatly not an attribute
+        # of the SwissKnife object to reduce its constraint
+        # on the computer's RAM
 
     def save(self, megazord):
         '''
@@ -246,7 +237,7 @@ class SwissKnife:
 
         classifier_config = ct.ClassifierConfig(self.labels)
 
-        megazord_cml = ct.convert(megazord, inputs=[image_input], 
+        megazord_cml = ct.convert(megazord, inputs=[image_input],
                                   classifier_config=classifier_config)
 
         print("Saving the converted megazord_lsa...")
@@ -260,26 +251,21 @@ class SwissKnife:
     # tf.keras.utils.plot_model(self.megazord_lsa, show_shapes=True)
 
 
-
 if __name__ == "__main__":
-<<<<<<< HEAD
     from tensorflow.keras import layers
     from tensorflow import nn, stack, keras
     import coremltools as ct
     from utils import *
-=======
->>>>>>> 62aca6519978f4d8a91d92b59bb9f9077fab7ffe
 
     DIRECTORY = "/Users/lucas/swiss_knife"
 
     swiss_knife = SwissKnife(DIRECTORY)
     swiss_knife.train_zords(epochs=2)
 
-    #swiss_knife.fine_tune(zord = "handle", epochs=3)
+    # swiss_knife.fine_tune(zord = "handle", epochs=3)
 
     megazord = swiss_knife.assemble_megazord()
 
     swiss_knife.save(megazord)
 
     swiss_knife.megazord_to_coreml(megazord)
-    

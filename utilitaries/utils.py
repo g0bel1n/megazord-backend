@@ -160,7 +160,7 @@ def zord_from_pb_file(path):
     return path[-i + 1:]
 
 def labeller(path):
-    f = open("labels.txt", "a")
+    f = open("../labels.txt", "a")
     path += "/data"
     err_compt = 0
     n = sum(data_repartition("main_zord", path))
@@ -181,7 +181,7 @@ def labeller(path):
 
 def label_reader(label=None):
 
-    f=open("labels.txt")
+    f=open("../labels.txt")
     lines = f.readlines()
     rep={}
     for line in lines :
