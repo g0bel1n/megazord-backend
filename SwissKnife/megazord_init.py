@@ -2,7 +2,6 @@
 
 # TO DO LIST :
 # Change train_zords to get rid of the dict thing
-# Define the attribute .label in the __init__ function
 # Get rid of the wildcard import (*) for utils
 
 
@@ -79,7 +78,7 @@ class SwissKnife:
                 labels="inferred",
                 label_mode="int", shuffle=True, batch_size=32)
 
-            folders = data_repartition(zord, directory_)
+            folders = data_repartition(zord, self.directory+ "/data")
 
             class_weight = weighter(folders)
 
@@ -88,8 +87,7 @@ class SwissKnife:
 
             print("Augmenting the train_ds")
             augmented_train_ds = train_ds.map(lambda x, y: (self.data_augmentation(x), y))
-            augmented_train_ds = augmented_train_ds.prefetch(buffer_size=32)  # facilitates training
-            augmented_train_ds.shuffle(1000)
+            augmented_train_ds = augmented_train_ds.prefetch(buffer_size=32).shuffle(10)  # facilitates training
             print("Augmentation is done. Importation of InceptionV3 beginning...")
 
             base_model = keras.applications.InceptionV3(
@@ -129,6 +127,7 @@ class SwissKnife:
             self.zords[zord] = [training_zords[zord], train_ds.class_names[::-1]]
             print("{} zord has been fitted and added to pre_megazord dictionnary. \n ".format(zord))
             print("Saving the zord ...")
+            training_zords[zord].save(self.directory + "/zords/" + zord + ".pb")
 
         print(
             "Pre Megazord dictionnary is now complete. \n You can now fine tune (.fine_tune()) or"
@@ -156,8 +155,7 @@ class SwissKnife:
 
         print("Augmenting the train_ds")
         augmented_train_ds = train_ds.map(lambda x, y: (self.data_augmentation(x), y))
-        augmented_train_ds = augmented_train_ds.prefetch(buffer_size=32)
-        augmented_train_ds.shuffle(1000)
+        augmented_train_ds = augmented_train_ds.prefetch(buffer_size=32).shuffle(10)
         print("Augmentation is done. Now begins fine-tuning")
 
         model = self.zords[zord][0]
@@ -236,7 +234,7 @@ class SwissKnife:
 
         classifier_config = ct.ClassifierConfig(self.labels)
 
-        megazord_cml = ct.convert(model, inputs=[image_input],
+        megazord_cml = ct.convert(model , inputs=[image_input],
                                   classifier_config=classifier_config)
 
         print("Saving the converted megazord_lsa...")
@@ -254,7 +252,7 @@ if __name__ == "__main__":
     from tensorflow.keras import layers
     from tensorflow import nn, stack, keras
     import coremltools as ct
-    from megazord.utilitaries.utils import *
+    from megazord.utilitaries.utils import listdir_nohidden,data_repartition, weighter
 
     DIRECTORY = "/Users/lucas/swiss_knife"
 

@@ -9,9 +9,9 @@ def listdir_nohidden(path, jpg_only=False):
     '''
     if jpg_only:
         return sorted(
-            [el for el in os.listdir(path) if not el.startswith(".") and (el.endswith(".jpg") or el.endswith(".JPG"))])
+            [el for el in os.listdir(path) if not (el.startswith(".") or el.endswith(".MOV") or el.endswith(".mov")) and (el.endswith(".jpg") or el.endswith(".JPG"))])
     else:
-        return sorted([el for el in os.listdir(path) if not el.startswith(".")])
+        return sorted([el for el in os.listdir(path) if not (el.startswith(".") or el.endswith(".MOV") or el.endswith(".mov"))])
 
 
 def data_repartition(zord, directory_):
@@ -32,9 +32,8 @@ def data_repartition(zord, directory_):
     else:
         directory_ = os.path.join(directory_,zord)
         for label in listdir_nohidden(directory_):
-            file_nb = len(listdir_nohidden(diver(directory_ + "/" + label), jpg_only=True))
+            file_nb = len(listdir_nohidden(diver(directory_ + "/" + label, jpg_only=True), jpg_only=True))
             folders.append(file_nb)
-
     return folders
 
 def weighter(folders):
@@ -48,7 +47,7 @@ def weighter(folders):
         class_weight[i] = float(maximum) / float(el)
     return class_weight
 
-def diver(path):
+def diver(path,jpg_only=False):
     '''
     DIVES
     '''

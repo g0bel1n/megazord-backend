@@ -47,5 +47,5 @@ class CrashTest:
 
 
 if __name__ == "__main__":
-    test = CrashTest("/Users/lucas/swiss_knife/zords/main_zord.pb")
+    test = CrashTest("/Users/lucas/swiss_knife/zords/megazord.pb")
     test.confmat()
