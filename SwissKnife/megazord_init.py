@@ -219,7 +219,7 @@ class SwissKnife:
         Saves megazord
         """
         print("Saving Megazord")
-        model.save(self.directory + "/zords/" + "megazord_lsa.pb")
+        model.save(self.directory + "/zords/" + "megazordw< .pb")
         print("Megazord is saved")
 
     def megazord_to_coreml(self, model):
@@ -237,9 +237,9 @@ class SwissKnife:
         megazord_cml = ct.convert(model , inputs=[image_input],
                                   classifier_config=classifier_config)
 
-        print("Saving the converted megazord_lsa...")
+        print("Saving the converted megazord...")
 
-        megazord_cml.save(self.directory + "/zords/" + "megazord_lsa.mlmodel")
+        megazord_cml.save(self.directory + "/zords/" + "megazord.mlmodel")
 
         print("Megazord is ready to serve ;)")
 
