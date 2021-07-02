@@ -24,4 +24,3 @@ def test_weighter():
 
 def test_diver():
     assert diver("data_test/ball_bearing") == "data_test/ball_bearing/ball_bearing/ball_bearing"
-

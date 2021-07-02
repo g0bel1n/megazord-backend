@@ -18,6 +18,7 @@ class SwissKnife:
         self.zords = {}
         self.directory = directory
         self.train_queue = []
+        self.labels = []
         for zord in zords:
 
             print("Trying to import " + zord + " model ...")
@@ -58,9 +59,9 @@ class SwissKnife:
             layers.experimental.preprocessing.RandomContrast((0, 1))])
 
     def train_zords(self, epochs=2):
-        '''
+        """
         Trains the differents zords (CNN) in the self.train_queue.
-        '''
+        """
 
         training_zords = {}
 
@@ -116,7 +117,7 @@ class SwissKnife:
             training_zords[zord] = keras.Model(inputs, outputs)
 
             training_zords[zord]._name = zord  # Changing each model name is capital as
-            #it might cause errors when calling same labelled models
+            # it might cause errors when calling same labelled models
 
             training_zords[zord].compile(optimizer='adam',
                                          loss='sparse_categorical_crossentropy',
@@ -134,9 +135,9 @@ class SwissKnife:
             "call Megazord formation (.assemble_Megazord())")
 
     def fine_tune(self, zord, fine_tune_at=280, epochs=4, learning_rate=0.0001):
-        '''
+        """
         Fine tunes the zord by his name from the fine_tune_at layer.
-        '''
+        """
 
         print("_____________ Fine tuning {} __________".format(zord))
         print(" Importing train_ds...")
@@ -146,7 +147,7 @@ class SwissKnife:
             labels="inferred",
             label_mode="int", shuffle=True, batch_size=32)
 
-        folders = data_repartition(zord,directory_)
+        folders = data_repartition(zord, directory_)
 
         class_weight = weighter(folders)
 
@@ -178,16 +179,14 @@ class SwissKnife:
         model.save(self.directory + "/zords/" + zord + ".pb")
 
     def assemble_megazord(self):
-        '''
+        """
         Assembles Megazord.
-        '''
+        """
 
         input_shape = (256, 256, 3)
         inputs_mz = keras.Input(shape=input_shape)
 
         class_pred = self.zords["main_zord"][0](inputs_mz)
-        labels = []
-        self.labels = labels
         nb_class = len(self.zords["main_zord"][1])
         compt = 0
         pre_stack = []
@@ -195,7 +194,7 @@ class SwissKnife:
             if key != "main_zord":
                 zorg_plus = self.zords[key]
                 for label in zorg_plus[1]:
-                    labels.append(label)
+                    self.labels.append(label)
                 if len(zorg_plus[1]) == 1:
                     pre_stack.append(class_pred[0, compt])
                 else:
@@ -217,18 +216,18 @@ class SwissKnife:
         # of the SwissKnife object to reduce its constraint
         # on the computer's RAM
 
-    def save(self, megazord):
-        '''
+    def save(self, model):
+        """
         Saves megazord
-        '''
+        """
         print("Saving Megazord")
-        megazord.save(self.directory + "/zords/" + "megazord_lsa.pb")
+        model.save(self.directory + "/zords/" + "megazord_lsa.pb")
         print("Megazord is saved")
 
-    def megazord_to_coreml(self, megazord):
-        '''
+    def megazord_to_coreml(self, model):
+        """
         Converts Megazord to CoreML.
-        '''
+        """
 
         print("CoreML conversion is beginning...")
 
@@ -237,7 +236,7 @@ class SwissKnife:
 
         classifier_config = ct.ClassifierConfig(self.labels)
 
-        megazord_cml = ct.convert(megazord, inputs=[image_input],
+        megazord_cml = ct.convert(model, inputs=[image_input],
                                   classifier_config=classifier_config)
 
         print("Saving the converted megazord_lsa...")

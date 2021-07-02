@@ -4,7 +4,7 @@
 import numpy as np
 from tensorflow import nn, keras, data
 from tensorflow.keras import layers
-from utils import one4all_labeller, weighter, image_from_directory
+from megazord.utilitaries.utils import one4all_labeller, weighter, image_from_directory
 
 
 class One4All:
