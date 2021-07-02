@@ -1,22 +1,29 @@
-from tensorflow import nn, keras
-from tensorflow.keras import layers
+'''
+Creates a CNN trained on the on the global dataset. Is the model already exists, does nothing :)
+/!\ WORK IN PROGRESS /!\
+'''
 import os
 import numpy as np
 
+from tensorflow import nn, keras
+from tensorflow.keras import layers
+
+
+
 class one4all:
 
-    def __init__(self, dir):
+    def __init__(self, path):
 
         self.data_augmentation = keras.Sequential([
             layers.experimental.preprocessing.RandomFlip("horizontal"),
             layers.experimental.preprocessing.RandomRotation(0.1),
             layers.experimental.preprocessing.RandomContrast((0, 1))])
         try :
-            self.model = keras.models.load_model(dir+"/zords/"+"one4all.pb")
+            self.model = keras.models.load_model(path+"/zords/"+"one4all.pb")
             print("successful importation")
 
-        except :
-            dir+="/data/one4all"
+        except OSError:
+            path +="/data/one4all"
             print("one4all need to be trained...")
             temp = one4all_labeller(dir)
             tab = np.array(temp)
@@ -26,12 +33,13 @@ class one4all:
             folders = tab[:, 1].astype("int32")
             class_weight = weighter(folders)
             train_ds = keras.preprocessing.image_dataset_from_directory(
-                dir,
+                path,
                 labels="inferred",
                 label_mode="int", shuffle=True, batch_size=32)
 
             print(train_ds.class_names)
-            print("As data is imbalanced, the following weights will be applied ", list(class_weight.values()))
+            print("As data is imbalanced, the following weights will be applied ", 
+                  list(class_weight.values()))
 
             print("Augmenting the train_ds")
             augmented_train_ds = train_ds.map(lambda x, y: (self.data_augmentation(x), y))
@@ -70,19 +78,27 @@ class one4all:
 
             self.model.fit(augmented_train_ds, epochs=epochs, class_weight=class_weight)
 
-            self.model.save(dir + "/zords/" + "one4all" + ".pb")
+            self.model.save(path + "/zords/" + "one4all" + ".pb")
 
             print("model saved")
 
 
 def listdir_nohidden(path, jpg_only=False):
+    ''' 
+    returns an alphabetically sorted list of filenames of the unhidden files of a directory
+    optionnal arg : jpg_only. Set on True for only .jpg or .JPG
+    '''
     if jpg_only:
         return sorted(
-            [el for el in os.listdir(path) if not el.startswith(".") and (el.endswith(".jpg") or el.endswith(".JPG"))])
+            [el for el in os.listdir(path) 
+             if not el.startswith(".") and (el.endswith(".jpg") or el.endswith(".JPG"))])
     else:
         return sorted([el for el in os.listdir(path) if not el.startswith(".")])
 
 def data_repartition(zord, directory_):
+    '''
+    Returns the count of .jpg or .JPG files from each category folder in the directory_ folder in the alphabetical order.
+    '''
     folders = []
     if zord == "main_zord":
         classes = listdir_nohidden(directory_)
@@ -102,20 +118,29 @@ def data_repartition(zord, directory_):
     return folders
 
 def weighter(folders):
-    m = max(folders)
+    '''
+    Returns the proportionnality coefficients of the sizes of the folders. The largest one's weight is set on 1.
+    '''
+    maximum = max(folders)
     class_weight = {}
-    for i in range(len(folders)):
-        class_weight[i] = float(m) / float(folders[i])
+    for i, el in enumerate(folders) :
+        class_weight[i] = float(maximum) / float(el)
 
     return class_weight
 
 def diver(path):
+    '''
+    DIVES
+    '''
     while len(listdir_nohidden(path))==1 :
         print(path)
         path+="/" + listdir_nohidden(path)[0]
     return path
 
 def one4all_labeller(path):
+    '''
+    LABELS
+    '''
     obj_map=[]
     folders = listdir_nohidden(path)
     print(folders)
@@ -127,11 +152,7 @@ def one4all_labeller(path):
 
 
 if __name__ == "__main__":
-
     directory = "/Users/lucas/swiss_knife"
-
     one4all_init = one4all(directory)
-
     model =  one4all_init.model
-
-
+    
