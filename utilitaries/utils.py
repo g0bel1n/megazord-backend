@@ -220,13 +220,13 @@ def label_reader(label=None):
 def int_labeller(label):
     dic = label_reader(label)
     integer_labels = np.unique(list(dic.values()))
-    f = open("files/int_{}.txt".format(label), "a")
+    f = open("../files/int_{}.txt".format(label), "a")
     f.write(str(integer_labels))
     f.close()
 
 
 def int_reader(label):
-    f = open("files/int_{}.txt".format(label))
+    f = open("../files/int_{}.txt".format(label))
     txt = f.read()
     dic = {}
     nb_found = 0
@@ -247,9 +247,9 @@ def int_reader(label):
 
 
 if __name__ == "__main__":
-    # os.remove("labels.txt")
-    # os.remove("int_label.txt")
-    # os.remove("int_classe.txt")
+    os.remove("../files/labels.txt")
+    os.remove("../files/int_label.txt")
+    os.remove("../files/int_classe.txt")
 
     labeller("/Users/lucas/swiss_knife")
     int_labeller("classe")

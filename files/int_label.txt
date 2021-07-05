@@ -1,3 +1,6 @@
-['ball_bearing' 'black_wheel' 'handle_lock' 'handle_lockless'
- 'resistance_enroulee' 'resistance_grille' 'sofiane' 'sonde'
- 'triple_resistance_coude' 'vn5' 'vn7' 'white_wheel_ro' 'white_wheel_sq']
+['4_buttons' '6_buttons' 'ampoule' 'ball_bearing' 'big_evco' 'big_ventilo'
+ 'black_wheel' 'handle_lock' 'handle_lockless' 'moteur_vert' 'motor_m'
+ 'motor_s' 'piece_chaise' 'piece_chelou' 'resistance_enroulee'
+ 'resistance_grille' 'scaphandre' 'small_evco' 'sofiane' 'sonde'
+ 'triple_resistance_coude' 'ventilo_carre' 'ventilo_long' 'ventilo_octo'
+ 'white_wheel_ro' 'white_wheel_sq']

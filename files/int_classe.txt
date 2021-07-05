@@ -1,1 +1,3 @@
-['ball_bearing' 'handle' 'motor' 'sofiane' 'tube' 'wheel']
+['ampoule' 'ball_bearing' 'big_ventilo' 'handle' 'moteur_vert' 'motor'
+ 'piece_chaise' 'piece_chelou' 'regulator' 'scaphandre' 'sofiane' 'tube'
+ 'ventilo' 'ventilo_long' 'wheel']

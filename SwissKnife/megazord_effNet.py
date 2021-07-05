@@ -250,15 +250,16 @@ if __name__ == "__main__":
     DIRECTORY = "/Users/lucas/swiss_knife"
 
     swiss_knife = SwissKnife(DIRECTORY)
-    swiss_knife.train_zords(epochs=2)
+    #swiss_knife.train_zords(epochs=2)
 
     # swiss_knife.fine_tune(zord="handle", epochs=3)
 
-    megazord = swiss_knife.assemble_megazord()
+    #megazord = swiss_knife.assemble_megazord()
 
-    swiss_knife.save(megazord)
+    #swiss_knife.save(megazord)
+    print(swiss_knife.labels)
 
-    try:
-        swiss_knife.megazord_to_coreml(megazord)
-    except Exception as e:
-        print(e.__class__)
+    #try:
+        #swiss_knife.megazord_to_coreml(megazord)
+    #except Exception as e:
+        #print(e.__class__)
