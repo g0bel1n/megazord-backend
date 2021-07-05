@@ -1,4 +1,4 @@
-from utilitaries.utils import *
+from .utilitaries.utils import *
 
 
 def test_listdir_nohidden_3(path="data_test"):

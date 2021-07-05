@@ -4,7 +4,7 @@ import random
 from tqdm import tqdm
 from tensorflow import keras
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
-from utils import zord_from_pb_file, image_from_directory
+from utils import zord_from_pb_file, ImageFromDirectory
 
 sns.set_style("dark")
 sns.set(rc={'figure.figsize': (10, 10)})
@@ -25,7 +25,7 @@ class CrashTest:
             print("Importation failed")
 
         print("loading test dataset...")
-        data = image_from_directory(path=test_dir, zord_kind=self.zord)
+        data = ImageFromDirectory(path=test_dir, zord_kind=self.zord)
         self.x_test = data.x
         self.y_test = data.y
         self.labels = data.label_map

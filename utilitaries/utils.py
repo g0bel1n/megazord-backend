@@ -2,22 +2,27 @@ import os
 import numpy as np
 import matplotlib.image as mpimg
 
+
 def listdir_nohidden(path, jpg_only=False):
-    '''
+    """
     returns an alphabetically sorted list of filenames of the unhidden files of a directory
     optionnal arg : jpg_only. Set on True for only .jpg or .JPG
-    '''
+    """
     if jpg_only:
         return sorted(
-            [el for el in os.listdir(path) if not (el.startswith(".") or el.endswith(".MOV") or el.endswith(".mov")) and (el.endswith(".jpg") or el.endswith(".JPG"))])
+            [el for el in os.listdir(path) if
+             not (el.startswith(".") or el.endswith(".MOV") or el.endswith(".mov")) and (
+                     el.endswith(".jpg") or el.endswith(".JPG"))])
     else:
-        return sorted([el for el in os.listdir(path) if not (el.startswith(".") or el.endswith(".MOV") or el.endswith(".mov"))])
+        return sorted(
+            [el for el in os.listdir(path) if not (el.startswith(".") or el.endswith(".MOV") or el.endswith(".mov"))])
 
 
 def data_repartition(zord, directory_):
-    '''
-    Returns the count of .jpg or .JPG files from each category folder in the directory_ folder in the alphabetical order.
-    '''
+    """
+    Returns the count of .jpg or .JPG files from each category folder in the directory_ folder in the alphabetical
+    order.
+    """
     folders = []
     if zord == "main_zord":
         classes = listdir_nohidden(directory_)
@@ -30,66 +35,67 @@ def data_repartition(zord, directory_):
             folders.append(tot)
 
     else:
-        directory_ = os.path.join(directory_,zord)
+        directory_ = os.path.join(directory_, zord)
         for label in listdir_nohidden(directory_):
-            file_nb = len(listdir_nohidden(diver(directory_ + "/" + label, jpg_only=True), jpg_only=True))
+            file_nb = len(listdir_nohidden(diver(directory_ + "/" + label), jpg_only=True))
             folders.append(file_nb)
     return folders
 
-def weighter(folders):
 
-    '''
+def weighter(folders):
+    """
     Returns the proportionnality coefficients of the sizes of the folders. The largest one's weight is set on 1.
-    '''
+    """
     maximum = max(folders)
     class_weight = {}
-    for i, el in enumerate(folders) :
+    for i, el in enumerate(folders):
         class_weight[i] = float(maximum) / float(el)
     return class_weight
 
-def diver(path,jpg_only=False):
-    '''
+
+def diver(path):
+    """
     DIVES
-    '''
-    while len(listdir_nohidden(path))==1 :
-        path+="/" + listdir_nohidden(path)[0]
+    """
+    while len(listdir_nohidden(path)) == 1:
+        path += "/" + listdir_nohidden(path)[0]
     return path
 
+
 def one4all_labeller(path):
-    '''
+    """
     LABELS
-    '''
-    obj_map=[]
+    """
+    obj_map = []
     folders = listdir_nohidden(path)
-    for folder in folders :
-        path_ = path+"/"+folder
-        if len(listdir_nohidden(path, jpg_only=True))>1:
+    for folder in folders:
+        path_ = path + "/" + folder
+        if len(listdir_nohidden(path, jpg_only=True)) > 1:
             file_nb = len(listdir_nohidden(diver(path_), jpg_only=True))
-            obj_map.append([folder,file_nb])
+            obj_map.append([folder, file_nb])
         else:
             for label in listdir_nohidden(path_):
-                path__ = path_+"/"+label
+                path__ = path_ + "/" + label
                 file_nb = len(listdir_nohidden(diver(path__), jpg_only=True))
                 obj_map.append([folder, file_nb])
 
-
     return obj_map
 
-class image_from_directory:
+
+class ImageFromDirectory:
 
     def __init__(self, path, zord_kind):
 
-        int_to_label={}
-        int_label =0
-        im_compt=0
+        int_to_label = {}
+        im_compt = 0
         err_compt = 0
 
-        if zord_kind == "main_zord" :
+        if zord_kind == "main_zord":
             n = sum(data_repartition("main_zord", path))
             x, y = np.empty((n, 256, 256, 3)), np.empty((n, 1), dtype="int32")
             int_label = int_reader(label="classe")
-            for classe in self.classes_names :
-                path_classe = os.path.join(path,classe)
+            for classe in self.classes_names:
+                path_classe = os.path.join(path, classe)
                 for label in listdir_nohidden(path_classe):
                     path_label = os.path.join(path_classe, label)
                     path_label = (diver(path_label))
@@ -99,34 +105,35 @@ class image_from_directory:
                             x[im_compt] = img
                             y[im_compt] = int_label[classe]
                             im_compt += 1
-                        except Exception as e :
+                        except Exception as e:
                             print(e.__class__)
                             err_compt += 1
 
-        elif zord_kind == "one4all" or zord_kind=="megazord_lsa":
+        elif zord_kind == "one4all" or zord_kind == "megazord_lsa":
 
             n = sum(data_repartition("main_zord", path))
             x, y = np.empty((n, 256, 256, 3)), np.empty((n, 1), dtype="int32")
-            int_label = int_reader(label ="label")
-            for classe in listdir_nohidden(path) :
-                path_classe = os.path.join(path,classe)
+            int_label = int_reader(label="label")
+            for classe in listdir_nohidden(path):
+                path_classe = os.path.join(path, classe)
                 for label in listdir_nohidden(path_classe):
-                    path_label = os.path.join(path_classe,label)
-                    path_label=(diver(path_label))
+                    path_label = os.path.join(path_classe, label)
+                    path_label = (diver(path_label))
                     for im in listdir_nohidden(path_label, jpg_only=True):
-                        try :
-                            img=mpimg.imread(os.path.join(path_label,im))
+                        try:
+                            img = mpimg.imread(os.path.join(path_label, im))
                             x[im_compt] = img
                             y[im_compt] = int_label[label]
-                            im_compt+=1
-                        except Exception as e :
+                            im_compt += 1
+                        except Exception as e:
                             print(e.__class__)
-                            err_compt+=1
+                            err_compt += 1
 
-        else :
+        else:
             n = sum(data_repartition(zord_kind, path))
             x, y = np.empty((n, 256, 256, 3)), np.empty((n, 1), dtype="int32")
             self.classes_names = listdir_nohidden(path)
+            int_label = int_reader(label="label")
             path_classe = os.path.join(path, zord_kind)
             for label in listdir_nohidden(path_classe):
                 path_label = os.path.join(path_classe, label)
@@ -142,7 +149,7 @@ class image_from_directory:
                         print(e.__class__)
                         err_compt += 1
 
-        assert im_compt+err_compt == n, "Some files have been missed"
+        assert im_compt + err_compt == n, "Some files have been missed"
         print("\n{} files have been imported".format(im_compt))
         print("{} errors occured".format(err_compt))
         print(len(x))
@@ -151,6 +158,7 @@ class image_from_directory:
         self.y = y[:im_compt]
         self.label_map = int_to_label
 
+
 def zord_from_pb_file(path):
     path = path[:-3]
     i = 1
@@ -158,11 +166,11 @@ def zord_from_pb_file(path):
         i += 1
     return path[-i + 1:]
 
+
 def labeller(path):
-    f = open("../labels.txt", "a")
+    f = open("../files/labels.txt", "a")
     path += "/data"
     err_compt = 0
-    n = sum(data_repartition("main_zord", path))
     classes_names = listdir_nohidden(path)
     for classe in classes_names:
         path_classe = os.path.join(path, classe)
@@ -171,73 +179,78 @@ def labeller(path):
             path_label = (diver(path_label))
             for im in listdir_nohidden(path_label, jpg_only=True):
                 try:
-                    input = "path " + str(
+                    input_path = "path " + str(
                         os.path.join(path_label, im)) + " " + "classe " + classe + " " + "label " + label + "\n"
-                    f.write(input)
+                    f.write(input_path)
                 except:
                     err_compt += 1
     f.close()
 
-def label_reader(label=None):
 
-    f=open("../labels.txt")
+def label_reader(label=None):
+    f = open("../files/labels.txt")
     lines = f.readlines()
-    rep={}
-    for line in lines :
-        i=0
-        while line[i+1:i+4]!="jpg" :
-            i+=1
+    rep = {}
+    for line in lines:
+        i = 0
+        while line[i + 1:i + 4] != "jpg":
+            i += 1
         path = line[5:i]
-        i+=3
-        if label == "classe" :
-            while line[i + 1:i + 8] != "classe ": i += 1
-            j=0
-            while line[i+8+j+1]!=" ": j+=1
-            value = line[i+8: i+8+j+1]
-        else :
+        i += 3
+        if label == "classe":
+            while line[i + 1:i + 8] != "classe ":
+                i += 1
+            j = 0
+            while line[i + 8 + j + 1] != " ":
+                j += 1
+            value = line[i + 8: i + 8 + j + 1]
+        else:
 
             while line[i + 1:i + 7] != "label ":
                 i += 1
-            j=0
-            while line[i+7+j+1:i+7+j+2]!="\n": j+=1
-            value = line[i+7: i+7+j+1]
+            j = 0
+            while line[i + 7 + j + 1:i + 7 + j + 2] != "\n":
+                j += 1
+            value = line[i + 7: i + 7 + j + 1]
 
         rep[path] = value
     return rep
 
+
 def int_labeller(label):
     dic = label_reader(label)
     integer_labels = np.unique(list(dic.values()))
-    f = open("int_{}.txt".format(label), "a")
+    f = open("files/int_{}.txt".format(label), "a")
     f.write(str(integer_labels))
     f.close()
 
+
 def int_reader(label):
-    f = open("int_{}.txt".format(label))
+    f = open("files/int_{}.txt".format(label))
     txt = f.read()
-    dic={}
-    nb_found=0
-    i=1
-    while i<len(txt)-2:
-       if txt[i]=="'":
-           i+=1
-           j=1
-           while txt[i+j]!="'":
-               j+=1
-           if j>2:
-               dic[txt[i:i+j]] = nb_found
-               nb_found+=1
-           i+=j
-       else : i+=1
+    dic = {}
+    nb_found = 0
+    i = 1
+    while i < len(txt) - 2:
+        if txt[i] == "'":
+            i += 1
+            j = 1
+            while txt[i + j] != "'":
+                j += 1
+            if j > 2:
+                dic[txt[i:i + j]] = nb_found
+                nb_found += 1
+            i += j
+        else:
+            i += 1
     return dic
 
-if __name__ == "__main__":
 
-    #os.remove("labels.txt")
-    #os.remove("int_label.txt")
-    #os.remove("int_classe.txt")
+if __name__ == "__main__":
+    # os.remove("labels.txt")
+    # os.remove("int_label.txt")
+    # os.remove("int_classe.txt")
 
     labeller("/Users/lucas/swiss_knife")
     int_labeller("classe")
     int_labeller("label")
-

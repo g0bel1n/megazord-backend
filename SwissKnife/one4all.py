@@ -4,7 +4,7 @@
 import numpy as np
 from tensorflow import nn, keras, data
 from tensorflow.keras import layers
-from megazord.utilitaries.utils import one4all_labeller, weighter, image_from_directory
+from megazord.utilitaries.utils import one4all_labeller, weighter, ImageFromDirectory
 
 
 class One4All:
@@ -30,7 +30,7 @@ class One4All:
 
             folders = tab[:, 1].astype("int32")
             class_weight = weighter(folders)
-            import_ds = image_from_directory(path + "/data", "one4all")
+            import_ds = ImageFromDirectory(path + "/data", "one4all")
             print("letsgo")
             print(import_ds.x.shape)
             train_ds = data.Dataset.from_tensor_slices((import_ds.x, import_ds.y)).batch(32)
