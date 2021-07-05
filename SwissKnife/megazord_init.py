@@ -1,6 +1,6 @@
 # The SwissKnife is the center class of our project. It centralizes many of the functions we need.
 
-# TO DO LIST :
+# ToDo LIST :
 # Change train_zords to get rid of the dict thing
 # Get rid of the wildcard import (*) for utils
 
@@ -31,7 +31,7 @@ class SwissKnife:
                                                                 + "/zords/"
                                                                 + zord + ".pb"),
                                         labels]
-                    print("\tSuccessul importation")
+                    print("\tSuccessful importation")
             except OSError:
                 self.train_queue.append(zord)
                 print("\t" + zord + " model has not been trained yet. It has been added"
@@ -46,7 +46,7 @@ class SwissKnife:
         except OSError:
             self.train_queue.append("main_zord")
             print("\tmain_zord" + " model has not been trained yet. It has been added"
-                  "to the training queue.")
+                                  "to the training queue.")
         print("\n#############################\n ")
         print("Zord models have been imported, please use .train_zords method to start"
               "the training queue if need "
@@ -59,11 +59,8 @@ class SwissKnife:
 
     def train_zords(self, epochs=2):
         """
-        Trains the differents zords (CNN) in the self.train_queue.
+        Trains the different zords (CNN) in the self.train_queue.
         """
-
-        training_zords = {}
-
         for zord in self.train_queue:
             if zord == "main_zord":
                 directory_ = self.directory + "/data"
@@ -78,7 +75,7 @@ class SwissKnife:
                 labels="inferred",
                 label_mode="int", shuffle=True, batch_size=32)
 
-            folders = data_repartition(zord, self.directory+ "/data")
+            folders = data_repartition(zord, self.directory + "/data")
 
             class_weight = weighter(folders)
 
@@ -112,22 +109,23 @@ class SwissKnife:
 
             outputs = keras.layers.Dense(len(train_ds.class_names), activation=nn.softmax)(x)
 
-            training_zords[zord] = keras.Model(inputs, outputs)
+            model = keras.Model(inputs, outputs)
 
-            training_zords[zord]._name = zord  # Changing each model name is capital as
+            model._name = zord  # Changing each model name is capital as
             # it might cause errors when calling same labelled models
 
-            training_zords[zord].compile(optimizer='adam',
-                                         loss='sparse_categorical_crossentropy',
-                                         metrics=['accuracy'])  # the default learning rate is 1e-3
+            model.compile(optimizer='adam',
+                          loss='sparse_categorical_crossentropy',
+                          metrics=['accuracy'])  # the default learning rate is 1e-3
 
             print("Fit sequence launched...")
-            training_zords[zord].fit(augmented_train_ds, epochs=epochs, class_weight=class_weight)
+            model.fit(augmented_train_ds, epochs=epochs, class_weight=class_weight)
 
-            self.zords[zord] = [training_zords[zord], train_ds.class_names[::-1]]
-            print("{} zord has been fitted and added to pre_megazord dictionnary. \n ".format(zord))
+            self.zords[zord] = [model, train_ds.class_names[::-1]]
+            print("{} zord has been fitted and added to pre_megazord dictionary. \n ".format(zord))
             print("Saving the zord ...")
-            training_zords[zord].save(self.directory + "/zords/" + zord + ".pb")
+            model.save(self.directory + "/zords/" + zord + ".pb")
+            del model
 
         print(
             "Pre Megazord dictionnary is now complete. \n You can now fine tune (.fine_tune()) or"
@@ -175,6 +173,7 @@ class SwissKnife:
 
         print("Saving the zord ...")
         model.save(self.directory + "/zords/" + zord + ".pb")
+        del model
 
     def assemble_megazord(self):
         """
@@ -234,7 +233,7 @@ class SwissKnife:
 
         classifier_config = ct.ClassifierConfig(self.labels)
 
-        megazord_cml = ct.convert(model , inputs=[image_input],
+        megazord_cml = ct.convert(model, inputs=[image_input],
                                   classifier_config=classifier_config)
 
         print("Saving the converted megazord...")
@@ -252,17 +251,20 @@ if __name__ == "__main__":
     from tensorflow.keras import layers
     from tensorflow import nn, stack, keras
     import coremltools as ct
-    from megazord.utilitaries.utils import listdir_nohidden,data_repartition, weighter
+    from megazord.utilitaries.utils import listdir_nohidden, data_repartition, weighter
 
     DIRECTORY = "/Users/lucas/swiss_knife"
 
     swiss_knife = SwissKnife(DIRECTORY)
     swiss_knife.train_zords(epochs=2)
 
-    # swiss_knife.fine_tune(zord = "handle", epochs=3)
+    swiss_knife.fine_tune(zord = "handle", epochs=3)
 
     megazord = swiss_knife.assemble_megazord()
 
     swiss_knife.save(megazord)
 
-    swiss_knife.megazord_to_coreml(megazord)
+    try:
+        swiss_knife.megazord_to_coreml(megazord)
+    except Exception as e:
+        print(e.__class__)
