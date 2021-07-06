@@ -239,7 +239,7 @@ if __name__ == "__main__":
     # swiss_knife.save(megazord)
     print(swiss_knife.labels)
 
-    try:
-        swiss_knife.megazord_to_coreml(megazord)
-    except Exception as e:
-        print(e.__class__)
+    #try:
+        #swiss_knife.megazord_to_coreml(megazord)
+    #except Exception as e:
+        #print(e.__class__)
