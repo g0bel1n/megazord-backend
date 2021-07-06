@@ -11,7 +11,6 @@ class ZordsCombination(Layer):
     def call(self, inputs, *args, **kwargs):
 
         class_output = self.zords["main_zord"][0](inputs)
-
         # Set to 0 the outputs of the classifier that are not the maximum.
         mask = math.equal(class_output, math.reduce_max(class_output))
         mask = cast(mask, float32)

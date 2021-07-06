@@ -181,6 +181,7 @@ class SwissKnife:
 
         input_shape = (256, 256, 3)
         megazord_input = keras.Input(shape=input_shape)
+        print(self.zords)
         megazord_output = fusion_layer.ZordsCombination(self.zords)(megazord_input)
 
         print(
@@ -192,7 +193,7 @@ class SwissKnife:
 
     def save(self, model):
         """
-        Saves megazord
+        Saves megazordriot
         """
         print("Saving Megazord")
         model.save(self.directory + "/zords/" + "megazord_effnetv2.pb")

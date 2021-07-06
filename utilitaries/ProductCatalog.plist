@@ -23,6 +23,20 @@
 		<key>label</key>
 		<string>ampoule</string>
 	</dict>
+	<key>angle</key>
+	<dict>
+		<key>description</key>
+		<string>bla bla bla</string>
+		<key>label</key>
+		<string>angle</string>
+	</dict>
+	<key>baco</key>
+	<dict>
+		<key>description</key>
+		<string>bla bla bla</string>
+		<key>label</key>
+		<string>baco</string>
+	</dict>
 	<key>ball_bearing</key>
 	<dict>
 		<key>description</key>
@@ -50,6 +64,27 @@
 		<string>bla bla bla</string>
 		<key>label</key>
 		<string>black_wheel</string>
+	</dict>
+	<key>charniere_3pieces</key>
+	<dict>
+		<key>description</key>
+		<string>bla bla bla</string>
+		<key>label</key>
+		<string>charniere_3pieces</string>
+	</dict>
+	<key>charniere_metal</key>
+	<dict>
+		<key>description</key>
+		<string>bla bla bla</string>
+		<key>label</key>
+		<string>charniere_metal</string>
+	</dict>
+	<key>cloche_verre</key>
+	<dict>
+		<key>description</key>
+		<string>bla bla bla</string>
+		<key>label</key>
+		<string>cloche_verre</string>
 	</dict>
 	<key>handle_lock</key>
 	<dict>
@@ -86,6 +121,13 @@
 		<key>label</key>
 		<string>motor_s</string>
 	</dict>
+	<key>noire_blanche_relief</key>
+	<dict>
+		<key>description</key>
+		<string>bla bla bla</string>
+		<key>label</key>
+		<string>noire_blanche_relief</string>
+	</dict>
 	<key>piece_chaise</key>
 	<dict>
 		<key>description</key>
@@ -100,6 +142,13 @@
 		<key>label</key>
 		<string>piece_chelou</string>
 	</dict>
+	<key>poignee_noire</key>
+	<dict>
+		<key>description</key>
+		<string>bla bla bla</string>
+		<key>label</key>
+		<string>poignee_noire</string>
+	</dict>
 	<key>resistance_enroulee</key>
 	<dict>
 		<key>description</key>
@@ -113,6 +162,13 @@
 		<string>bla bla bla</string>
 		<key>label</key>
 		<string>resistance_grille</string>
+	</dict>
+	<key>roue_noire_seule</key>
+	<dict>
+		<key>description</key>
+		<string>bla bla bla</string>
+		<key>label</key>
+		<string>roue_noire_seule</string>
 	</dict>
 	<key>scaphandre</key>
 	<dict>
