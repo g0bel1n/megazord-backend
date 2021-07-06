@@ -109,11 +109,11 @@ class ImageFromDirectory:
                             print(e.__class__)
                             err_compt += 1
 
-        elif zord_kind == "one4all" or zord_kind == "megazord_lsa":
+        elif zord_kind == "one4all" or zord_kind == "megazord" or zord_kind == "megazord_effnet":
 
             n = sum(data_repartition("main_zord", path))
             x, y = np.empty((n, 256, 256, 3)), np.empty((n, 1), dtype="int32")
-            int_label = int_reader(label="label")
+            int_label = labels_in_dir_mz_order()
             for classe in listdir_nohidden(path):
                 path_classe = os.path.join(path, classe)
                 for label in listdir_nohidden(path_classe):
@@ -133,7 +133,7 @@ class ImageFromDirectory:
             n = sum(data_repartition(zord_kind, path))
             x, y = np.empty((n, 256, 256, 3)), np.empty((n, 1), dtype="int32")
             self.classes_names = listdir_nohidden(path)
-            int_label = int_reader(label="label")
+            int_label = labels_in_dir_mz_order()
             path_classe = os.path.join(path, zord_kind)
             for label in listdir_nohidden(path_classe):
                 path_label = os.path.join(path_classe, label)
@@ -152,8 +152,6 @@ class ImageFromDirectory:
         assert im_compt + err_compt == n, "Some files have been missed"
         print("\n{} files have been imported".format(im_compt))
         print("{} errors occured".format(err_compt))
-        print(len(x))
-        print(len(y))
         self.x = x[:im_compt]
         self.y = y[:im_compt]
         self.label_map = int_to_label
@@ -245,6 +243,29 @@ def int_reader(label):
             i += 1
     return dic
 
+def flatten(t):
+    l=[]
+    for el in t :
+
+        if type(el)==list:
+            for el_1 in el :
+                l.append(el_1)
+        else :
+            l.append(el)
+    return l
+
+def labels_in_dir_mz_order():
+    labels={}
+    compt=0
+    path = "/Users/lucas/swiss_knife/data"
+    for classe in listdir_nohidden(path):
+        for label in listdir_nohidden(os.path.join(path, classe)):
+            labels[label]=compt
+            compt+=1
+    return labels
+
+
+
 
 if __name__ == "__main__":
     os.remove("../files/labels.txt")
@@ -254,3 +275,4 @@ if __name__ == "__main__":
     labeller("/Users/lucas/swiss_knife")
     int_labeller("classe")
     int_labeller("label")
+

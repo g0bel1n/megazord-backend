@@ -4,7 +4,7 @@ import random
 from tqdm import tqdm
 from tensorflow import keras
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
-from utils import zord_from_pb_file, ImageFromDirectory
+from megazord.utilitaries.utils import zord_from_pb_file, ImageFromDirectory
 
 sns.set_style("dark")
 sns.set(rc={'figure.figsize': (10, 10)})
@@ -13,7 +13,7 @@ sns.set(rc={'figure.figsize': (10, 10)})
 class CrashTest:
 
     def __init__(self, dir_model):
-        test_dir = "/Users/lucas/swiss_knife/data_test"
+        test_dir = "/Users/lucas/swiss_knife/data"
         self.zord = zord_from_pb_file(dir_model)
 
         print("loading model...")
@@ -23,6 +23,7 @@ class CrashTest:
             print(self.model)
         except OSError:
             print("Importation failed")
+            pass
 
         print("loading test dataset...")
         data = ImageFromDirectory(path=test_dir, zord_kind=self.zord)
@@ -45,7 +46,17 @@ class CrashTest:
         plt.grid(False)
         plt.show()
 
+    def conf(self):
+        n = 100
+        if n > len(self.y_test):
+            n = len(self.x_test)
+        indexs = random.sample(range(len(self.x_test)), n)
+        print(indexs)
+        predictions = [self.model.predict((self.x_test[index]).reshape(1, 256, 256, 3)) for index in
+                       tqdm(indexs)]
+        for el in predictions : plt.hist(el)
+
 
 if __name__ == "__main__":
-    test = CrashTest("/Users/lucas/swiss_knife/zords/megazord.pb")
+    test = CrashTest("/Users/lucas/swiss_knife/zords/megazord_effnet.pb")
     test.confmat()

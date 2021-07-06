@@ -3,6 +3,7 @@
 # ToDo LIST :
 # Change train_zords to get rid of the dict thing
 # Get rid of the wildcard import (*) for utils
+import tensorflow
 
 
 class SwissKnife:
@@ -21,19 +22,22 @@ class SwissKnife:
         for zord in zords:
 
             print("Trying to import " + zord + " model ...")
+            in_file =listdir_nohidden(self.directory + "/data/" + zord)
             try:
-                if len(listdir_nohidden(self.directory + "/data/" + zord)) == 1:
+                if len(in_file) == 1:
                     self.zords[zord] = [None, [zord]]
                     print("\tSingle Label Class, no need to import.")
+                    self.labels.append(zord)
                 else:
-                    labels = listdir_nohidden(self.directory + "/data/" + zord)
                     self.zords[zord] = [keras.models.load_model(self.directory
                                                                 + "/zords/"
                                                                 + zord + "_effnet" + ".pb"),
-                                        labels]
+                                        in_file]
+                    self.labels.append(in_file)
                     print("\tSuccessful importation")
             except OSError:
                 self.train_queue.append(zord)
+                self.labels.append(in_file)
                 print("\t" + zord + " model has not been trained yet. It has been added"
                                     "to the training queue.")
 
@@ -56,7 +60,7 @@ class SwissKnife:
             layers.experimental.preprocessing.RandomFlip("horizontal"),
             layers.experimental.preprocessing.RandomRotation(0.1),
             layers.experimental.preprocessing.RandomContrast((0, 1))])
-
+        self.labels = flatten(self.labels)
     def train_zords(self, epochs=2):
         """
         Trains the different zords (CNN) in the self.train_queue.
@@ -177,14 +181,15 @@ class SwissKnife:
         inputs_mz = keras.Input(shape=input_shape)
 
         class_pred = self.zords["main_zord"][0](inputs_mz)
+        mask = math.equal(class_pred, math.reduce_max(class_pred))
+        mask = cast(mask, tensorflow.float32)
+        class_pred = tensorflow.multiply(mask, class_pred)
         nb_class = len(self.zords["main_zord"][1])
         compt = 0
         pre_stack = []
         for key in self.zords:
             if key != "main_zord":
                 zorg_plus = self.zords[key]
-                for label in zorg_plus[1]:
-                    self.labels.append(label)
                 if len(zorg_plus[1]) == 1:
                     pre_stack.append(class_pred[0, compt])
                 else:
@@ -211,7 +216,7 @@ class SwissKnife:
         Saves megazord
         """
         print("Saving Megazord")
-        model.save(self.directory + "/zords/" + "megazordw< .pb")
+        model.save(self.directory + "/zords/" + "megazord_effnet.pb")
         print("Megazord is saved")
 
     def megazord_to_coreml(self, model):
@@ -241,11 +246,13 @@ class SwissKnife:
 
 
 if __name__ == "__main__":
+
     from tensorflow.keras import layers
+    from tensorflow import math, cast
     from tensorflow import nn, stack, keras
     from efficientnet.tfkeras import EfficientNetB0
     import coremltools as ct
-    from megazord.utilitaries.utils import listdir_nohidden, data_repartition, weighter
+    from megazord.utilitaries.utils import listdir_nohidden, data_repartition, weighter, flatten
 
     DIRECTORY = "/Users/lucas/swiss_knife"
 
@@ -254,12 +261,12 @@ if __name__ == "__main__":
 
     # swiss_knife.fine_tune(zord="handle", epochs=3)
 
-    #megazord = swiss_knife.assemble_megazord()
+    megazord = swiss_knife.assemble_megazord()
 
-    #swiss_knife.save(megazord)
+    # swiss_knife.save(megazord)
     print(swiss_knife.labels)
 
-    #try:
-        #swiss_knife.megazord_to_coreml(megazord)
-    #except Exception as e:
-        #print(e.__class__)
+    try:
+        swiss_knife.megazord_to_coreml(megazord)
+    except Exception as e:
+        print(e.__class__)
