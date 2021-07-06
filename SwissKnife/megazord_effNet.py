@@ -3,7 +3,6 @@
 # ToDo LIST :
 # Change train_zords to get rid of the dict thing
 # Get rid of the wildcard import (*) for utils
-import tensorflow
 
 
 class SwissKnife:
@@ -22,7 +21,7 @@ class SwissKnife:
         for zord in zords:
 
             print("Trying to import " + zord + " model ...")
-            in_file =listdir_nohidden(self.directory + "/data/" + zord)
+            in_file = listdir_nohidden(self.directory + "/data/" + zord)
             try:
                 if len(in_file) == 1:
                     self.zords[zord] = [None, [zord]]
@@ -61,6 +60,7 @@ class SwissKnife:
             layers.experimental.preprocessing.RandomRotation(0.1),
             layers.experimental.preprocessing.RandomContrast((0, 1))])
         self.labels = flatten(self.labels)
+
     def train_zords(self, epochs=2):
         """
         Trains the different zords (CNN) in the self.train_queue.
@@ -125,7 +125,7 @@ class SwissKnife:
             del model
 
         print(
-            "Pre Megazord dictionnary is now complete. \n You can now fine tune (.fine_tune()) or"
+            "Pre Megazord dictionary is now complete. \n You can now fine tune (.fine_tune()) or"
             "call Megazord formation (.assemble_Megazord())")
 
     def fine_tune(self, zord, fine_tune_at=280, epochs=4, learning_rate=0.0001):
@@ -166,7 +166,7 @@ class SwissKnife:
 
         self.zords[zord] = [model, train_ds.class_names[::-1]]
         print("{} zord has been fine-tuned and added to pre_megazord"
-              "dictionnary. \n ".format(zord))
+              "dictionary. \n ".format(zord))
 
         print("Saving the zord ...")
         model.save(self.directory + "/zords/" + zord + ".pb")
@@ -178,38 +178,15 @@ class SwissKnife:
         """
 
         input_shape = (256, 256, 3)
-        inputs_mz = keras.Input(shape=input_shape)
-
-        class_pred = self.zords["main_zord"][0](inputs_mz)
-        mask = math.equal(class_pred, math.reduce_max(class_pred))
-        mask = cast(mask, tensorflow.float32)
-        class_pred = tensorflow.multiply(mask, class_pred)
-        nb_class = len(self.zords["main_zord"][1])
-        compt = 0
-        pre_stack = []
-        for key in self.zords:
-            if key != "main_zord":
-                zorg_plus = self.zords[key]
-                if len(zorg_plus[1]) == 1:
-                    pre_stack.append(class_pred[0, compt])
-                else:
-                    out = zorg_plus[0](inputs_mz)
-                    for i in range(len(zorg_plus[1])):
-                        pre_stack.append(class_pred[0, compt] * out[0, i])
-                compt += 1
-        assert compt == nb_class, "Classes are missing"
-        print("Reaching the bottom of the neural network...")
-
-        output_mz = stack([pre_stack], axis=0)
+        megazord_input = keras.Input(shape=input_shape)
+        megazord_output = fusion_layer.ZordsCombination(self.zords)(megazord_input)
 
         print(
             "\n\t\t\t\t\t\t#############################################\n\t\t\t\t\t\t"
             "###########  MEGAZORD DEPLOYED  #############\n\t\t\t\t\t\t################"
             "#############################\n ")
 
-        return keras.Model(inputs_mz, output_mz)  # The Megazord is deliberatly not an attribute
-        # of the SwissKnife object to reduce its constraint
-        # on the computer's RAM
+        return keras.Model(megazord_input, megazord_output)
 
     def save(self, model):
         """
@@ -240,24 +217,20 @@ class SwissKnife:
 
         print("Megazord is ready to serve ;)")
 
-    # following methods does not work yet
-    # def show_architecture(self):
-    # tf.keras.utils.plot_model(self.megazord_lsa, show_shapes=True)
-
 
 if __name__ == "__main__":
 
     from tensorflow.keras import layers
-    from tensorflow import math, cast
-    from tensorflow import nn, stack, keras
+    from tensorflow import nn, keras
     from efficientnet.tfkeras import EfficientNetB0
     import coremltools as ct
     from megazord.utilitaries.utils import listdir_nohidden, data_repartition, weighter, flatten
+    from megazord.layers import fusion_layer
 
     DIRECTORY = "/Users/lucas/swiss_knife"
 
     swiss_knife = SwissKnife(DIRECTORY)
-    #swiss_knife.train_zords(epochs=2)
+    # swiss_knife.train_zords(epochs=2)
 
     # swiss_knife.fine_tune(zord="handle", epochs=3)
 
