@@ -5,7 +5,23 @@
 # Get rid of the wildcard import (*) for utils
 # Early dropout
 
-def get_data(zord: str, path: str):
+import os
+import logging
+import coremltools as ct
+
+from tensorflow.keras import layers
+from tensorflow import nn, keras
+from megazord.utilitaries.utils import listdir_nohidden, data_repartition, weighter, flatten
+from tensorflow.keras.models import load_model
+from tensorflow import math, multiply, cast, float32, stack
+from tqdm import tqdm
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # FATAL
+logging.getLogger('tensorflow').setLevel(logging.FATAL)
+
+
+def get_data(zord: str, path: str, label_mode="int"):
+    from tensorflow import keras
     if zord == "main_zord":
         directory_ = path + "/data"
     else:
@@ -14,10 +30,14 @@ def get_data(zord: str, path: str):
     print("_____________ Training {} __________".format(zord))
     print(" Importing train_ds...")
 
-    train_ds = keras.preprocessing.image_dataset_from_directory(
-        directory_,
-        labels="inferred",
-        label_mode="int", shuffle=True, batch_size=32)
+    if label_mode is None:
+        train_ds = keras.preprocessing.image_dataset_from_directory(
+            directory_,
+            label_mode=label_mode, shuffle=True, batch_size=32)
+    else:
+        train_ds = keras.preprocessing.image_dataset_from_directory(
+            directory_, labels="inferred",
+            label_mode="int", shuffle=True, batch_size=32)
 
     return train_ds
 
@@ -89,6 +109,7 @@ class SwissKnife:
 
     # zords = ["zord1", "zord2", "zord3", ...]
     def __init__(self, directory: str, base_model: str):
+
         assert isinstance(directory, str), "directory parameter must be a str object"
         zords = listdir_nohidden(directory + "/data")
         self.zords = []
@@ -263,20 +284,6 @@ class SwissKnife:
 
 
 if __name__ == "__main__":
-    import os
-    import logging
-
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # FATAL
-    logging.getLogger('tensorflow').setLevel(logging.FATAL)
-
-    from tensorflow.keras import layers
-    from tensorflow import nn, keras
-    import coremltools as ct
-
-    from megazord.utilitaries.utils import listdir_nohidden, data_repartition, weighter, flatten
-    from tensorflow.keras.models import load_model
-    from tensorflow import math, multiply, cast, float32, stack
-    from tqdm import tqdm
 
     DIRECTORY = "/Users/lucas/swiss_knife"
 
