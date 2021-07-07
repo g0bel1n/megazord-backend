@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.image as mpimg
 
 
-def listdir_nohidden(path, jpg_only=False):
+def listdir_nohidden(path: str, jpg_only=False) -> list:
     """
     returns an alphabetically sorted list of filenames of the unhidden files of a directory
     optionnal arg : jpg_only. Set on True for only .jpg or .JPG
@@ -18,7 +18,7 @@ def listdir_nohidden(path, jpg_only=False):
             [el for el in os.listdir(path) if not (el.startswith(".") or el.endswith(".MOV") or el.endswith(".mov"))])
 
 
-def data_repartition(zord, directory_):
+def data_repartition(zord: str, directory_: str) -> list:
     """
     Returns the count of .jpg or .JPG files from each category folder in the directory_ folder in the alphabetical
     order.
@@ -27,7 +27,7 @@ def data_repartition(zord, directory_):
     if zord == "main_zord":
         classes = listdir_nohidden(directory_)
         for classe in classes:
-            dir_ = directory_ + "/" + classe
+            dir_ = os.path.join(directory_, classe)
             labels = listdir_nohidden(dir_)
             tot = 0
             for label in labels:
@@ -42,7 +42,7 @@ def data_repartition(zord, directory_):
     return folders
 
 
-def weighter(folders):
+def weighter(folders: list) -> dict:
     """
     Returns the proportionnality coefficients of the sizes of the folders. The largest one's weight is set on 1.
     """
@@ -53,7 +53,7 @@ def weighter(folders):
     return class_weight
 
 
-def diver(path):
+def diver(path: str) -> str:
     """
     DIVES
     """
@@ -62,7 +62,7 @@ def diver(path):
     return path
 
 
-def one4all_labeller(path):
+def one4all_labeller(path: str) -> list:
     """
     LABELS
     """
@@ -83,6 +83,12 @@ def one4all_labeller(path):
 
 
 class ImageFromDirectory:
+    """
+    Imports Image from directory pretty much as the keras methods except it outputs x and y separately
+     and in NumPy arrays. It was done to avoid dealing with keras Tensors.
+
+     Depends on int_reader and all the functions required to make int_reader work
+    """
 
     def __init__(self, path, zord_kind):
 
@@ -118,7 +124,7 @@ class ImageFromDirectory:
                 path_classe = os.path.join(path, classe)
                 for label in listdir_nohidden(path_classe):
                     path_label = os.path.join(path_classe, label)
-                    path_label = (diver(path_label))
+                    path_label = diver(path_label)
                     for im in listdir_nohidden(path_label, jpg_only=True):
                         try:
                             img = mpimg.imread(os.path.join(path_label, im))
@@ -157,7 +163,11 @@ class ImageFromDirectory:
         self.label_map = int_to_label
 
 
-def zord_from_pb_file(path):
+def zord_from_pb_file(path: str) -> str:
+    """
+    :param path:
+    :return: the name of the zord
+    """
     path = path[:-3]
     i = 1
     while path[-i] != "/":
@@ -165,7 +175,7 @@ def zord_from_pb_file(path):
     return path[-i + 1:]
 
 
-def labeller(path):
+def labeller(path: str) -> None:
     f = open("../files/labels.txt", "a")
     path += "/data"
     err_compt = 0
@@ -185,7 +195,7 @@ def labeller(path):
     f.close()
 
 
-def label_reader(label=None):
+def label_reader(label=None) -> dict:
     f = open("../files/labels.txt")
     lines = f.readlines()
     rep = {}
@@ -215,7 +225,7 @@ def label_reader(label=None):
     return rep
 
 
-def int_labeller(label):
+def int_labeller(label: str) -> None:
     dic = label_reader(label)
     integer_labels = np.unique(list(dic.values()))
     f = open("../files/int_{}.txt".format(label), "a")
@@ -223,7 +233,7 @@ def int_labeller(label):
     f.close()
 
 
-def int_reader(label):
+def int_reader(label: str) -> dict:
     f = open("../files/int_{}.txt".format(label))
     txt = f.read()
     dic = {}
@@ -243,28 +253,31 @@ def int_reader(label):
             i += 1
     return dic
 
-def flatten(t):
-    l=[]
-    for el in t :
 
-        if type(el)==list:
-            for el_1 in el :
+def flatten(t: list) -> list:
+    l = []
+    for el in t:
+
+        if type(el) == list:
+            for el_1 in el:
                 l.append(el_1)
-        else :
+        else:
             l.append(el)
     return l
 
-def labels_in_dir_mz_order():
-    labels={}
-    compt=0
+
+def labels_in_dir_mz_order() -> list:
+    """
+    :return: labels in the same order that megazord was trained on.
+    """
+    labels = {}
+    compt = 0
     path = "/Users/lucas/swiss_knife/data"
     for classe in listdir_nohidden(path):
         for label in listdir_nohidden(os.path.join(path, classe)):
-            labels[label]=compt
-            compt+=1
+            labels[label] = compt
+            compt += 1
     return labels
-
-
 
 
 if __name__ == "__main__":
@@ -275,4 +288,3 @@ if __name__ == "__main__":
     labeller("/Users/lucas/swiss_knife")
     int_labeller("classe")
     int_labeller("label")
-
