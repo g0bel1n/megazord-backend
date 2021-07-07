@@ -1,6 +1,3 @@
-import numpy as np
-
-from archive.layers import fusion_layer
 from .utilitaries.utils import listdir_nohidden, data_repartition, weighter, diver
 
 
