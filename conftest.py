@@ -1,4 +1,4 @@
-from .utilitaries.utils import listdir_nohidden, data_repartition, weighter, diver
+from utilitaries.utils import listdir_nohidden, data_repartition, weighter, diver
 
 
 def test_listdir_nohidden_3(path="data_test"):
