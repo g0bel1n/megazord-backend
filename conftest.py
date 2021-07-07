@@ -1,6 +1,6 @@
 import numpy as np
 
-from .layers import fusion_layer
+from archive.layers import fusion_layer
 from .utilitaries.utils import listdir_nohidden, data_repartition, weighter, diver
 
 
@@ -28,7 +28,7 @@ def test_weighter():
 def test_diver():
     assert diver("data_test/ball_bearing") == "data_test/ball_bearing/ball_bearing/ball_bearing"
 
-
+"""
 def test_zord_combination():
     inputs = np.empty((1, 256, 256, 3))
 
@@ -50,3 +50,4 @@ def test_zord_combination():
     true_value = np.array([[0.2, 0.3, 0, 0, 0, 0]], dtype="float32")
 
     assert not np.any(value_to_test.numpy() - true_value)
+"""
