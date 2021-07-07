@@ -3,11 +3,7 @@
 # ToDo LIST :
 # Change train_zords to get rid of the dict thing
 # Get rid of the wildcard import (*) for utils
-#Early dropout
-import tensorflow.python.keras.models
-
-from silence_tensorflow import silence_tensorflow
-silence_tensorflow()
+# Early dropout
 
 def get_data(zord: str, path: str):
     if zord == "main_zord":
@@ -85,24 +81,6 @@ def get_base_model(base_model: str):
     else:
         raise Exception("The model asked is not avalaible")
 
-def remove_logging():
-    import sys
-    import logging
-
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-
-    # Keras outputs warnings using `print` to stderr so let's direct that to devnull temporarily
-    stderr = sys.stderr
-    sys.stderr = open(os.devnull, 'w')
-
-    import keras
-
-    # we're done
-    sys.stderr = stderr
-
-    import absl.logging
-    logging.root.removeHandler(absl.logging._absl_handler)
-    absl.logging._warn_preinit_stderr = False
 
 class SwissKnife:
     """
@@ -113,11 +91,11 @@ class SwissKnife:
     def __init__(self, directory: str, base_model: str):
         assert isinstance(directory, str), "directory parameter must be a str object"
         zords = listdir_nohidden(directory + "/data")
-        self.zords=[]
+        self.zords = []
         self.directory = directory
         self.train_queue = []
         self.labels = []
-        self.suffix = "_"+base_model
+        self.suffix = "_" + base_model
         self.base_model = get_base_model(base_model)
         self.base_model.trainable = False
 
@@ -161,7 +139,6 @@ class SwissKnife:
         Trains the different zords (CNN) in the self.train_queue.
         """
         for zord in self.train_queue:
-
             train_ds = get_data(zord, self.directory)
             class_weight = get_class_weight(zord, self.directory)
             augmented_train_ds = augment_data(train_ds, self.data_augmentation)
@@ -196,7 +173,7 @@ class SwissKnife:
         class_weight = get_class_weight(zord, self.directory)
         augmented_train_ds = augment_data(train_ds, self.data_augmentation)
 
-        model = keras.models.load_model(self.directory+ "/zords/"+ zord + self.suffix + ".pb")
+        model = keras.models.load_model(self.directory + "/zords/" + zord + self.suffix + ".pb")
 
         model.layers[2].trainable = True
 
@@ -212,7 +189,7 @@ class SwissKnife:
               "dictionary. \n ".format(zord))
 
         print("Saving the zord ...")
-        model.save(self.directory+ "/zords/"+ zord + self.suffix + ".pb")
+        model.save(self.directory + "/zords/" + zord + self.suffix + ".pb")
         del model
 
     def assemble_megazord(self):
@@ -236,7 +213,7 @@ class SwissKnife:
         pre_stack = []
         print(self.zords)
         for zord, labels in tqdm(self.zords):
-            if type(labels)== str:
+            if type(labels) == str:
                 pre_stack.append(transformed_inputs[0, connected_label_nb])
             else:
                 model = load_model(self.directory + "/zords/" + zord + self.suffix + ".pb")
@@ -260,7 +237,7 @@ class SwissKnife:
         Saves megazord
         """
         print("Saving Megazord")
-        model.save(self.directory + "/zords/" + "megazord"+self.suffix+ ".pb")
+        model.save(self.directory + "/zords/" + "megazord" + self.suffix + ".pb")
         print("Megazord is saved")
 
     def megazord_to_coreml(self, model):
@@ -280,7 +257,7 @@ class SwissKnife:
 
         print("Saving the converted megazord...")
 
-        megazord_cml.save(self.directory + "/zords/" + "megazord"+self.suffix+".mlmodel")
+        megazord_cml.save(self.directory + "/zords/" + "megazord" + self.suffix + ".mlmodel")
 
         print("Megazord is ready to serve ;)")
 
@@ -296,14 +273,10 @@ if __name__ == "__main__":
     from tensorflow import nn, keras
     import coremltools as ct
 
-
     from megazord.utilitaries.utils import listdir_nohidden, data_repartition, weighter, flatten
     from tensorflow.keras.models import load_model
     from tensorflow import math, multiply, cast, float32, stack
     from tqdm import tqdm
-    import absl.logging
-
-
 
     DIRECTORY = "/Users/lucas/swiss_knife"
 
