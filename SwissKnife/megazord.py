@@ -11,10 +11,10 @@ import coremltools as ct
 
 from tensorflow.keras import layers
 from tensorflow import nn, keras
-from megazord.utilitaries.utils import listdir_nohidden, data_repartition, weighter, flatten
 from tensorflow.keras.models import load_model
 from tensorflow import math, multiply, cast, float32, stack
 from tqdm import tqdm
+from MegaZord.utilitaries.utils import listdir_nohidden, data_repartition, weighter, flatten
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # FATAL
 logging.getLogger('tensorflow').setLevel(logging.FATAL)
@@ -81,7 +81,7 @@ def build_model(base_model, n, zord: str):
 
 def get_base_model(base_model: str):
     if base_model == "effnetv2":
-        from megazord.efficientnetv2 import effnetv2_model
+        from MegaZord.efficientnetv2 import effnetv2_model
         return effnetv2_model.get_model("efficientnetv2-b0", include_top=False, pretrained=True)
 
     elif base_model == "effnet":
@@ -255,10 +255,10 @@ class SwissKnife:
 
     def save(self, model):
         """
-        Saves megazord
+        Saves MegaZord
         """
         print("Saving Megazord")
-        model.save(self.directory + "/zords/" + "megazord" + self.suffix + ".pb")
+        model.save(self.directory + "/zords/" + "MegaZord" + self.suffix + ".pb")
         print("Megazord is saved")
 
     def megazord_to_coreml(self, model):
@@ -276,14 +276,15 @@ class SwissKnife:
         megazord_cml = ct.convert(model, inputs=[image_input],
                                   classifier_config=classifier_config)
 
-        print("Saving the converted megazord...")
+        print("Saving the converted MegaZord...")
 
-        megazord_cml.save(self.directory + "/zords/" + "megazord" + self.suffix + ".mlmodel")
+        megazord_cml.save(self.directory + "/zords/" + "MegaZord" + self.suffix + ".mlmodel")
 
         print("Megazord is ready to serve ;)")
 
 
 if __name__ == "__main__":
+
 
     DIRECTORY = "/Users/lucas/swiss_knife"
 
@@ -294,7 +295,7 @@ if __name__ == "__main__":
 
     megazord = swiss_knife.assemble_megazord()
 
-    # swiss_knife.save(megazord)
+    # swiss_knife.save(MegaZord)
     print(swiss_knife.labels)
 
     try:

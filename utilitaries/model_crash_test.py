@@ -4,7 +4,7 @@ import random
 from tqdm import tqdm
 from tensorflow import keras
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
-from megazord.utilitaries.utils import zord_from_pb_file, ImageFromDirectory
+from MegaZord.utilitaries.utils import zord_from_pb_file, ImageFromDirectory
 
 sns.set_style("dark")
 sns.set(rc={'figure.figsize': (10, 10)})

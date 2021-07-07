@@ -15,7 +15,7 @@
 """EfficientNet V1 and V2 model configs."""
 import functools
 import re
-import megazord.efficientnetv2.hparams as hparams
+import MegaZord.efficientnetv2.hparams as hparams
 cfg_register = functools.partial(hparams.register, prefix='cfg:')
 
 

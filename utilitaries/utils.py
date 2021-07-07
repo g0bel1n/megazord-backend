@@ -115,7 +115,7 @@ class ImageFromDirectory:
                             print(e.__class__)
                             err_compt += 1
 
-        elif zord_kind == "one4all" or zord_kind == "megazord" or zord_kind == "megazord_effnet":
+        elif zord_kind == "one4all" or zord_kind == "MegaZord" or zord_kind == "megazord_effnet":
 
             n = sum(data_repartition("main_zord", path))
             x, y = np.empty((n, 256, 256, 3)), np.empty((n, 1), dtype="int32")
@@ -268,7 +268,7 @@ def flatten(t: list) -> list:
 
 def labels_in_dir_mz_order() -> list:
     """
-    :return: labels in the same order that megazord was trained on.
+    :return: labels in the same order that MegaZord was trained on.
     """
     labels = {}
     compt = 0

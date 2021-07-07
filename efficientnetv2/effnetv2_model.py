@@ -32,9 +32,9 @@ import six
 from six.moves import xrange
 import tensorflow as tf
 
-import megazord.efficientnetv2.effnetv2_configs as effnetv2_configs
-import megazord.efficientnetv2.hparams as hparams
-import megazord.efficientnetv2.utils as utils
+import MegaZord.efficientnetv2.effnetv2_configs as effnetv2_configs
+import MegaZord.efficientnetv2.hparams as hparams
+import MegaZord.efficientnetv2.utils as utils
 
 
 def conv_kernel_initializer(shape, dtype=None, partition_info=None):

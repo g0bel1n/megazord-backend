@@ -9,7 +9,7 @@ from tqdm import tqdm
 import tensorflow as tf
 import os
 
-model = tf.keras.models.load_model("/Users/lucas/swiss_knife/zords/megazord.pb")
+model = tf.keras.models.load_model("/Users/lucas/swiss_knife/zords/MegaZord.pb")
 directory = "/Users/lucas/swiss_knife/test"
 
 x_train = []
