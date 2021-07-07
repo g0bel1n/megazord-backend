@@ -98,6 +98,17 @@ def get_base_model(base_model: str):
             classes=1000,
             classifier_activation="softmax")
 
+    elif base_model == "mobilenetv2":
+        return keras.applications.mobilenet_v2.MobileNetV2(
+            include_top=False,
+            weights="imagenet",
+            input_tensor=None,
+            input_shape=None,
+            pooling=None,
+            classes=1000,
+            classifier_activation="softmax")
+
+
     else:
         raise Exception("The model asked is not avalaible")
 
@@ -288,8 +299,8 @@ if __name__ == "__main__":
 
     DIRECTORY = "/Users/lucas/swiss_knife"
 
-    swiss_knife = SwissKnife(DIRECTORY, "effnetv2")
-    swiss_knife.train_zords(epochs=3)
+    swiss_knife = SwissKnife(DIRECTORY, "mobilenetv2")
+    swiss_knife.train_zords(epochs=2)
 
     # swiss_knife.fine_tune(zord="handle", epochs=3)
 
