@@ -62,12 +62,13 @@ def augment_data(train_ds, data_augmentation):
     return augmented_train_ds
 
 
-def build_model(base_model, n, zord: str):
+def build_model(base_model, n: int, zord: str, suffix: str):
     input_shape = (256, 256, 3)
     inputs = keras.Input(shape=input_shape)
     x = keras.layers.experimental.preprocessing.Rescaling(1.0 / 255.)(inputs)
     x = base_model(x, training=False)
-    x = keras.layers.Reshape((1, -1, 1280))(x)
+    if suffix != "_inceptionv3" :
+        x = keras.layers.Reshape((1, -1, 1280))(x)
     x = keras.layers.GlobalAveragePooling2D()(x)
 
     outputs = keras.layers.Dense(n, activation=nn.softmax)(x)
@@ -150,7 +151,7 @@ class SwissKnife:
                                         "to the training queue.")
 
         print("Checking if main_zord exists...")
-        if not os.path.isdir(self.directory + "/zords/" + "main_zord" + self.suffix + ".pb"):
+        if not os.path.isdir(self.directory + "/zords/" + "main_zord" + "_inceptionv3" + ".pb"):
             self.train_queue.append("main_zord")
             print("\tmain_zord" + " model has not been trained yet. It has been added"
                                   "to the training queue.")
@@ -175,7 +176,7 @@ class SwissKnife:
             class_weight = get_class_weight(zord, self.directory)
             augmented_train_ds = augment_data(train_ds, self.data_augmentation)
 
-            model = build_model(self.base_model, len(class_weight), zord)
+            model = build_model(self.base_model, len(class_weight), zord, self.suffix)
 
             print("Compilation of the CNN")
 
@@ -232,7 +233,7 @@ class SwissKnife:
         input_shape = (256, 256, 3)
         inputs = keras.Input(shape=input_shape)
 
-        main_zord = load_model(self.directory + "/zords/" + "main_zord" + self.suffix + ".pb")
+        main_zord = load_model(self.directory + "/zords/" + "main_zord" + "_inceptionv3" + ".pb")
         class_output = main_zord(inputs)
         del main_zord
         # Set to 0 the outputs of the classifier that are not the maximum.
@@ -299,17 +300,20 @@ if __name__ == "__main__":
 
     DIRECTORY = "/Users/lucas/swiss_knife"
 
-    swiss_knife = SwissKnife(DIRECTORY, "mobilenetv2")
+    complete = False
+
+    swiss_knife = SwissKnife(DIRECTORY, "inceptionv3")
     swiss_knife.train_zords(epochs=2)
 
-    # swiss_knife.fine_tune(zord="handle", epochs=3)
 
-    megazord = swiss_knife.assemble_megazord()
+    # swiss_knife.fine_tune(zord="handle", epochs=3)
+    if complete:
+        megazord = swiss_knife.assemble_megazord()
 
     # swiss_knife.save(MegaZord)
-    print(swiss_knife.labels)
+        print(swiss_knife.labels)
 
-    try:
-        swiss_knife.megazord_to_coreml(megazord)
-    except Exception as e:
-        print(e.__class__)
+        try:
+            swiss_knife.megazord_to_coreml(megazord)
+        except Exception as e:
+            print(e.__class__)

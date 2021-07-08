@@ -1,8 +1,8 @@
 import os
+
 import numpy as np
 import matplotlib.image as mpimg
-
-
+import cv2
 def listdir_nohidden(path: str, jpg_only=False) -> list:
     """
     returns an alphabetically sorted list of filenames of the unhidden files of a directory
@@ -44,7 +44,7 @@ def data_repartition(zord: str, directory_: str) -> list:
 
 def weighter(folders: list) -> dict:
     """
-    Returns the proportionnality coefficients of the sizes of the folders. The largest one's weight is set on 1.
+    Returns the proportionality coefficients of the sizes of the folders. The largest one's weight is set on 1.
     """
     maximum = max(folders)
     class_weight = {}
@@ -96,18 +96,18 @@ class ImageFromDirectory:
         im_compt = 0
         err_compt = 0
 
-        if zord_kind == "main_zord":
+        if zord_kind[:9] == "main_zord":
             n = sum(data_repartition("main_zord", path))
             x, y = np.empty((n, 256, 256, 3)), np.empty((n, 1), dtype="int32")
             int_label = int_reader(label="classe")
-            for classe in self.classes_names:
+            for classe in listdir_nohidden(path):
                 path_classe = os.path.join(path, classe)
                 for label in listdir_nohidden(path_classe):
                     path_label = os.path.join(path_classe, label)
                     path_label = (diver(path_label))
                     for im in listdir_nohidden(path_label, jpg_only=True):
                         try:
-                            img = os.path.join(path_label, im)
+                            img = mpimg.imread(os.path.join(path_label, im))
                             x[im_compt] = img
                             y[im_compt] = int_label[classe]
                             im_compt += 1
@@ -115,7 +115,8 @@ class ImageFromDirectory:
                             print(e.__class__)
                             err_compt += 1
 
-        elif zord_kind == "one4all" or zord_kind == "MegaZord" or zord_kind == "megazord_effnet":
+
+        elif zord_kind == "one4all" or zord_kind == "MegaZord" or zord_kind[:8] == "megazord":
 
             n = sum(data_repartition("main_zord", path))
             x, y = np.empty((n, 256, 256, 3)), np.empty((n, 1), dtype="int32")
@@ -133,6 +134,7 @@ class ImageFromDirectory:
                             im_compt += 1
                         except Exception as e:
                             print(e.__class__)
+                            print(label)
                             err_compt += 1
 
         else:
@@ -266,7 +268,7 @@ def flatten(t: list) -> list:
     return l
 
 
-def labels_in_dir_mz_order() -> list:
+def labels_in_dir_mz_order() -> dict:
     """
     :return: labels in the same order that MegaZord was trained on.
     """
@@ -279,11 +281,40 @@ def labels_in_dir_mz_order() -> list:
             compt += 1
     return labels
 
+def resizer(path, tgt_size=(256,256)):
+    for img in listdir_nohidden(path, jpg_only=True):
+        pic = cv2.imread(os.path.join(path, img))
+        shape=pic.shape[:2]
+        w = min(shape)
+        l = max(shape)
+        d = int((l - w) / 2)
+        pic = np.asarray(pic)
+        print(type(pic))
+        if w == shape[0]:
+            pic = pic[:, d:d + w]
+        else:
+            pic = pic[d:d + w, :]
+        pic = cv2.resize(pic, tgt_size)
+
+        cv2.imwrite(os.path.join(path, img), pic)
+
+def get_path():
+    cwd = os.getcwd()
+    if  cwd[:-8]=="MegaZord" :
+        return os.path.join(cwd,"files")
+
+
+
+
+
 
 if __name__ == "__main__":
-    os.remove("../files/labels.txt")
-    os.remove("../files/int_label.txt")
-    os.remove("../files/int_classe.txt")
+    try :
+        os.remove("../files/labels.txt")
+        os.remove("../files/int_label.txt")
+        os.remove("../files/int_classe.txt")
+    except FileNotFoundError :
+        pass
 
     labeller("/Users/lucas/swiss_knife")
     int_labeller("classe")

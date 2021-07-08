@@ -1,6 +1,7 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 import random
+import os
 from tqdm import tqdm
 from tensorflow import keras
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
@@ -12,19 +13,23 @@ sns.set(rc={'figure.figsize': (10, 10)})
 
 class CrashTest:
 
-    def __init__(self, dir_model):
-        test_dir = "/Users/lucas/swiss_knife/data"
-        self.zord = zord_from_pb_file(dir_model)
+    def __init__(self,  dir_model, load = True, model = None, zord = None):
+        if not load and not model : raise ValueError("Can't have load = False and no model")
+        test_dir = "/Users/lucas/swiss_knife/test"
+        if load :
+            self.zord = zord_from_pb_file(dir_model)
 
-        print("loading model...")
-        try:
-            self.model = keras.models.load_model(dir_model)
-            print("sucessful importation")
-            print(self.model)
-        except OSError:
-            print("Importation failed")
-            pass
-
+            print("loading model...")
+            try:
+                self.model = keras.models.load_model(dir_model)
+                print("sucessful importation")
+                print(self.model)
+            except OSError:
+                print("Importation failed")
+                pass
+        else :
+            self.zord = zord
+            self.model = model
         print("loading test dataset...")
         data = ImageFromDirectory(path=test_dir, zord_kind=self.zord)
         self.x_test = data.x
