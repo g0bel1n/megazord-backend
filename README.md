@@ -13,6 +13,39 @@ Please mention us if you use this code.
 Feel free to contact us at : lucas.saban@ensae.fr or augustin.cramer@ensae.fr. 
 
 **The goal is to classify the maximum amount of industrial pieces while minimizing misclassifcations.**
+## OnBoarding
+
+The main file is megazord.py in the directory SwissKnife  
+``` python
+from MegaZord.SwissKnife.megazord import SwissKnife
+```
+
+Instantiates the SwissKnife object with your your main directory path and the base_model used for zord.
+
+>The main_zord while be trained with inceptionV3 no matter the base_model chosen. 
+> Making good main predictions on the main zord is crucial.
+``` python
+swiss_knife = SwissKnife(directory = "/Users/lucas/swiss_knife", base_model = "mobilenetv2")
+```
+If some zords are missing, they will be trained with the following command :
+```python
+swiss_knife.train_zords(epochs= 2)
+```
+Then, it's time to assemble the main_zord and every zords : 
+```python
+megazord = swiss_knife.assemble_megazord()
+```
+To save the megazord : 
+```python
+swiss_knife.save(megazord)
+```
+>  **Warnings** : If the base_model is efficientNetV2, you might encounter errors when loading the saved file.
+
+
+Finally, the user can convert the megazord the .mlmodel with :
+```python
+swiss_knife.megazord_to_coreml(megazord)
+```
 
 ## Versions
 
@@ -26,10 +59,16 @@ Feel free to contact us at : lucas.saban@ensae.fr or augustin.cramer@ensae.fr.
 | numpy      | 1.19.5     |
 | matplotlib | 3.4.2  |
 
-## The app
+## The app (interface)
 
-The app is based on code sample found on the Apple Developper website. It's not energy efficient and is quite heavy.  
-For now, it's only for visualization but we might improve it later on.
+The app is based on code sample found on the Apple Developper website. We only modified it to work with our model and to adapt the detection threshold.  
+It's not energy efficient and is quite heavy.  
+For now, it's only for visualization but we might spend more time on it later on.
+
+The .plist file needed to show predictions is the output of :
+```python
+execfile('MegaZord/utilitaries/plis_maker.py')
+```
 
 ## Techniques used
 
