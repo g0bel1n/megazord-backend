@@ -2,7 +2,6 @@ import os
 
 import numpy as np
 import matplotlib.image as mpimg
-import cv2
 def listdir_nohidden(path: str, jpg_only=False) -> list:
     """
     returns an alphabetically sorted list of filenames of the unhidden files of a directory
@@ -282,6 +281,7 @@ def labels_in_dir_mz_order() -> dict:
     return labels
 
 def resizer(path, tgt_size=(256,256)):
+    import cv2
     for img in listdir_nohidden(path, jpg_only=True):
         pic = cv2.imread(os.path.join(path, img))
         shape=pic.shape[:2]
