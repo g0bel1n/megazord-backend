@@ -13,6 +13,15 @@ Please mention us if you use this code.
 Feel free to contact us at : lucas.saban@ensae.fr or augustin.cramer@ensae.fr. 
 
 **The goal is to classify the maximum amount of industrial pieces while minimizing misclassifcations.**
+      
+## Demonstration
+      
+<div align="center"> 
+      
+https://user-images.githubusercontent.com/73651505/124951406-9c869c00-e013-11eb-99ef-c2f6f70df43d.mp4
+      
+<div align="left"> 
+      
 ## OnBoarding
 
 The main file is megazord.py in the directory SwissKnife  
