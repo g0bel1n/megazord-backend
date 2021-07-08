@@ -12,7 +12,7 @@ Deep learning project realised by Lucas Saban and Augustin Cramer for Soft Next.
 Please mention us if you use this code.  
 Feel free to contact us at : lucas.saban@ensae.fr or augustin.cramer@ensae.fr. 
 
-**The goal is to classify the maximum amount of industrial pieces while minimizing errors.**
+**The goal is to classify the maximum amount of industrial pieces while minimizing misclassifcations.**
 
 ## Versions
 
@@ -33,7 +33,8 @@ For now, it's only for visualization but we might improve it later on.
 
 ## Techniques used
 
-In this project we used Data Augmentation, Transfer Learning (Inception V3), Fine Tuning and multi inputs/outputs neural networks
+In this project we used Data Augmentation, Transfer Learning (Inception V3, EfficientNetV2, MobileNetV2), Fine Tuning and multi inputs/outputs neural networks
+      
 ## Errors known
 
 None.
