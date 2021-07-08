@@ -1,5 +1,5 @@
 # Megazord
-![alt text](https://powerrangers.fandom.com/wiki/Megazord?file=Dino_Megazord_%2526_Daizyuzin.png)
+![plot](./ressources/megazord_pic.png?raw=true)
 
 [![Unit tests](https://github.com/iSab01/megazord/actions/workflows/python-app.yml/badge.svg)](https://github.com/iSab01/megazord/actions/workflows/python-app.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
