@@ -45,6 +45,13 @@ inputed in the adequate zord and only this one. Then a label prediction is made 
 considered as such**
 
 ## OnBoarding
+      
+### Installation
+
+```
+pip install git+https://github.com/iSab01/megazord-backend
+```
+
 
 ### Creating the dataset
 
