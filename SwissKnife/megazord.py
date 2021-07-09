@@ -82,7 +82,7 @@ def build_model(base_model, n: int, zord: str, suffix: str):
 
 def get_base_model(base_model: str):
     if base_model == "effnetv2":
-        #from archive.efficientnetv2 import effnetv2_model
+        from MegaZord.automl.efficientnetv2 import effnetv2_model
         return effnetv2_model.get_model("efficientnetv2-b0", include_top=False, pretrained=True)
 
     elif base_model == "effnet":
