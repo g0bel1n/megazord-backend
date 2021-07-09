@@ -5,7 +5,7 @@
 
 [![Unit tests](https://github.com/iSab01/megazord/actions/workflows/python-app.yml/badge.svg)](https://github.com/iSab01/megazord/actions/workflows/python-app.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
+</div>
 <div align="left">
 Deep learning project realised by Lucas Saban and Augustin Cramer for Soft Next. 
 
@@ -114,7 +114,7 @@ Please remember that your main directory must look like this :
  ### video_to frame
  
  The file containing the frames extracted from the video is in the input directory. 
- 
+ </div>
  
 
       
