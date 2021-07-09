@@ -24,7 +24,7 @@ https://user-images.githubusercontent.com/73651505/124951406-9c869c00-e013-11eb-
       
 
 
-##Lexicon :
+## Lexicon :
  **Zords** : Convolutionnal Neural Networks (CNN) trained to classify labels from the same class.  For example, **handle** distinguish the labels *handle_lock* and *handle_lockless*. 
 
 **Main Zord** : CNN trained to distinguish classes. (*ex: handles from motors*)
