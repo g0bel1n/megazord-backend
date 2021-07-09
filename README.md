@@ -25,7 +25,8 @@ https://user-images.githubusercontent.com/73651505/124951406-9c869c00-e013-11eb-
 
 
 ## Lexicon :
- **Zords** : Convolutionnal Neural Networks (CNN) trained to classify labels from the same class.  For example, **handle** distinguish the labels *handle_lock* and *handle_lockless*. 
+ **Zords** : Convolutionnal Neural Networks (CNN) trained to classify labels from the same class.  For example,
+ **handle** distinguish the labels *handle_lock* and *handle_lockless*. 
 
 **Main Zord** : CNN trained to distinguish classes. (*ex: handles from motors*)
 
@@ -40,9 +41,25 @@ the job is done and the prediction is made.
 If it's not the case, if the image belongs to a class with several labels, a mask is applied so that the input is 
 inputed in the adequate zord and only this one. Then a label prediction is made and outputted.  
 
-**However, it will not be valid for the frontend as the confidence of the output must be superior to 0.7 to be considered as valid**
+**However, it will not be valid for the frontend as the confidence of the output must be superior to 0.7 to be
+considered as such**
 
 ## OnBoarding
+
+### Creating the dataset
+
+In order to get enough data to train our models, we used *video_to_frame.py*. It allowed to video-scan our pieces in
+different environnements quite quickly and to extract pictures from it.
+
+For example :
+```python
+from MegaZord.utilitaries.video_to_frame import framer
+
+directory = "my_dir_with_videos"
+
+framer(fps_goal=8,  directory=directory, rescale=True, shape=(256,256))
+```
+You might want to put your video into labels folders and iterate upon the directories to automatize the process.
 
 
 ### Make the app 
@@ -82,7 +99,8 @@ swiss_knife.megazord_to_coreml(megazord)
 
 #### Configuring the app
 
-Now that the mlmodel has been saved, you need to create a plist file containing info about your labels for the app to work.
+Now that the mlmodel has been saved, you need to create a plist file containing info about your labels for the app to 
+work.
 Please run the following command : 
 
 ```python
@@ -110,7 +128,8 @@ Finally, build the app on the simulator or your iDevice after signing the projec
 
 ## The frontend
 
-The app is based on code sample found on the Apple Developper website. We only modified it to work with our model and to adapt the detection threshold.  
+The app is based on code sample found on the Apple Developper website. We only modified it to work with our model and to
+adapt the detection threshold.  
 It's not energy efficient and is quite heavy.  
 For now, it's only for visualization but we might spend more time on it later on.
 
@@ -123,16 +142,21 @@ execfile('MegaZord/utilitaries/plist_maker.py')
 
 ## Techniques used
 
-In this project we used Data Augmentation, Transfer Learning (Inception V3,EfficentNet, EfficientNetV2, MobileNetV2), Fine Tuning.
+In this project we used Data Augmentation, Transfer Learning (Inception V3,EfficentNet, EfficientNetV2, MobileNetV2),
+Fine Tuning.
 
       
 ## Errors known
 
-None.
+The importation processes in-between files is quite messy, you might check that first if you encounter errors. 
 
 ## Why *Megazord* and *zords* ? 
 
-Well, it is because of the architecture of our neural network. It combines several small neural networks, trained to distinguish object from the same class (ex: motor_s and motor_m) to make a big neural networks that classify each label. It made us remember the good old days, when we used to watch the *Power Rangers series*. They used to merge their zords (each Ranger had its own zord aka fighter robot) into a megazord which could defeat the bad guys. In our case, the megazord is the final model and the zords are the secondary models.
+Well, it is because of the architecture of our neural network. It combines several small neural networks, trained to 
+distinguish object from the same class (ex: motor_s and motor_m) to make a big neural networks that classify each label.
+It made us remember the good old days, when we used to watch the *Power Rangers series*. They used to merge their zords 
+(each Ranger had its own zord aka fighter robot) into a megazord which could defeat the bad guys. In our case, the 
+megazord is the final model and the zords are the secondary models.
 
 ## Tips
 
