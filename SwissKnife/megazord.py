@@ -1,8 +1,6 @@
 # The SwissKnife is the center class of our project. It centralizes many of the functions we need.
 
 # ToDo LIST :
-# Change train_zords to get rid of the dict thing
-# Get rid of the wildcard import (*) for utils
 # Early dropout
 
 import os
@@ -21,6 +19,13 @@ logging.getLogger('tensorflow').setLevel(logging.FATAL)
 
 
 def get_data(zord: str, path: str, label_mode="int"):
+    """
+
+    :param zord: name of the zord. if main_zord stack same class labels together.
+    :param path: main path
+    :param label_mode:
+    :return: a tensorflow.k0eras Dataset
+    """
     from tensorflow import keras
     if zord == "main_zord":
         directory_ = path + "/data"
@@ -43,6 +48,12 @@ def get_data(zord: str, path: str, label_mode="int"):
 
 
 def get_class_weight(zord: str, path: str) -> dict:
+    """
+
+    :param zord: zord's name
+    :param path: main path
+    :return: dict containing the weights that balance data
+    """
     folders = data_repartition(zord, path + "/data")
 
     class_weight = weighter(folders)
@@ -54,6 +65,11 @@ def get_class_weight(zord: str, path: str) -> dict:
 
 
 def augment_data(train_ds, data_augmentation):
+    """
+    :param train_ds: raw train_ds
+    :param data_augmentation: data augmentation sequence
+    :return: an augmented training set
+    """
     print("Augmenting the train_ds")
     augmented_train_ds = train_ds.map(lambda x, y: (data_augmentation(x), y))
     augmented_train_ds = augmented_train_ds.prefetch(buffer_size=32).shuffle(10)  # facilitates training
@@ -63,6 +79,15 @@ def augment_data(train_ds, data_augmentation):
 
 
 def build_model(base_model, n: int, zord: str, suffix: str):
+    """
+
+    :param base_model: base_model keras model
+    :param n: number of outputs
+    :param zord: zord's name
+    :param suffix: str wxith base_model id
+    :return: a built model
+    """
+
     input_shape = (256, 256, 3)
     inputs = keras.Input(shape=input_shape)
     x = keras.layers.experimental.preprocessing.Rescaling(1.0 / 255.)(inputs)
@@ -81,6 +106,10 @@ def build_model(base_model, n: int, zord: str, suffix: str):
 
 
 def get_base_model(base_model: str):
+    """
+    :param base_model: base_model's name
+    :return: base_model
+    """
     if base_model == "effnetv2":
         from MegaZord.automl.efficientnetv2 import effnetv2_model
         return effnetv2_model.get_model("efficientnetv2-b0", include_top=False, pretrained=True)
@@ -121,6 +150,11 @@ class SwissKnife:
 
     # zords = ["zord1", "zord2", "zord3", ...]
     def __init__(self, directory: str, base_model: str):
+        """
+        Checks which zords need to be trained and initiate most attributes
+        :param directory: main directory containing zords and data folders
+        :param base_model: The model used to do transfer-learning on zords
+        """
 
         assert isinstance(directory, str), "directory parameter must be a str object"
         zords = listdir_nohidden(directory + "/data")
