@@ -17,9 +17,9 @@ Feel free to contact us at : lucas.saban@ensae.fr or augustin.cramer@ensae.fr.
 ## Demonstration
       
 <div align="center"> 
-      
-https://user-images.githubusercontent.com/73651505/124951406-9c869c00-e013-11eb-99ef-c2f6f70df43d.mp4
-      
+
+https://user-images.githubusercontent.com/73651505/125635015-fc0dde11-4c67-44db-90be-adf77dea888d.mp4
+   
 <div align="left"> 
       
 
