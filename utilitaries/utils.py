@@ -313,6 +313,7 @@ if __name__ == "__main__":
         os.remove("../files/labels.txt")
         os.remove("../files/int_label.txt")
         os.remove("../files/int_classe.txt")
+
     except FileNotFoundError :
         pass
 

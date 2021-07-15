@@ -111,7 +111,7 @@ work.
 Please run the following command : 
 
 ```python
-execfile("Megazord/utilitaries/plist_maker.py")
+execfile("Megazord/utilitaries/ProductCatalog_Maker.py")
 ```
 
 Then you have to open the [xcode project](https://github.com/iSab01/megazord_frontend) and 
@@ -144,7 +144,7 @@ The code can be found here, in the [frontend repo](https://github.com/iSab01/meg
 
 The .plist file needed to show predictions is the output of :
 ```python
-execfile('MegaZord/utilitaries/plist_maker.py')
+execfile('MegaZord/utilitaries/ProductCatalog_Maker.py')
 ```
 
 ## Techniques used

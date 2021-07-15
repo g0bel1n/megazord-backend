@@ -5,11 +5,11 @@
 	<key>motor</key>
 	<dict>
 		<key>left</key>
-		<string>vn7</string>
+		<string>motor_m</string>
 		<key>question</key>
 		<string>Quel �tiquette est visble ?</string>
 		<key>right</key>
-		<string>vn5</string>
+		<string>motor_s</string>
 	</dict>
 </dict>
 </plist>

@@ -1,7 +1,7 @@
 ['4_buttons' '6_buttons' 'ampoule' 'angle' 'baco' 'ball_bearing'
  'big_evco' 'big_ventilo' 'black_wheel' 'charniere_3pieces'
  'charniere_metal' 'cloche_verre' 'handle_lock' 'handle_lockless'
- 'moteur_vert' 'motor_m' 'motor_s' 'noire_blanche_relief' 'piece_chaise'
+ 'moteur_vert' 'motor' 'noire_blanche_relief' 'piece_chaise'
  'piece_chelou' 'poignee_noire' 'resistance_enroulee' 'resistance_grille'
  'roue_noire_seule' 'scaphandre' 'small_evco' 'sofiane' 'sonde'
  'triple_resistance_coude' 'ventilo_carre' 'ventilo_long' 'ventilo_octo'
