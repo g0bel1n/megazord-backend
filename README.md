@@ -142,9 +142,11 @@ For now, it's only for visualization but we might spend more time on it later on
 
 The code can be found here, in the [frontend repo](https://github.com/iSab01/megazord_frontend)
 
-The .plist file needed to show predictions is the output of :
+The .plist files needed to show predictions are the output of :
 ```python
 execfile('MegaZord/utilitaries/ProductCatalog_Maker.py')
+execfile('MegaZord/utilitaries/UndefinedProductCatalog_Maker.py')
+execfile('MegaZord/utilitaries/ref_to_id_maker.py')
 ```
 
 ## Techniques used
