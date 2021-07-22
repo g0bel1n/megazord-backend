@@ -178,7 +178,7 @@ def zord_from_pb_file(path: str) -> str:
 
 def labeller(path: str) -> None:
     f = open("../files/labels.txt", "a")
-    path += "/data"
+    path += "/train_set"
     err_compt = 0
     classes_names = listdir_nohidden(path)
     for classe in classes_names:
@@ -317,6 +317,6 @@ if __name__ == "__main__":
     except FileNotFoundError :
         pass
 
-    labeller("/Users/lucas/swiss_knife")
+    labeller("/Volumes/WD_BLACK/ressources")
     int_labeller("classe")
     int_labeller("label")

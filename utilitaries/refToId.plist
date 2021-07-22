@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>148VK</key>
+	<string>ventilateur_axial_triphase</string>
+	<key>6188N</key>
+	<string>loqueteaux</string>
+	<key>AIL251000</key>
+	<string>resistance_ailettes_rectangulaires</string>
+	<key>CPTC180W</key>
+	<string>sonde</string>
+	<key>D2E146HT</key>
+	<string>ventilateur_centrifuge</string>
+	<key>DR045720</key>
+	<string>chariot</string>
+	<key>DRACO</key>
+	<string>compteur_eau_draco</string>
+	<key>EV3411M7</key>
+	<string>dispositif_de_controle_universel</string>
+	<key>EVCP1180</key>
+	<string>electrovanne</string>
+	<key>FER175</key>
+	<string>corps_de_pivot</string>
+	<key>FER306</key>
+	<string>charniere_fermod_306</string>
+	<key>FER720</key>
+	<string>charniere_fermod_720</string>
+	<key>FER920</key>
+	<string>Poignee_avec_serrure</string>
+	<key>FER921</key>
+	<string>Poignee_sans_serrure</string>
+	<key>GALHT80P</key>
+	<string>roue_noire_seule</string>
+	<key>IDP17Y07F0001</key>
+	<string>4_buttons</string>
+	<key>LEXNGU12</key>
+	<string>ampoule</string>
+	<key>MRTAX</key>
+	<string>motoreducteur leroy-somer</string>
+	<key>NMB119</key>
+	<string>ventilateur_axial_compact</string>
+	<key>PR12/16093E/F</key>
+	<string>branchement_pour_moteur</string>
+	<key>PRES6020</key>
+	<string>pressostats</string>
+	<key>PROG2</key>
+	<string>programmateur</string>
+	<key>RESIS1</key>
+	<string>resistance_circulaire</string>
+	<key>RESIS32</key>
+	<string>resistance_pour_lave_batterie</string>
+	<key>RIN80P</key>
+	<string>roulette_blanche_sans_plateau</string>
+	<key>RTU620</key>
+	<string>regulateur_universel</string>
+	<key>RZHT80P</key>
+	<string>roue_noire_avec_plateau</string>
+	<key>RZN65P</key>
+	<string>roulette_blanche_avec_plateau</string>
+	<key>VN5</key>
+	<string>vn5</string>
+	<key>VN7</key>
+	<string>vn7</string>
+	<key>VT180</key>
+	<string>ventilateur_tangentiel</string>
+	<key>XR02CX-5N0C1</key>
+	<string>6_buttons</string>
+	<key>nan</key>
+	<string>cloche_en_verre</string>
+</dict>
+</plist>

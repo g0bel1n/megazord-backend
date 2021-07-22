@@ -2,14 +2,368 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>motor</key>
+	<key>4_buttons</key>
 	<dict>
-		<key>left</key>
-		<string>vn7</string>
-		<key>question</key>
-		<string>Quel �tiquette est visble ?</string>
-		<key>right</key>
-		<string>vn5</string>
+		<key>description</key>
+		<string>Référence : IDP17Y07F0001
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Régulateur Eliwell ID+961</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/demande-particuliere/</string>
+	</dict>
+	<key>6_buttons</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : XR02CX-5N0C1
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Thermostat régulateur électronique</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/thermostat-regulateur-electronique-de-frigo-1-relais/</string>
+	</dict>
+	<key>Poignee_avec_serrure</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : FER920
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Fermeture FERMOD 920</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/fermeture-fermod-920-et-921/</string>
+	</dict>
+	<key>Poignee_sans_serrure</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : FER921
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Fermeture FERMOD 921</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/fermeture-fermod-920-et-921/</string>
+	</dict>
+	<key>ampoule</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : LEXNGU12
+Fournisseur : Panicoupe
+Description: Ampoule halogène 50 watts</string>
+		<key>label</key>
+		<string>Lampe four halogène 50W</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/lampes-four-halogene-dichroique-fermee/</string>
+	</dict>
+	<key>branchement_pour_moteur</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : PR12/16093E/F
+Fournisseur : Panicoupe
+Description: Branchement moteur pour inversion sens</string>
+		<key>label</key>
+		<string>Commutateur BACO modèle inverseur</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/commutateur-baco-modele-inverseur-pour-laminoir/</string>
+	</dict>
+	<key>chariot</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : DR045720
+Fournisseur : Sud Roulettes Services
+Description: Chariot</string>
+		<key>label</key>
+		<string>Chariot</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-roulette-renovation-baie-coulissante.php?id=759&amp;np=Roulette%20de%20r%C3%A9novation&amp;prov=cotations#ancre</string>
+	</dict>
+	<key>charniere_fermod_306</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : FER306
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Charnière FERMOD 306</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/charniere-fermod-306-2/</string>
+	</dict>
+	<key>charniere_fermod_720</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : FER720
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Charnière FERMOD 720</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/charniere-fermod-720-2/</string>
+	</dict>
+	<key>cloche_en_verre</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : nan
+Fournisseur : Sud Roulettes Services
+</string>
+		<key>label</key>
+		<string>Cloche Verre</string>
+		<key>url</key>
+		<string>https://fr.wikipedia.org/wiki/Under_the_Dome_(s%C3%A9rie_t%C3%A9l%C3%A9vis%C3%A9e)</string>
+	</dict>
+	<key>compteur_eau_draco</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : DRACO
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Compteur d'eau DRACO</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/compteur-deau-draco-0-99999-litres-avec-decimale/</string>
+	</dict>
+	<key>corps_de_pivot</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : FER175
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Corps de pivot à ressort</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/corps-de-pivot-a-ressort/</string>
+	</dict>
+	<key>dispositif_de_controle_universel</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : EV3411M7
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Dispositifs de contrôle universels</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/dispositif-de-controle-universels/</string>
+	</dict>
+	<key>electrovanne</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : EVCP1180
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Electrovanne droite plastique</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/electrovanne-droite-corps-plastique-1-voie-180/</string>
+	</dict>
+	<key>loqueteaux</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : 6188N
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Loqueteaux ergo 6188</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/loqueteaux-ergo-6188-6189/</string>
+	</dict>
+	<key>motoreducteur_leroy-somer</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : MRTAX
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Motoréducteur Leroy-Somer</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/motoreducteur-leroy-somer-pour-four-ibt-tax-et-trx/</string>
+	</dict>
+	<key>pressostats</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : PRES6020
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Pressostats lavage</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/pressostats-lavage/</string>
+	</dict>
+	<key>programmateur</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : PROG2
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Programmateurs 7003F3</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/programmateurs-7003f3/</string>
+	</dict>
+	<key>regulateur_universel</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : RTU620
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Régulateur universel RTU620</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/regulateur-universel-panicoupe-rtu620/</string>
+	</dict>
+	<key>resistance_ailettes_rectangulaires</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : AIL251000
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Résistance ailettes rectanhgulaires</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/resistance-ailettes-rectangulaires-25-x-50-mm/</string>
+	</dict>
+	<key>resistance_circulaire</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : RESIS1
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Résistance circulaire 9450W</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/resistance-circulaire-9450-w-pour-four-ventile/</string>
+	</dict>
+	<key>resistance_pour_lave_batterie</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : RESIS32
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Résistance pour lave batterie</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/resistance-pour-lave-batterie/</string>
+	</dict>
+	<key>roue_noire_avec_plateau</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : RZHT80P
+Fournisseur : Panicoupe
+Description: 100 mm</string>
+		<key>label</key>
+		<string>Roulette HT pivotante avec fixation</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/roulette-ht-pivotante-chape-zinguee/</string>
+	</dict>
+	<key>roue_noire_seule</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : GALHT80P
+Fournisseur : Panicoupe
+Description: 80 mm</string>
+		<key>label</key>
+		<string>Roulette HT pivotante seule</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/roue-seule-haute-temperature/</string>
+	</dict>
+	<key>roulette_blanche_avec_plateau</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : RZN65P
+Fournisseur : Panicoupe
+Description: 100 mm</string>
+		<key>label</key>
+		<string>Roulette polypropylène pivotate avec fixation</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/roulette-polypropylene-pivotante-chape-zinguee/</string>
+	</dict>
+	<key>roulette_blanche_sans_plateau</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : RIN80P
+Fournisseur : Panicoupe
+Description:  100 mm pas de plateau sur le dessus</string>
+		<key>label</key>
+		<string>Roulette polypropylène pivotante sans fixation</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/roulette-polypropylene-pivotante-chape-inox/</string>
+	</dict>
+	<key>sonde</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : CPTC180W
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Cartouches autorégulantes PTC</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/cartouches-autoregulantes-ptc/</string>
+	</dict>
+	<key>ventilateur_axial_compact</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : NMB119
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Ventilateur axial compact NMB</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/ventilateurs-axiaux-compacts-nmb/</string>
+	</dict>
+	<key>ventilateur_axial_triphase</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : 148VK
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Ventilateur axial triphasé</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/ventilateurs-axial-triphase-special-chambre-de-pousse/</string>
+	</dict>
+	<key>ventilateur_centrifuge</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : D2E146HT
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Ventilateur centrifuge 4 vitesses</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/ventilateur-centrifuge-a-4-vitesses-integrees/</string>
+	</dict>
+	<key>ventilateur_tangentiel</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : VT180
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Ventilateur tangentiel</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/ventilateur-tangentiel-2/</string>
+	</dict>
+	<key>vn5</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : VN5
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Moteur VN5 Universel</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/moteur-vn5-universel/</string>
+	</dict>
+	<key>vn7</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : VN7
+Fournisseur : Panicoupe
+</string>
+		<key>label</key>
+		<string>Moteur VN7 Universel</string>
+		<key>url</key>
+		<string>https://panicoupe.fr/p/moteur-vn7-universel/</string>
 	</dict>
 </dict>
 </plist>
