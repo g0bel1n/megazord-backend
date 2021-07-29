@@ -2,18 +2,58 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>0116097BLANC</key>
+	<string>0116097BLANC</string>
 	<key>148VK</key>
 	<string>ventilateur_axial_triphase</string>
+	<key>2312</key>
+	<string>2312</string>
+	<key>2313</key>
+	<string>2313</string>
+	<key>33020DA</key>
+	<string>33020DA</string>
+	<key>517-F1</key>
+	<string>517-F1</string>
+	<key>518-F1</key>
+	<string>518-F1</string>
+	<key>55014DA</key>
+	<string>55014DA</string>
+	<key>55020DA</key>
+	<string>55020DA</string>
 	<key>6188N</key>
-	<string>loqueteaux</string>
+	<string>loqueteaux </string>
+	<key>66011DA</key>
+	<string>66011DA</string>
+	<key>6792BLANC</key>
+	<string>6792BLANC</string>
 	<key>AIL251000</key>
 	<string>resistance_ailettes_rectangulaires</string>
+	<key>CC002PM-GRIS</key>
+	<string>CC002PM-GRIS</string>
+	<key>CC005PM-GRIS</key>
+	<string>CC005PM-GRIS</string>
+	<key>CD031750</key>
+	<string>CD031750</string>
+	<key>CD037070</key>
+	<string>CD037070</string>
 	<key>CPTC180W</key>
 	<string>sonde</string>
 	<key>D2E146HT</key>
 	<string>ventilateur_centrifuge</string>
+	<key>DR021110</key>
+	<string>DR021110</string>
+	<key>DR021120</key>
+	<string>DR0211120</string>
+	<key>DR03883GR3</key>
+	<string>DR03883GR3</string>
+	<key>DR042580</key>
+	<string>DR042580</string>
+	<key>DR044790</key>
+	<string>DR044790</string>
+	<key>DR044830</key>
+	<string>DR044830</string>
 	<key>DR045720</key>
-	<string>chariot</string>
+	<string>galet_ceramique</string>
 	<key>DRACO</key>
 	<string>compteur_eau_draco</string>
 	<key>EV3411M7</key>
@@ -37,7 +77,7 @@
 	<key>LEXNGU12</key>
 	<string>ampoule</string>
 	<key>MRTAX</key>
-	<string>motoreducteur leroy-somer</string>
+	<string>motoreducteur_leroy-somer</string>
 	<key>NMB119</key>
 	<string>ventilateur_axial_compact</string>
 	<key>PR12/16093E/F</key>

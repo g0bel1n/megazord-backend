@@ -1,3 +1,6 @@
-from utils import resizer
+from utils import resizer, listdir_nohidden
 
-resizer("/Users/lucas/to_resize")
+resizer("/Volumes/WD_BLACK/ressources/resize")
+
+
+# [o_o]

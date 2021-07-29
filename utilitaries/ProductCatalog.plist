@@ -2,6 +2,50 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>0116097BLANC</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : 0116097BLANC
+Fournisseur : Sud Roulettes Services
+Description: Pareille que Serrure CDS mais sans vis</string>
+		<key>label</key>
+		<string>Serrure Kawneer</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-serrure-baie-coulissante-kawneer.php?id=824&amp;first=1&amp;last=9&amp;np=Serrure%20Kawneer&amp;search=0116097BLANC#ancre</string>
+	</dict>
+	<key>2312</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : 2312
+Fournisseur : Sud Roulettes Services
+Description: 2,5mm</string>
+		<key>label</key>
+		<string>Gâche petite</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-gache-baie-coulissante.php?id=193&amp;first=1&amp;last=9&amp;np=G%C3%A2che&amp;search=2312#ancre</string>
+	</dict>
+	<key>2313</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : 2313
+Fournisseur : Sud Roulettes Services
+Description: 4,5mm</string>
+		<key>label</key>
+		<string>Gâche grande</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-gache-baie-coulissante.php?id=194&amp;first=1&amp;last=9&amp;np=G%C3%A2che&amp;search=2313#ancre</string>
+	</dict>
+	<key>33020DA</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : 33020DA
+Fournisseur : Sud Roulettes Services
+Description: rayon DA 4</string>
+		<key>label</key>
+		<string>Galet 130° DA4</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-galet-130-baie-vitree.php?id=1000&amp;first=1&amp;last=9&amp;np=Galet%20130%C2%B0&amp;search=33020DA#ancre</string>
+	</dict>
 	<key>4_buttons</key>
 	<dict>
 		<key>description</key>
@@ -13,6 +57,72 @@ Fournisseur : Panicoupe
 		<key>url</key>
 		<string>https://panicoupe.fr/demande-particuliere/</string>
 	</dict>
+	<key>517-F1</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : 517-F1
+Fournisseur : Sud Roulettes Services
+Description: Poignée avec trous large vis</string>
+		<key>label</key>
+		<string>Serrure avec pas de vis</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-serrure-baie-coulissante-divers.php?id=1169&amp;first=1&amp;last=9&amp;np=Serrure&amp;search=517-F1#ancre</string>
+	</dict>
+	<key>518-F1</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : 518-F1
+Fournisseur : Sud Roulettes Services
+Description: Poignée sans trou vis face apparente</string>
+		<key>label</key>
+		<string>Serrure sans pas de vis</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-serrure-baie-coulissante-divers.php?id=1173&amp;first=1&amp;last=9&amp;np=Serrure&amp;search=518-F1#ancre</string>
+	</dict>
+	<key>55014DA</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : 55014DA
+Fournisseur : Sud Roulettes Services
+Description: rayon DA 6</string>
+		<key>label</key>
+		<string>Galet 150°</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-galet-150-baie-vitree.php?id=548&amp;first=1&amp;last=9&amp;np=Galet%20150%C2%B0&amp;search=55014DA#ancre</string>
+	</dict>
+	<key>55020DA</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : 55020DA
+Fournisseur : Sud Roulettes Services
+Description: rayon DA 6</string>
+		<key>label</key>
+		<string>Galet 130° DA6</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-galet-130-baie-vitree.php?id=556&amp;first=1&amp;last=9&amp;np=Galet%20130%C2%B0&amp;search=55020DA#ancre</string>
+	</dict>
+	<key>66011DA</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : 66011DA
+Fournisseur : Sud Roulettes Services
+Description: rayon DA 4</string>
+		<key>label</key>
+		<string>Galet plat</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-galet-plat-baie-vitree.php?id=566&amp;first=1&amp;last=9&amp;np=Galet%20plat&amp;search=66011DA#ancre</string>
+	</dict>
+	<key>6792BLANC</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : 6792BLANC
+Fournisseur : Sud Roulettes Services
+Description: Pareille que Serrure Kawneer mais avec vis </string>
+		<key>label</key>
+		<string>Serrure CDS</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-serrure-baie-coulissante-cds.php?id=433&amp;first=1&amp;last=9&amp;np=Serrure%20CDS&amp;search=6792BLANC#ancre</string>
+	</dict>
 	<key>6_buttons</key>
 	<dict>
 		<key>description</key>
@@ -23,6 +133,116 @@ Fournisseur : Panicoupe
 		<string>Thermostat régulateur électronique</string>
 		<key>url</key>
 		<string>https://panicoupe.fr/p/thermostat-regulateur-electronique-de-frigo-1-relais/</string>
+	</dict>
+	<key>CC002PM-GRIS</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : CC002PM-GRIS
+Fournisseur : Sud Roulettes Services
+</string>
+		<key>label</key>
+		<string>Poignée clic clac sans supp</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-poignee-clicclac-baie-vitree.php?id=1454&amp;first=1&amp;last=9&amp;np=Poign%C3%A9e%20Clic%20Clac&amp;search=CC002PM-GRIS#ancre</string>
+	</dict>
+	<key>CC005PM-GRIS</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : CC005PM-GRIS
+Fournisseur : Sud Roulettes Services
+Description: avec support</string>
+		<key>label</key>
+		<string>Poignée clic clac avec supp</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-poignee-clicclac-baie-vitree.php?id=1062&amp;first=1&amp;last=9&amp;np=Poign%C3%A9e%20Clic%20Clac&amp;search=CC005PM-GRIS#ancre</string>
+	</dict>
+	<key>CD031750</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : CD031750
+Fournisseur : Sud Roulettes Services
+Description: Coupe galet R3/R2.2</string>
+		<key>label</key>
+		<string>Pièce détachée pour chariot R3</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-piece-detachee-chariot.php?id=300&amp;first=1&amp;last=9&amp;np=Pi%C3%A8ce%20d%C3%A9tach%C3%A9e%20pour%20chariot&amp;search=CD031750#ancre</string>
+	</dict>
+	<key>CD037070</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : CD037070
+Fournisseur : Sud Roulettes Services
+Description: Coupe galet créneau</string>
+		<key>label</key>
+		<string>Pièce détachée pour chariot creneau</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-piece-detachee-chariot.php?id=1144&amp;first=1&amp;last=9&amp;np=Pi%C3%A8ce%20d%C3%A9tach%C3%A9e%20pour%20chariot&amp;search=CD037070#ancre</string>
+	</dict>
+	<key>DR021110</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : DR021110
+Fournisseur : Sud Roulettes Services
+Description: la ref est la bonne mais la photo site est confusante</string>
+		<key>label</key>
+		<string>Roulette de rénovation 150</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-roulette-renovation-baie-coulissante.php?id=399&amp;first=1&amp;last=9&amp;np=Roulette%20de%20r%C3%A9novation&amp;search=DR021110#ancre</string>
+	</dict>
+	<key>DR0211120</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : DR021120
+Fournisseur : Sud Roulettes Services
+Description: idem</string>
+		<key>label</key>
+		<string>Roulette de rénovation R3</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-roulette-renovation-baie-coulissante.php?id=400&amp;first=1&amp;last=9&amp;np=Roulette%20de%20r%C3%A9novation&amp;search=DR021120#ancre</string>
+	</dict>
+	<key>DR03883GR3</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : DR03883GR3
+Fournisseur : Sud Roulettes Services
+Description: galets noirs coupe type 150°, forme générale rectangulaire</string>
+		<key>label</key>
+		<string>Roulette de rénovation Rnoires 150</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-roulette-renovation-baie-coulissante.php?id=748&amp;first=1&amp;last=9&amp;np=Roulette%20de%20r%C3%A9novation&amp;search=DR03883GR3#ancre</string>
+	</dict>
+	<key>DR042580</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : DR042580
+Fournisseur : Sud Roulettes Services
+Description: galets noirs coupe créneau, forme générale rectangulaire</string>
+		<key>label</key>
+		<string>Roulette de rénovation Rnoires creneau</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-roulette-renovation-baie-coulissante.php?id=324&amp;first=1&amp;last=9&amp;np=Roulette%20de%20r%C3%A9novation&amp;search=DR042580#ancre</string>
+	</dict>
+	<key>DR044790</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : DR044790
+Fournisseur : Sud Roulettes Services
+Description: galets inox coupe 150°, sans trucs qui dépassent en bas</string>
+		<key>label</key>
+		<string>Roulette de rénovation Rgrises no dep</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-roulette-renovation-baie-coulissante.php?id=974&amp;first=1&amp;last=9&amp;np=Roulette%20de%20r%C3%A9novation&amp;search=DR044790#ancre</string>
+	</dict>
+	<key>DR044830</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : DR044830
+Fournisseur : Sud Roulettes Services
+Description: galets inox coupe 150°, trucs qui dépassent en bas</string>
+		<key>label</key>
+		<string>Roulette de rénovation Rgrises dep</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-roulette-renovation-baie-coulissante.php?id=497&amp;first=1&amp;last=9&amp;np=Roulette%20de%20r%C3%A9novation&amp;search=DR044830#ancre</string>
 	</dict>
 	<key>Poignee_avec_serrure</key>
 	<dict>
@@ -68,17 +288,6 @@ Description: Branchement moteur pour inversion sens</string>
 		<key>url</key>
 		<string>https://panicoupe.fr/p/commutateur-baco-modele-inverseur-pour-laminoir/</string>
 	</dict>
-	<key>chariot</key>
-	<dict>
-		<key>description</key>
-		<string>Référence : DR045720
-Fournisseur : Sud Roulettes Services
-Description: Chariot</string>
-		<key>label</key>
-		<string>Chariot</string>
-		<key>url</key>
-		<string>https://sud-roulettes-services.com/fiche-roulette-renovation-baie-coulissante.php?id=759&amp;np=Roulette%20de%20r%C3%A9novation&amp;prov=cotations#ancre</string>
-	</dict>
 	<key>charniere_fermod_306</key>
 	<dict>
 		<key>description</key>
@@ -119,7 +328,7 @@ Fournisseur : Sud Roulettes Services
 Fournisseur : Panicoupe
 </string>
 		<key>label</key>
-		<string>Compteur d'eau DRACO</string>
+		<string>Compteur d&apos;eau DRACO</string>
 		<key>url</key>
 		<string>https://panicoupe.fr/p/compteur-deau-draco-0-99999-litres-avec-decimale/</string>
 	</dict>
@@ -155,6 +364,17 @@ Fournisseur : Panicoupe
 		<string>Electrovanne droite plastique</string>
 		<key>url</key>
 		<string>https://panicoupe.fr/p/electrovanne-droite-corps-plastique-1-voie-180/</string>
+	</dict>
+	<key>galet_ceramique</key>
+	<dict>
+		<key>description</key>
+		<string>Référence : DR045720
+Fournisseur : Sud Roulettes Services
+Description: Chariot</string>
+		<key>label</key>
+		<string>Chariot</string>
+		<key>url</key>
+		<string>https://sud-roulettes-services.com/fiche-roulette-renovation-baie-coulissante.php?id=759&amp;np=Roulette%20de%20r%C3%A9novation&amp;prov=cotations#ancre</string>
 	</dict>
 	<key>loqueteaux</key>
 	<dict>
@@ -282,7 +502,7 @@ Description: 100 mm</string>
 		<key>description</key>
 		<string>Référence : RIN80P
 Fournisseur : Panicoupe
-Description:  100 mm pas de plateau sur le dessus</string>
+Description: 100 mm, pas de plateau sur le dessus</string>
 		<key>label</key>
 		<string>Roulette polypropylène pivotante sans fixation</string>
 		<key>url</key>

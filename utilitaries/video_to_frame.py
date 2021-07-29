@@ -55,7 +55,9 @@ def framer(directory, fps_goal = 2, rescale=False, shape=(128,128)):
 
 
 # main directory
-directory = "/Volumes/WD_BLACK/New dataset"
+directory = "/Volumes/WD_BLACK/ressources/train_set/gache"
 
-for classe in listdir_nohidden(directory, mov_only=False):
-    framer(fps_goal=4,  directory=os.path.join(directory,classe), rescale=True, shape=(256,256))
+#for classe in listdir_nohidden(directory, mov_only=False):
+framer(fps_goal=4,  directory=directory, rescale=True, shape=(256,256))
+
+# [o_o]

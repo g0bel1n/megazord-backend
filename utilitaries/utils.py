@@ -320,3 +320,4 @@ if __name__ == "__main__":
     labeller("/Volumes/WD_BLACK/ressources")
     int_labeller("classe")
     int_labeller("label")
+# [o_o]

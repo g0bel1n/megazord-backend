@@ -2,14 +2,226 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>motor</key>
+	<key>130</key>
 	<dict>
-		<key>left</key>
-		<string>motor_m</string>
+		<key>answer1</key>
+		<string>4mm</string>
+		<key>answer2</key>
+		<string>6mm</string>
 		<key>question</key>
-		<string>Quel �tiquette est visble ?</string>
-		<key>right</key>
-		<string>motor_s</string>
+		<string>Quel est le diametre du DA ?</string>
+		<key>sol1</key>
+		<string>33020DA</string>
+		<key>sol2</key>
+		<string>55020DA</string>
+	</dict>
+	<key>bloc_inox</key>
+	<dict>
+		<key>answer1</key>
+		<string>Petite</string>
+		<key>answer2</key>
+		<string>Grand</string>
+		<key>question</key>
+		<string>Quelle sont les dimensions de l&apos;objet ?</string>
+		<key>sol1</key>
+		<string>piece_detachee_pour_chariot</string>
+		<key>sol2</key>
+		<string>chariot_tout_inox</string>
+	</dict>
+	<key>blocs_noirs</key>
+	<dict>
+		<key>answer1</key>
+		<string>Proposition 1 : Loqueteau</string>
+		<key>answer2</key>
+		<string>Proposition 2 : Chariot noir</string>
+		<key>question</key>
+		<string>Selectionnez la bonne image</string>
+		<key>sol1</key>
+		<string>loqueteaux</string>
+		<key>sol2</key>
+		<string>chariot_noir</string>
+	</dict>
+	<key>chariot</key>
+	<dict>
+		<key>answer1</key>
+		<string>galets_inox</string>
+		<key>answer2</key>
+		<string>galets_ceramique</string>
+		<key>question</key>
+		<string>De quel type sont les galets ?</string>
+		<key>sol1</key>
+		<string>galets_inox</string>
+		<key>sol2</key>
+		<string>DR045720</string>
+	</dict>
+	<key>chariot_noir</key>
+	<dict>
+		<key>answer1</key>
+		<string>Coupe créneau</string>
+		<key>answer2</key>
+		<string>Coupe 150</string>
+		<key>question</key>
+		<string>Quelle est la coupe des galets ?</string>
+		<key>sol1</key>
+		<string>DR042580</string>
+		<key>sol2</key>
+		<string>DR03883GR3</string>
+	</dict>
+	<key>chariot_tout_inox</key>
+	<dict>
+		<key>answer1</key>
+		<string>Coupe 150</string>
+		<key>answer2</key>
+		<string>Coupe R3/R2.2</string>
+		<key>question</key>
+		<string>Quelle est la coupe des galets ?</string>
+		<key>sol1</key>
+		<string>DR021110</string>
+		<key>sol2</key>
+		<string>DR0211120</string>
+	</dict>
+	<key>cremone_fourche</key>
+	<dict>
+		<key>answer1</key>
+		<string>Oui</string>
+		<key>answer2</key>
+		<string>Non</string>
+		<key>question</key>
+		<string>Les trous de vis sont-ils visibles sur la face avant ?</string>
+		<key>sol1</key>
+		<string>517-F1</string>
+		<key>sol2</key>
+		<string>518-F1</string>
+	</dict>
+	<key>gache</key>
+	<dict>
+		<key>answer1</key>
+		<string>4,5mm</string>
+		<key>answer2</key>
+		<string>2,5mm</string>
+		<key>question</key>
+		<string>Quelle est la mesure de la partie basse de la piece ?</string>
+		<key>sol1</key>
+		<string>2313</string>
+		<key>sol2</key>
+		<string>2312</string>
+	</dict>
+	<key>galet</key>
+	<dict>
+		<key>answer1</key>
+		<string>130</string>
+		<key>answer2</key>
+		<string>150</string>
+		<key>question</key>
+		<string>De quelle forme est la rainure du galet ?</string>
+		<key>sol1</key>
+		<string>130</string>
+		<key>sol2</key>
+		<string>55014DA</string>
+	</dict>
+	<key>galets_inox</key>
+	<dict>
+		<key>answer1</key>
+		<string>depasse</string>
+		<key>answer2</key>
+		<string>depasse_pas</string>
+		<key>question</key>
+		<string>Selectionnez la bonne image</string>
+		<key>sol1</key>
+		<string>DR044830</string>
+		<key>sol2</key>
+		<string>DR044790</string>
+	</dict>
+	<key>moteur</key>
+	<dict>
+		<key>answer1</key>
+		<string>vn5</string>
+		<key>answer2</key>
+		<string>vn7</string>
+		<key>question</key>
+		<string>Quelle étiquette voyez-vous ? </string>
+		<key>sol1</key>
+		<string>vn5</string>
+		<key>sol2</key>
+		<string>vn7</string>
+	</dict>
+	<key>piece_detachee_pour_chariot</key>
+	<dict>
+		<key>answer1</key>
+		<string>Coupe créneau</string>
+		<key>answer2</key>
+		<string>Coupe R3/R2.2</string>
+		<key>question</key>
+		<string>Quelle est la coupe des galets ?</string>
+		<key>sol1</key>
+		<string>CD037070</string>
+		<key>sol2</key>
+		<string>CD031750</string>
+	</dict>
+	<key>poignee_clic_clac</key>
+	<dict>
+		<key>answer1</key>
+		<string>Avec support</string>
+		<key>answer2</key>
+		<string>Sans support</string>
+		<key>question</key>
+		<string>Avez vous besoin du support ?</string>
+		<key>sol1</key>
+		<string>CC005PM-GRIS</string>
+		<key>sol2</key>
+		<string>CC002PM-GRIS</string>
+	</dict>
+	<key>roues</key>
+	<dict>
+		<key>answer1</key>
+		<string>HT (noire)</string>
+		<key>answer2</key>
+		<string>polyprène (blanche)</string>
+		<key>question</key>
+		<string>Quel est le type de roue ?</string>
+		<key>sol1</key>
+		<string>roues_noires</string>
+		<key>sol2</key>
+		<string>roues_blanches</string>
+	</dict>
+	<key>roues_blanches</key>
+	<dict>
+		<key>answer1</key>
+		<string>Oui</string>
+		<key>answer2</key>
+		<string>Non</string>
+		<key>question</key>
+		<string>La roue possede-t-elle un plateau ? </string>
+		<key>sol1</key>
+		<string>roulette_blanche_avec_plateau</string>
+		<key>sol2</key>
+		<string>roulette_blanche_sans_plateau</string>
+	</dict>
+	<key>roues_noires</key>
+	<dict>
+		<key>answer1</key>
+		<string>Oui</string>
+		<key>answer2</key>
+		<string>Non</string>
+		<key>question</key>
+		<string>La roue possede-t-elle une chape ? </string>
+		<key>sol1</key>
+		<string>roue_noire_avec_plateau</string>
+		<key>sol2</key>
+		<string>roue_noire_seule</string>
+	</dict>
+	<key>serrure_baie_vitree</key>
+	<dict>
+		<key>answer1</key>
+		<string>Oui</string>
+		<key>answer2</key>
+		<string>Non</string>
+		<key>question</key>
+		<string>Les trous de vis sont-ils visibles sur la face avant ?</string>
+		<key>sol1</key>
+		<string>6792BLANC</string>
+		<key>sol2</key>
+		<string>0116097BLANC</string>
 	</dict>
 </dict>
 </plist>

@@ -28,7 +28,7 @@ def get_data(zord: str, path: str, label_mode="int"):
     """
     from tensorflow import keras
     if zord == "main_zord":
-        train_directory= path + "/train_set"
+        train_directory = path + "/train_set"
         val_directory = path + "/validation_set"
     else:
         train_directory = path + "/train_set/" + zord
@@ -37,18 +37,37 @@ def get_data(zord: str, path: str, label_mode="int"):
     print(" Importing dataset...")
 
     if label_mode is None:
-        train_ds = keras.preprocessing.image_dataset_from_directory(
-            train_directory,
-            label_mode=label_mode, shuffle=True, batch_size=256)
-        val_ds = keras.preprocessing.image_dataset_from_directory(
-            val_directory, label_mode=label_mode, shuffle=True, batch_size=256, validation_split = 0.3, subset = "validation", seed = 123)
+        try:
+            train_ds = keras.preprocessing.image_dataset_from_directory(
+                train_directory,
+                label_mode=label_mode, shuffle=True, batch_size=256)
+            val_ds = keras.preprocessing.image_dataset_from_directory(
+                val_directory, label_mode=label_mode, shuffle=True, batch_size=256, validation_split=0.3,
+                subset="validation", seed=123)
+
+        except:
+            train_ds = keras.preprocessing.image_dataset_from_directory(
+                train_directory,
+                label_mode=label_mode, shuffle=True, batch_size=256, subset = "training", validation_split = 0.2)
+            val_ds = keras.preprocessing.image_dataset_from_directory(
+                val_directory, label_mode=label_mode, shuffle=True, batch_size=256, validation_split=0.2,
+                subset="validation", seed=123)
+
     else:
-        train_ds = keras.preprocessing.image_dataset_from_directory(
-            train_directory, labels="inferred",
-            label_mode="int", shuffle=True, batch_size=256)
+        """try:
+            train_ds = keras.preprocessing.image_dataset_from_directory(
+                train_directory, labels="inferred",
+                label_mode="int", shuffle=True, batch_size=256)
+            val_ds = keras.preprocessing.image_dataset_from_directory(
+                val_directory, labels="inferred",
+                label_mode="int", shuffle=True, batch_size=256, validation_split=0.3, subset="validation", seed=123)
+        except:"""
+        train_ds = keras.preprocessing.image_dataset_from_directory (
+            train_directory,
+            label_mode=label_mode, labels="inferred", shuffle=True, batch_size=256, subset = "training", validation_split = 0.2, seed =123)
         val_ds = keras.preprocessing.image_dataset_from_directory(
-            val_directory, labels="inferred",
-            label_mode="int", shuffle=True, batch_size=256, validation_split = 0.3, subset = "validation", seed = 123)
+            train_directory, label_mode=label_mode, labels="inferred", shuffle=True, batch_size=256, validation_split=0.2,
+            subset="validation", seed=123)
 
     return val_ds, train_ds
 
@@ -78,7 +97,7 @@ def augment_data(train_ds, data_augmentation):
     """
     print("Augmenting the train_ds")
     augmented_train_ds = train_ds.map(lambda x, y: (data_augmentation(x), y))
-    #augmented_train_ds = augmented_train_ds.prefetch(buffer_size=32).shuffle(10)  # facilitates training
+    # augmented_train_ds = augmented_train_ds.prefetch(buffer_size=32).shuffle(10)  # facilitates training
     print("Augmentation is done")
 
     return augmented_train_ds
@@ -98,7 +117,7 @@ def build_model(base_model, n: int, zord: str, suffix: str):
     inputs = keras.Input(shape=input_shape)
     x = keras.layers.experimental.preprocessing.Rescaling(1.0 / 255.)(inputs)
     x = base_model(x, training=False)
-    if suffix != "_inceptionv3" :
+    if suffix != "_inceptionv3":
         x = keras.layers.Reshape((1, -1, 1280))(x)
     x = keras.layers.GlobalAveragePooling2D()(x)
 
@@ -214,7 +233,8 @@ class SwissKnife:
             val_ds, train_ds = get_data(zord, self.directory)
             class_weight = get_class_weight(zord, self.directory)
             augmented_train_ds = augment_data(train_ds, self.data_augmentation)
-            base_model, suffix = (get_base_model("inceptionv3"), "_inceptionv3") if zord=="main_zord" else (self.base_model, self.suffix)
+            base_model, suffix = (get_base_model("inceptionv3"), "_inceptionv3") if zord == "main_zord" else (
+                self.base_model, self.suffix)
             base_model.trainable = False
             model = build_model(base_model, len(class_weight), zord, suffix)
 
@@ -226,7 +246,8 @@ class SwissKnife:
 
             print("Fit sequence launched...")
             callbacks = [keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=3)]
-            model.fit(augmented_train_ds, epochs=epochs, class_weight=class_weight, validation_data=val_ds, callbacks=callbacks, shuffle = True)
+            model.fit(augmented_train_ds, epochs=epochs, class_weight=class_weight, validation_data=val_ds,
+                      callbacks=callbacks, shuffle=True)
 
             print("{} zord has been fitted and added to pre_megazord dictionary. \n ".format(zord))
             print("Saving the zord ...")
@@ -243,7 +264,7 @@ class SwissKnife:
         """
 
         print("_____________ Fine tuning {} __________".format(zord))
-        val_ds,train_ds = get_data(zord, self.directory)
+        val_ds, train_ds = get_data(zord, self.directory)
         class_weight = get_class_weight(zord, self.directory)
         augmented_train_ds = augment_data(train_ds, self.data_augmentation)
 
@@ -256,7 +277,7 @@ class SwissKnife:
 
         model.optimizer.learning_rate = learning_rate  # a smaller learning rate is required to fine
         # tune the unfrozen layers
-        callbacks = [keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=3)]
+        callbacks = [keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=2)]
         model.fit(augmented_train_ds, epochs=epochs, class_weight=class_weight, validation_data=val_ds,
                   callbacks=callbacks, shuffle=True)
 
@@ -339,7 +360,6 @@ class SwissKnife:
 
 if __name__ == "__main__":
 
-
     DIRECTORY = "/Volumes/WD_BLACK/ressources"
 
     complete = True
@@ -347,16 +367,18 @@ if __name__ == "__main__":
     swiss_knife = SwissKnife(DIRECTORY, "mobilenetv2")
     swiss_knife.train_zords()
 
-    for zord in swiss_knife.zords:
-        swiss_knife.fine_tune(zord=zord)
+    #for zord in swiss_knife.zords:
+        #swiss_knife.fine_tune(zord=zord)
 
     if complete:
         megazord = swiss_knife.assemble_megazord()
 
-    # swiss_knife.save(MegaZord)
+        # swiss_knife.save(MegaZord)
         print(swiss_knife.labels)
 
         try:
             swiss_knife.megazord_to_coreml(megazord)
         except Exception as e:
             print(e.__class__)
+
+# [o_o]

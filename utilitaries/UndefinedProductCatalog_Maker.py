@@ -2,15 +2,18 @@ import plistlib
 import pandas as pd
 from utils import int_reader
 
-df = pd.read_csv("/Users/lucas/swiss_knife/UndefinedProd.csv", delimiter=";")
+df = pd.read_csv("/Volumes/WD_BLACK/ressources/files/UndefinedProductCatalog.csv", delimiter=",")
 print(df.columns)
-df.set_index(["class"], inplace=True)
+df.set_index(["piece"], inplace=True)
 root = {}
 for key in df.index:
-    right, left, question = df["right"].loc[key], df["left"].loc[key], df["question"].loc[key],
+    answer1, answer2, question = df["answer1"].loc[key], df["answer2"].loc[key], df["question"].loc[key]
+    sol1,sol2 = df["sol1"].loc[key], df["sol2"].loc[key]
 
-    temp_dic = {"right": right, "left": left, "question" : question}
+    temp_dic = {"answer1": answer1, "answer2": answer2, "question" : question, "sol1": sol1, "sol2": sol2}
     root[key] = temp_dic
 
 with open("UndefinedProductCatalog.plist", 'wb') as fp:
     plistlib.dump(root, fp)
+
+# [o_o]
