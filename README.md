@@ -19,7 +19,7 @@ Feel free to contact us at : lucas.saban@ensae.fr or augustin.cramer@ensae.fr.
 <div align="center"> 
 
 
-https://user-images.githubusercontent.com/73651505/143784896-72a36cc8-8747-4a00-a287-573eb60714fb.mov
+![Demo](https://github.com/g0bel1n/megazord-backend/blob/main/ressources/demo_megazord.gif)
 
    
 <div align="left"> 
